@@ -93,7 +93,7 @@ namespace Game
 
             Rect rect = myRect.RenderTransform.TransformBounds(myRect.RenderedGeometry.Bounds);
 
-            if ((rect.Contains(point1) == true) && (pic==0))
+            if ((rect.Contains(point1) == true) && (pic==0)) // из первой во вторую
             {
                 x = 25;
                 y = 175;
@@ -102,7 +102,7 @@ namespace Game
                 pic = 1;
             }
 
-            if ((rect.Contains(point2) == true) && (pic == 1))
+            if ((rect.Contains(point2) == true) && (pic == 1)) // из второй в первую
             {
                 x = 770;
                 y = 175;
@@ -111,7 +111,7 @@ namespace Game
                 pic = 0;
             }
 
-            if ((rect.Contains(point3)==true) && (pic==1))
+            if ((rect.Contains(point3)==true) && (pic==1)) // из второй в третью
             {
                 x = 395;
                 y = 340;
@@ -120,7 +120,7 @@ namespace Game
                 pic = 2;
             }
 
-            if ((rect.Contains(point4) == true) && (pic == 2))
+            if ((rect.Contains(point4) == true) && (pic == 2)) // из третьей во вторую
             {
                 x = 395;
                 y = 20;
