@@ -62,22 +62,20 @@ namespace Game
             if (e.Key==Key.Right)
             {
                 x +=10;
-
             }
 
             if (e.Key == Key.Left)
             {
-                x -=10;
+                x -=10;
             }
 
             if (e.Key == Key.Up)
             {
-                y -=10;
-            }
+                y -=10;            }
 
             if (e.Key == Key.Down)
             {
-                y +=10;
+                y +=10;
             }
 
             TranslateTransform tt = new TranslateTransform(x, y);
@@ -85,14 +83,20 @@ namespace Game
             tg.Children.Add(tt);
             myRect.RenderTransform = tg;
 
-            Point point1 = new Point(100, 0);
+            Point point1 = new Point(790, 175);
 
-            Point point2 = new Point(0, 0);
+            Point point2 = new Point(10, 175);
+
+            Point point3 = new Point(395, 10);
+
+            Point point4 = new Point(395, 350);
 
             Rect rect = myRect.RenderTransform.TransformBounds(myRect.RenderedGeometry.Bounds);
 
             if ((rect.Contains(point1) == true) && (pic==0))
             {
+                x = 25;
+                y = 175;
                 ib.ImageSource = new BitmapImage(new Uri(@"pack://application:,,,/greensward.jpg", UriKind.Absolute));
                 screen.Background = ib;
                 pic = 1;
@@ -100,11 +104,30 @@ namespace Game
 
             if ((rect.Contains(point2) == true) && (pic == 1))
             {
+                x = 770;
+                y = 175;
                 ib.ImageSource = new BitmapImage(new Uri(@"pack://application:,,,/Рисунок1.jpg", UriKind.Absolute));
                 screen.Background = ib;
                 pic = 0;
             }
 
+            if ((rect.Contains(point3)==true) && (pic==1))
+            {
+                x = 395;
+                y = 340;
+                ib.ImageSource = new BitmapImage(new Uri(@"pack://application:,,,/250px-Darkwing.JPG", UriKind.Absolute));
+                screen.Background = ib;
+                pic = 2;
+            }
+
+            if ((rect.Contains(point4) == true) && (pic == 2))
+            {
+                x = 395;
+                y = 20;
+                ib.ImageSource = new BitmapImage(new Uri(@"pack://application:,,,/greensward.jpg", UriKind.Absolute));
+                screen.Background = ib;
+                pic = 1;
+            }
         }
     }
 }
