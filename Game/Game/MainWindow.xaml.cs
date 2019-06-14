@@ -23,13 +23,14 @@ namespace Game
 
         Rectangle myRect = new Rectangle();
 
-        int x = 0, y = 0;
+        int x = 0, y = 0, pic = 0;
+
+        ImageBrush ib = new ImageBrush();
 
         public MainWindow()
         {
             InitializeComponent();
 
-            ImageBrush ib = new ImageBrush();
             ib.AlignmentX = AlignmentX.Left;
             ib.AlignmentY = AlignmentY.Top;            ib.ImageSource = new BitmapImage(new Uri(@"pack://application:,,,/Рисунок1.jpg", UriKind.Absolute));
             screen.Background = ib;
@@ -42,12 +43,7 @@ namespace Game
 
             screen.KeyDown += Window_KeyDown;
 
-            //Rect rect = myRect.RenderTransform.TransformBounds(myRect.RenderedGeometry.Bounds);
-            //Point pos = screen.Se;
-            //if ()
-            //{
-
-            //}
+            
         }
 
         public void zdraste()
@@ -88,6 +84,27 @@ namespace Game
             TransformGroup tg = new TransformGroup();
             tg.Children.Add(tt);
             myRect.RenderTransform = tg;
+
+            Point point1 = new Point(100, 0);
+
+            Point point2 = new Point(0, 0);
+
+            Rect rect = myRect.RenderTransform.TransformBounds(myRect.RenderedGeometry.Bounds);
+
+            if ((rect.Contains(point1) == true) && (pic==0))
+            {
+                ib.ImageSource = new BitmapImage(new Uri(@"pack://application:,,,/greensward.jpg", UriKind.Absolute));
+                screen.Background = ib;
+                pic = 1;
+            }
+
+            if ((rect.Contains(point2) == true) && (pic == 1))
+            {
+                ib.ImageSource = new BitmapImage(new Uri(@"pack://application:,,,/Рисунок1.jpg", UriKind.Absolute));
+                screen.Background = ib;
+                pic = 0;
+            }
+
         }
     }
 }
