@@ -20,30 +20,42 @@ namespace Game
     /// </summary>
     public partial class MainWindow : Window
     {
+        System.Windows.Threading.DispatcherTimer Timer;
 
         Rectangle myRect = new Rectangle();
 
         int x = 0, y = 0, pic = 0;
 
+        int currentFrame = 1, currentRow = 0, cr = 64;
+        int frameW = 96, frameH = 96;
+        bool boolat = false;
+        int time = DateTime.Now.Second;
+
         ImageBrush ib = new ImageBrush();
 
         public MainWindow()
         {
+            InitializeComponent();  
+
             InitializeComponent();
-
-            ib.AlignmentX = AlignmentX.Left;
-            ib.AlignmentY = AlignmentY.Top;            ib.ImageSource = new BitmapImage(new Uri(@"pack://application:,,,/Рисунок1.jpg", UriKind.Absolute));
-            screen.Background = ib;
-
-            myRect.Stroke = Brushes.Black;
-            myRect.Fill = Brushes.SkyBlue;            myRect.HorizontalAlignment = HorizontalAlignment.Left;
-            myRect.VerticalAlignment = VerticalAlignment.Center;            myRect.Height = 50;
-            myRect.Width = 50;
-            screen.Children.Add(myRect);
-
-            screen.KeyDown += Window_KeyDown;
-
+            Timer = new System.Windows.Threading.DispatcherTimer();
+            Timer.Tick += new EventHandler(dispatcherTimer_Tick);
+            Timer.Interval = new TimeSpan(0, 0, 0, 0, 250);
             
+            screen.KeyDown += Window_KeyDown;            
+        }
+
+        private void dispatcherTimer_Tick(object sender, EventArgs e)
+        {
+                var frameLeft = currentFrame * frameW;
+                var frameTop = currentRow * frameH;
+                (myRect.Fill as ImageBrush).Viewbox = new Rect(frameLeft, frameTop, frameLeft + frameW, frameTop + frameH);
+                if (currentFrame % cr == 0)
+                {
+                    currentRow++;
+                    currentFrame = 0;
+                }
+                currentFrame++;
         }
 
         public void zdraste()
@@ -61,12 +73,44 @@ namespace Game
             
             if (e.Key==Key.Right)
             {
-                x +=10;
+                Timer.Start();
+                myRect.Height = 96;
+                myRect.Width = 96;
+                ImageBrush ib = new ImageBrush();
+                ib.AlignmentX = AlignmentX.Left;
+                ib.AlignmentY = AlignmentY.Top;
+                ib.Stretch = Stretch.None;
+                ib.Viewbox = new Rect(0, 0, 96, 96);
+                ib.ViewboxUnits = BrushMappingMode.Absolute;
+                ib.ImageSource = new BitmapImage(new Uri("C:\\Users\\Bulat\\Desktop\\zombie test forward.gif", UriKind.Absolute));
+                myRect.Fill = ib;
+                myRect.Margin = new Thickness(0, 0, 0, 0);
+                x += 5;
+                //boolat = bulat
+                if (boolat == false)
+                {
+                    screen.Children.Add(myRect);
+                    boolat = true;
+                }
             }
 
             if (e.Key == Key.Left)
             {
+                myRect.Height = 96;
+                myRect.Width = 96;
+
+                ImageBrush ib = new ImageBrush();
+                ib.AlignmentX = AlignmentX.Left;
+                ib.AlignmentY = AlignmentY.Top;
+                ib.Stretch = Stretch.None;
+                ib.Viewbox = new Rect(0, 0, 100, 100);
+                ib.ViewboxUnits = BrushMappingMode.Absolute;
+                ib.ImageSource = new BitmapImage(new Uri("C:\\Users\\Bulat\\Desktop\\zombie test.gif", UriKind.Absolute));
+                myRect.Fill = ib;
+                myRect.Margin = new Thickness(0, 0, 0, 0);
+                screen.Children.Add(myRect);
                 x -=10;
+                Timer.Start();
             }
 
             if (e.Key == Key.Up)

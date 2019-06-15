@@ -103,5 +103,11 @@
   <ItemGroup>
     <Resource Include="250px-Darkwing.JPG" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="zombie test.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="zombie test forward.gif" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
