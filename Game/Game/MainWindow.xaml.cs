@@ -23,13 +23,19 @@ namespace Game
         System.Windows.Threading.DispatcherTimer Timer;
 
         Rectangle myRect = new Rectangle();
+        Rectangle HP = new Rectangle();
+        Rectangle FRAME = new Rectangle();
+        Rectangle Enemy = new Rectangle();
 
         int x = 0, y = 0, pic = 0;
 
-        int currentFrame = 1, currentRow = 0, cr = 64;
+        int hph = 32, hpw = 96;
+
+        int currentFrame = 1, currentRow = 0, cr = 4;
         int frameW = 96, frameH = 96;
         bool boolat = false;
         int time = DateTime.Now.Second;
+        
 
         ImageBrush ib = new ImageBrush();
 
@@ -42,8 +48,65 @@ namespace Game
             Timer.Tick += new EventHandler(dispatcherTimer_Tick);
             Timer.Interval = new TimeSpan(0, 0, 0, 0, 250);
             
-            screen.KeyDown += Window_KeyDown;            
+            screen.KeyDown += Window_KeyDown;
+
+            FRAME.Height = 32;
+            FRAME.Width = 96;
+            FRAME.Stroke = Brushes.Black;
+            FRAME.HorizontalAlignment = HorizontalAlignment.Left;
+            FRAME.VerticalAlignment = VerticalAlignment.Center;
+            FRAME.Margin = new Thickness(696, 0, 0, 0);
+            screen.Children.Add(FRAME);
+
+            HP.Height = hph;
+            HP.Width = hpw;
+            HP.Stroke = Brushes.Black;
+            HP.Fill = Brushes.Green;
+            HP.HorizontalAlignment = HorizontalAlignment.Left;
+            HP.VerticalAlignment = VerticalAlignment.Center;
+            HP.Margin = new Thickness(696, 0, 0, 0);
+            screen.Children.Add(HP);            Enemy.Height = 96;
+            Enemy.Width = 96;
+            Enemy.Stroke = Brushes.Black;
+            Enemy.Fill = Brushes.Red;
+            Enemy.HorizontalAlignment = HorizontalAlignment.Left;
+            Enemy.VerticalAlignment = VerticalAlignment.Center;
+            Enemy.Margin = new Thickness(398, 200, 0, 0);
+            screen.Children.Add(Enemy);
+            
+            myRect.Height = 96;
+            myRect.Width = 96;
+            ImageBrush ib = new ImageBrush();
+            ib.AlignmentX = AlignmentX.Left;
+            //ib.AlignmentY = AlignmentY.Top;
+            ib.Stretch = Stretch.None;
+            ib.Viewbox = new Rect(0, 0, 96, 96);
+            ib.ViewboxUnits = BrushMappingMode.Absolute;
+            ib.ImageSource = new BitmapImage(new Uri(@"pack://application:,,,/zomb.gif", UriKind.Absolute));
+            myRect.Fill = ib;
+            myRect.Margin = new Thickness(0, 0, 0, 0);
+            screen.Children.Add(myRect);
         }
+
+        //public void damage()
+        //{
+        //    TranslateTransform tt = new TranslateTransform(x, y);
+        //    TransformGroup tg = new TransformGroup();
+        //    tg.Children.Add(tt);
+        //    myRect.RenderTransform = tg;
+
+        //    Point e1 = new Point(398, 200);
+        //    Point e2 = new Point(494, 200);
+        //    Point e3 = new Point(398, 296);
+        //    Point e4 = new Point(494, 296);
+
+        //    Rect rect = myRect.RenderTransform.TransformBounds(myRect.RenderedGeometry.Bounds);
+
+        //    if ((rect.Contains(e1) == true) || (rect.Contains(e2) == true) || (rect.Contains(e3) == true) || (rect.Contains(e4) == true)) // из первой во вторую
+        //    {
+        //        hpw -= 8;
+        //    }
+        //}
 
         private void dispatcherTimer_Tick(object sender, EventArgs e)
         {
@@ -68,59 +131,164 @@ namespace Game
 
         }
 
+       
+
         private void Window_KeyDown(object sender, KeyEventArgs e)
-        {          
-            
-            if (e.Key==Key.Right)
+        {
+            if ((e.Key != Key.Right) && (e.Key != Key.Left))
             {
-                Timer.Start();
                 myRect.Height = 96;
                 myRect.Width = 96;
                 ImageBrush ib = new ImageBrush();
                 ib.AlignmentX = AlignmentX.Left;
-                ib.AlignmentY = AlignmentY.Top;
-                ib.Stretch = Stretch.None;
                 ib.Viewbox = new Rect(0, 0, 96, 96);
                 ib.ViewboxUnits = BrushMappingMode.Absolute;
-                ib.ImageSource = new BitmapImage(new Uri("C:\\Users\\Bulat\\Desktop\\zombie test forward.gif", UriKind.Absolute));
+                Rect Rect = myRect.RenderTransform.TransformBounds(myRect.RenderedGeometry.Bounds);
+                ib.Stretch = Stretch.None;
+                ib.ImageSource = new BitmapImage(new Uri(@"pack://application:,,,/zomb.gif", UriKind.Absolute));
                 myRect.Fill = ib;
                 myRect.Margin = new Thickness(0, 0, 0, 0);
-                x += 5;
-                //boolat = bulat
-                if (boolat == false)
-                {
-                    screen.Children.Add(myRect);
-                    boolat = true;
-                }
             }
+
+                if (e.Key == Key.Right)
+            {
+                //if (boolat == false)
+                //{
+                    //Timer.Start();
+                    myRect.Height = 96;
+                    myRect.Width = 96;
+                    ImageBrush ib = new ImageBrush();
+                    ib.AlignmentX = AlignmentX.Left;
+                    ib.Viewbox = new Rect(0, 0, 96, 96);
+                    ib.ViewboxUnits = BrushMappingMode.Absolute;
+                    Rect Rect = myRect.RenderTransform.TransformBounds(myRect.RenderedGeometry.Bounds);
+                    ib.Stretch = Stretch.None;
+                    ib.ImageSource = new BitmapImage(new Uri(@"pack://application:,,,/zombie test forward.gif", UriKind.Absolute));
+                    myRect.Fill = ib;
+                    myRect.Margin = new Thickness(0, 0, 0, 0);
+                    boolat = true;
+                //}
+                x += 8;
+                //Timer.Start();
+                //myRect.Height = 96;
+                //myRect.Width = 96;
+                //ImageBrush ib = new ImageBrush();
+                ////ib.AlignmentY = AlignmentY.Top;
+
+                //ib.ImageSource = new BitmapImage(new Uri("C:\\Users\\Bulat\\Desktop\\zombie test forward.gif", UriKind.Absolute));
+                //myRect.Fill = ib;
+
+                ////boolat = bulat
+                //if (boolat == false)
+                //{
+                //    screen.Children.Add(myRect);
+                //    boolat = true;
+                //}
+            }
+            //if ((e.Key != Key.Right) && (e.Key != Key.Left))
+            //{
+            //    screen.Children.Add(notmyRect);
+            //    notmyRect.Height = 96;
+            //    notmyRect.Width = 96;
+            //    ImageBrush id = new ImageBrush();
+            //    id.AlignmentX = AlignmentX.Left;
+            //    //ib.AlignmentY = AlignmentY.Top;
+            //    id.Stretch = Stretch.None;
+            //    id.Viewbox = new Rect(0, 0, 96, 96);
+            //    id.ViewboxUnits = BrushMappingMode.Absolute;
+            //    id.ImageSource = new BitmapImage(new Uri("C:\\Users\\Bulat\\Desktop\\zomb.gif", UriKind.Absolute));
+            //    myRect.Fill = id;
+            //    myRect.Margin = new Thickness(0, 0, 0, 0);
+            //}
 
             if (e.Key == Key.Left)
             {
-                myRect.Height = 96;
-                myRect.Width = 96;
+                //if (boolat == false)
+                //{
+                    //Timer.Start();
+                    myRect.Height = 96;
+                    myRect.Width = 96;
+                    ImageBrush ib = new ImageBrush();
+                    ib.AlignmentX = AlignmentX.Left;
+                    ib.Viewbox = new Rect(0, 0, 96, 96);
+                    ib.ViewboxUnits = BrushMappingMode.Absolute;
+                    Rect Rect = myRect.RenderTransform.TransformBounds(myRect.RenderedGeometry.Bounds);
+                    ib.Stretch = Stretch.None;
+                    ib.ImageSource = new BitmapImage(new Uri(@"pack://application:,,,/zombie test.gif", UriKind.Absolute));
+                    myRect.Fill = ib;
+                    myRect.Margin = new Thickness(0, 0, 0, 0);
+                    boolat = true;
+                //}
+                x -=8;
+                //Timer.Start();
+                ////myRect.Height = 96;
+                ////myRect.Width = 96;
+                //ImageBrush ib = new ImageBrush();
 
-                ImageBrush ib = new ImageBrush();
-                ib.AlignmentX = AlignmentX.Left;
-                ib.AlignmentY = AlignmentY.Top;
-                ib.Stretch = Stretch.None;
-                ib.Viewbox = new Rect(0, 0, 100, 100);
-                ib.ViewboxUnits = BrushMappingMode.Absolute;
-                ib.ImageSource = new BitmapImage(new Uri("C:\\Users\\Bulat\\Desktop\\zombie test.gif", UriKind.Absolute));
-                myRect.Fill = ib;
-                myRect.Margin = new Thickness(0, 0, 0, 0);
-                screen.Children.Add(myRect);
-                x -=10;
-                Timer.Start();
+                //Rect Rect = myRect.RenderTransform.TransformBounds(myRect.RenderedGeometry.Bounds);
+
+                //ib.ImageSource = new BitmapImage(new Uri(@"pack://application:,,,/zombie test forward.gif", UriKind.Absolute));
+                //myRect.Fill = ib;
+                ////ib.AlignmentX = AlignmentX.Left;
+                ////ib.AlignmentY = AlignmentY.Top;
+                ////ib.Stretch = Stretch.None;
+                ////ib.Viewbox = new Rect(0, 0, 96, 96);
+                ////ib.ViewboxUnits = BrushMappingMode.Absolute;
+                ////ib.ImageSource = new BitmapImage(new Uri("C:\\Users\\Bulat\\Desktop\\zombie test.gif", UriKind.Absolute));
+                ////myRect.Fill = ib;
+                ////myRect.Margin = new Thickness(0, 0, 0, 0);
+                //x -= 10;
+                //boolat = bulat
+                //if (boolat == false)
+                //{
+                //    screen.Children.Add(myRect);
+                //    boolat = true;
+                //}
             }
 
             if (e.Key == Key.Up)
             {
-                y -=10;            }
+                y -=8;
+            }
 
             if (e.Key == Key.Down)
             {
-                y +=10;
+                y +=8;
             }
+
+            //TranslateTransform tt1 = new TranslateTransform(x, y);
+            //TransformGroup tg1 = new TransformGroup();
+            //tg1.Children.Add(tt1);
+            //myRect.RenderTransform = tg1;
+
+            Point e1 = new Point(398, 200);
+            Point e2 = new Point(494, 200);
+            Point e3 = new Point(398, 296);
+            Point e4 = new Point(494, 296);
+
+            Rect rect = myRect.RenderTransform.TransformBounds(myRect.RenderedGeometry.Bounds);
+
+            
+
+            if ((rect.Contains(e1) == true) || (rect.Contains(e2) == true) || (rect.Contains(e3) == true) || (rect.Contains(e4) == true)) // из первой во вторую
+            {
+                hpw -= 8;
+                
+                if (hpw == 0)
+                    if (MessageBox.Show("LOL You Died :D. Want to restart?", "/n", MessageBoxButton.YesNo)==MessageBoxResult.Yes)
+                    {
+                        x = 0;
+                        y = 0;
+                        hpw = 96;
+                    }
+                    //else
+                    //{
+                        
+                    //}
+                HP.Width = hpw;
+            }
+
+
 
             TranslateTransform tt = new TranslateTransform(x, y);
             TransformGroup tg = new TransformGroup();
@@ -135,7 +303,6 @@ namespace Game
 
             Point point4 = new Point(395, 350);
 
-            Rect rect = myRect.RenderTransform.TransformBounds(myRect.RenderedGeometry.Bounds);
 
             if ((rect.Contains(point1) == true) && (pic==0)) // из первой во вторую
             {
@@ -171,7 +338,18 @@ namespace Game
                 ib.ImageSource = new BitmapImage(new Uri(@"pack://application:,,,/greensward.jpg", UriKind.Absolute));
                 screen.Background = ib;
                 pic = 1;
-            }
+            }            
         }
+        //public void asd()
+        //{
+        //    HP.Height = hph;
+        //    HP.Width = hpw;
+        //    HP.Stroke = Brushes.Black;
+        //    HP.Fill = Brushes.Green;
+        //    HP.HorizontalAlignment = HorizontalAlignment.Left;
+        //    HP.VerticalAlignment = VerticalAlignment.Center;
+        //    HP.Margin = new Thickness(696, 0, 0, 0);
+        //    screen.Children.Add(HP);
+        //}
     }
 }
