@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Threading;
 
 namespace Game
 {
@@ -21,15 +22,22 @@ namespace Game
     public partial class MainWindow : Window
     {
         System.Windows.Threading.DispatcherTimer Timer;
+        System.Windows.Threading.DispatcherTimer JumpTimer;
+        System.Windows.Threading.DispatcherTimer FallTimer;
+        System.Windows.Threading.DispatcherTimer MoveTimer;
 
         Rectangle myRect = new Rectangle();
         Rectangle HP = new Rectangle();
         Rectangle FRAME = new Rectangle();
         Rectangle Enemy = new Rectangle();
 
-        int x = 0, y = 0, pic = 0;
 
-        int hph = 32, hpw = 96;
+
+        int x = 0, y = 0, pic = 0;
+        int up = 0, down = 0;
+
+
+        int hph = 16, hpw = 96;
 
         int currentFrame = 1, currentRow = 0, cr = 4;
         int frameW = 96, frameH = 96;
@@ -46,11 +54,24 @@ namespace Game
             InitializeComponent();
             Timer = new System.Windows.Threading.DispatcherTimer();
             Timer.Tick += new EventHandler(dispatcherTimer_Tick);
-            Timer.Interval = new TimeSpan(0, 0, 0, 0, 250);
-            
+            Timer.Interval = new TimeSpan(0, 0, 0, 1);
+
+            JumpTimer = new System.Windows.Threading.DispatcherTimer();
+            JumpTimer.Tick += new EventHandler(JumpTimer_Tick);
+            JumpTimer.Interval = new TimeSpan(0, 0, 0, 0, 100);
+
+            FallTimer = new System.Windows.Threading.DispatcherTimer();
+            FallTimer.Tick += new EventHandler(FallTimer_Tick);
+            FallTimer.Interval = new TimeSpan(0, 0, 0, 0, 100);
+
+            MoveTimer = new System.Windows.Threading.DispatcherTimer();
+            MoveTimer.Tick += new EventHandler(MoveTimer_Tick);
+            MoveTimer.Interval = new TimeSpan(0, 0, 0, 0, 50);
+            MoveTimer.Start();
+
             screen.KeyDown += Window_KeyDown;
 
-            FRAME.Height = 32;
+            FRAME.Height = 16;
             FRAME.Width = 96;
             FRAME.Stroke = Brushes.Black;
             FRAME.HorizontalAlignment = HorizontalAlignment.Left;
@@ -65,7 +86,9 @@ namespace Game
             HP.HorizontalAlignment = HorizontalAlignment.Left;
             HP.VerticalAlignment = VerticalAlignment.Center;
             HP.Margin = new Thickness(696, 0, 0, 0);
-            screen.Children.Add(HP);            Enemy.Height = 96;
+            screen.Children.Add(HP);
+
+            Enemy.Height = 96;
             Enemy.Width = 96;
             Enemy.Stroke = Brushes.Black;
             Enemy.Fill = Brushes.Red;
@@ -108,17 +131,78 @@ namespace Game
         //    }
         //}
 
+        private void JumpTimer_Tick(object sender, EventArgs e)
+        {            
+            y -= 12;
+            up += 1;
+            if (up == 3)
+            {
+                JumpTimer.Stop();
+                up = 0;
+                FallTimer.Start();
+                
+            }
+
+        }
+
+        private void MoveTimer_Tick(object sender, EventArgs e)
+        {
+            TranslateTransform tt = new TranslateTransform(x, y);
+            TransformGroup tg = new TransformGroup();
+            tg.Children.Add(tt);
+            myRect.RenderTransform = tg;
+        }
+
+        private void FallTimer_Tick(object sender, EventArgs e)
+        {
+            y += 12;
+            down += 1;
+            if (down == 3)
+            {
+                FallTimer.Stop();
+                down = 0;
+            }
+        }
+
         private void dispatcherTimer_Tick(object sender, EventArgs e)
         {
-                var frameLeft = currentFrame * frameW;
-                var frameTop = currentRow * frameH;
-                (myRect.Fill as ImageBrush).Viewbox = new Rect(frameLeft, frameTop, frameLeft + frameW, frameTop + frameH);
-                if (currentFrame % cr == 0)
-                {
-                    currentRow++;
-                    currentFrame = 0;
-                }
-                currentFrame++;
+            //var frameLeft = currentFrame * frameW;
+            //var frameTop = currentRow * frameH;
+            //(myRect.Fill as ImageBrush).Viewbox = new Rect(frameLeft, frameTop, frameLeft + frameW, frameTop + frameH);
+            //if (currentFrame % cr == 0)
+            //{
+            //    currentRow++;
+            //    currentFrame = 0;
+            //}
+            //currentFrame++;
+            Point e1 = new Point(398, 200);
+            Point e2 = new Point(494, 200);
+            Point e3 = new Point(398, 296);
+            Point e4 = new Point(494, 296);
+
+            Rect rect = myRect.RenderTransform.TransformBounds(myRect.RenderedGeometry.Bounds);
+            if ((rect.Contains(e1) == true) || (rect.Contains(e2) == true) || (rect.Contains(e3) == true) || (rect.Contains(e4) == true)) // из первой во вторую
+            {
+                hpw -= 8;
+
+                if (hpw == 0)
+                    if (MessageBox.Show("LOL You Died :D. Want to restart?", "/n", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
+                    {
+                        x = 0;
+                        y = 0;
+                        hpw = 96;
+                    }
+                    else
+                    {
+                        Application.Current.Shutdown();
+                    }
+                HP.Width = hpw;
+            }
+
+            if (hpw<96)
+                hpw += 2;
+            HP.Width = hpw;
+
         }
 
         public void zdraste()
@@ -135,8 +219,18 @@ namespace Game
 
         private void Window_KeyDown(object sender, KeyEventArgs e)
         {
+
+            if (e.Key==Key.F9)
+            {
+                hpw += 1000000000;
+                HP.Width = hpw;
+            }
+
+
+
             if ((e.Key != Key.Right) && (e.Key != Key.Left))
             {
+                Timer.Start();
                 myRect.Height = 96;
                 myRect.Width = 96;
                 ImageBrush ib = new ImageBrush();
@@ -150,7 +244,9 @@ namespace Game
                 myRect.Margin = new Thickness(0, 0, 0, 0);
             }
 
-                if (e.Key == Key.Right)
+            
+
+            if (e.Key == Key.Right)
             {
                 //if (boolat == false)
                 //{
@@ -248,7 +344,8 @@ namespace Game
 
             if (e.Key == Key.Up)
             {
-                y -=8;
+                JumpTimer.Start();
+                
             }
 
             if (e.Key == Key.Down)
@@ -261,39 +358,15 @@ namespace Game
             //tg1.Children.Add(tt1);
             //myRect.RenderTransform = tg1;
 
-            Point e1 = new Point(398, 200);
-            Point e2 = new Point(494, 200);
-            Point e3 = new Point(398, 296);
-            Point e4 = new Point(494, 296);
-
-            Rect rect = myRect.RenderTransform.TransformBounds(myRect.RenderedGeometry.Bounds);
+            
 
             
 
-            if ((rect.Contains(e1) == true) || (rect.Contains(e2) == true) || (rect.Contains(e3) == true) || (rect.Contains(e4) == true)) // из первой во вторую
-            {
-                hpw -= 8;
-                
-                if (hpw == 0)
-                    if (MessageBox.Show("LOL You Died :D. Want to restart?", "/n", MessageBoxButton.YesNo)==MessageBoxResult.Yes)
-                    {
-                        x = 0;
-                        y = 0;
-                        hpw = 96;
-                    }
-                    //else
-                    //{
-                        
-                    //}
-                HP.Width = hpw;
-            }
+            
 
 
 
-            TranslateTransform tt = new TranslateTransform(x, y);
-            TransformGroup tg = new TransformGroup();
-            tg.Children.Add(tt);
-            myRect.RenderTransform = tg;
+            
 
             Point point1 = new Point(790, 175);
 
@@ -303,10 +376,11 @@ namespace Game
 
             Point point4 = new Point(395, 350);
 
+            Rect rect = myRect.RenderTransform.TransformBounds(myRect.RenderedGeometry.Bounds);
 
             if ((rect.Contains(point1) == true) && (pic==0)) // из первой во вторую
             {
-                x = 25;
+                x = 60;
                 y = 175;
                 ib.ImageSource = new BitmapImage(new Uri(@"pack://application:,,,/greensward.jpg", UriKind.Absolute));
                 screen.Background = ib;
@@ -315,7 +389,7 @@ namespace Game
 
             if ((rect.Contains(point2) == true) && (pic == 1)) // из второй в первую
             {
-                x = 770;
+                x = 730;
                 y = 175;
                 ib.ImageSource = new BitmapImage(new Uri(@"pack://application:,,,/Рисунок1.jpg", UriKind.Absolute));
                 screen.Background = ib;
@@ -325,7 +399,7 @@ namespace Game
             if ((rect.Contains(point3)==true) && (pic==1)) // из второй в третью
             {
                 x = 395;
-                y = 340;
+                y = 305;
                 ib.ImageSource = new BitmapImage(new Uri(@"pack://application:,,,/250px-Darkwing.JPG", UriKind.Absolute));
                 screen.Background = ib;
                 pic = 2;
@@ -334,7 +408,7 @@ namespace Game
             if ((rect.Contains(point4) == true) && (pic == 2)) // из третьей во вторую
             {
                 x = 395;
-                y = 20;
+                y = 60;
                 ib.ImageSource = new BitmapImage(new Uri(@"pack://application:,,,/greensward.jpg", UriKind.Absolute));
                 screen.Background = ib;
                 pic = 1;
