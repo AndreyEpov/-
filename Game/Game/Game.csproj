@@ -95,32 +95,16 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Рисунок1.jpg" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="greensward.jpg" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="250px-Darkwing.JPG" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="текстурки\арена.png" />
     <Resource Include="текстурки\арена2.png.jpg" />
-    <Resource Include="текстурки\арена3.jpg" />
     <Resource Include="текстурки\болото.jpg" />
     <Resource Include="текстурки\вид с корабля.gif" />
     <Resource Include="текстурки\внутри дома.bmp" />
-    <Resource Include="текстурки\город1.jpg" />
-    <Resource Include="текстурки\город2.jpg" />
     <Resource Include="текстурки\город3.jpg" />
     <Resource Include="текстурки\деревня.png" />
-    <Resource Include="текстурки\лес.bmp" />
     <Resource Include="текстурки\лес.jpg" />
     <Resource Include="текстурки\маяк.jpg" />
     <Resource Include="текстурки\мб башня босса.jpg" />
     <Resource Include="текстурки\море.png" />
-    <Resource Include="текстурки\пещера.png" />
-    <Resource Include="текстурки\подземелье.jpg" />
     <Resource Include="текстурки\подземелье.png" />
     <Resource Include="текстурки\поляна.jpg" />
     <Resource Include="текстурки\руины.jpg" />

@@ -5,13 +5,10 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Game"
         mc:Ignorable="d"
-        Title="MainWindow" Height="453.782" Width="800" KeyDown="Window_KeyDown">
+        Title="MainWindow" Height="448" Width="800" KeyDown="Window_KeyDown">
     <Grid KeyDown="Grid_KeyDown" Margin="0,0,0,17">
-        <Grid.RowDefinitions>
-            <RowDefinition Height="379*"/>
-            <RowDefinition Height="4*"/>
-            <RowDefinition Height="36*"/>
-        </Grid.RowDefinitions>
-        <Canvas x:Name="screen" HorizontalAlignment="Left" Height="422" VerticalAlignment="Top" Width="792" Margin="0,0,0,-16" Grid.RowSpan="3"/>
+        <Canvas x:Name="screen" HorizontalAlignment="Left" Height="440" VerticalAlignment="Top" Width="792">
+            <Label x:Name="confirm" Content="" Height="54" Canvas.Left="252" Canvas.Top="352" Width="296"/>
+        </Canvas>
     </Grid>
 </Window>
