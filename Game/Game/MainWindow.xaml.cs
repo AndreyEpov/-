@@ -32,13 +32,19 @@ namespace Game
             InitializeComponent();
 
             ib.AlignmentX = AlignmentX.Left;
-            ib.AlignmentY = AlignmentY.Top;            ib.ImageSource = new BitmapImage(new Uri(@"pack://application:,,,/Рисунок1.jpg", UriKind.Absolute));
+            ib.AlignmentY = AlignmentY.Top;
+            ib.ImageSource = new BitmapImage(new Uri(@"pack://application:,,,/Рисунок1.jpg", UriKind.Absolute));
             screen.Background = ib;
 
             myRect.Stroke = Brushes.Black;
-            myRect.Fill = Brushes.SkyBlue;            myRect.HorizontalAlignment = HorizontalAlignment.Left;
-            myRect.VerticalAlignment = VerticalAlignment.Center;            myRect.Height = 50;
-            myRect.Width = 50;
+            myRect.Fill = Brushes.SkyBlue;
+
+            myRect.HorizontalAlignment = HorizontalAlignment.Left;
+            myRect.VerticalAlignment = VerticalAlignment.Center;
+
+            myRect.Height = 50;
+            myRect.Width = 50;
+
             screen.Children.Add(myRect);
 
             screen.KeyDown += Window_KeyDown;
@@ -71,7 +77,8 @@ namespace Game
 
             if (e.Key == Key.Up)
             {
-                y -=10;            }
+                y -=10;
+            }
 
             if (e.Key == Key.Down)
             {
