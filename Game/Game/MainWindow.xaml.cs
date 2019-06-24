@@ -58,6 +58,7 @@ namespace Game
         Point f12t14 = new Point(600, 300);
         Point f14t15 = new Point(400, 312);
         Point f1t2 = new Point(750, 312);
+        Point tostore = new Point(475,312);
 
         int x = 0, y = 200, pic = 0;
         int up = 0;
@@ -77,6 +78,8 @@ namespace Game
 
 
         ImageBrush background = new ImageBrush();
+
+        store store = new store();
 
         public MainWindow()
         {
@@ -259,6 +262,8 @@ namespace Game
 
             if (pic == 5) // из замка
             {
+                if (rect.Contains(tostore))
+                    confirm.Content = "[b]В магазин";
                 if (rect.Contains(f5t2) == true)
                     confirm.Content = "[e]На поляну";
                 if (rect.Contains(f5t3) == true)
@@ -269,7 +274,7 @@ namespace Game
                     confirm.Content = "[e]В пещеру\n[t]К руинам";
                 if (rect.Contains(f5t9) == true)
                     confirm.Content = "[e]На рыцарский турнир";
-                if (rect.Contains(f5t2) == false && rect.Contains(f5t3) == false && rect.Contains(f5t4) == false && rect.Contains(f5t67) == false && rect.Contains(f5t9) == false)
+                if (rect.Contains(f5t2) == false && rect.Contains(f5t3) == false && rect.Contains(f5t4) == false && rect.Contains(f5t67) == false && rect.Contains(f5t9) == false && rect.Contains(tostore)==false)
                     confirm.Content = "";
             }
 
@@ -347,6 +352,11 @@ namespace Game
             {
                 canjump = true;
             }
+        }
+
+        private void Window_Closed(object sender, EventArgs e)
+        {
+            store.Close();
         }
 
         private void dispatcherTimer_Tick(object sender, EventArgs e)
@@ -469,6 +479,13 @@ namespace Game
 
             Rect rect = myRect.RenderTransform.TransformBounds(myRect.RenderedGeometry.Bounds);
 
+            if (rect.Contains(tostore) && pic == 5)
+            {
+                if (e.Key==Key.B)
+                {
+                    store.ShowDialog();
+                }
+            }
 
             if (rect.Contains(f6t5) == true && pic == 6) // из пещеры в замок
             {
