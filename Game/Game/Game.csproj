@@ -77,10 +77,18 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="fight.xaml.cs">
+      <DependentUpon>fight.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Gaming.cs" />
     <Compile Include="store.xaml.cs">
       <DependentUpon>store.xaml</DependentUpon>
     </Compile>
     <Compile Include="tests.cs" />
+    <Page Include="fight.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -147,6 +155,45 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="текстурки\zomb.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="poses\00.gif" />
+    <Resource Include="poses\01.gif" />
+    <Resource Include="poses\02.gif" />
+    <Resource Include="poses\03.gif" />
+    <Resource Include="poses\10.gif" />
+    <Resource Include="poses\11.gif" />
+    <Resource Include="poses\12.gif" />
+    <Resource Include="poses\13.gif" />
+    <Resource Include="poses\20.gif" />
+    <Resource Include="poses\21.gif" />
+    <Resource Include="poses\22.gif" />
+    <Resource Include="poses\23.gif" />
+    <Resource Include="poses\30.gif" />
+    <Resource Include="poses\31.gif" />
+    <Resource Include="poses\32.gif" />
+    <Resource Include="poses\33.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="текстурки\таверна.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="poses\king.gif" />
+    <Resource Include="poses\merchant.gif" />
+    <Resource Include="poses\orc1.gif" />
+    <Resource Include="poses\orc2.gif" />
+    <Resource Include="poses\orc3.gif" />
+    <Resource Include="poses\princess.gif" />
+    <Resource Include="poses\slime1.gif" />
+    <Resource Include="poses\slime2.gif" />
+    <Resource Include="poses\tavernwoman.gif" />
+    <Resource Include="poses\zomb1.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="текстурки\ggrunbackwa.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="текстурки\ggrunforw.gif" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

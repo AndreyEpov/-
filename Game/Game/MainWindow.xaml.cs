@@ -29,6 +29,10 @@ namespace Game
         System.Windows.Threading.DispatcherTimer MoveTimer;
         System.Windows.Threading.DispatcherTimer ConfirmTimer;
 
+        bool tavern = true;
+        bool start = false;
+        bool forest = false;
+
         Rectangle myRect = new Rectangle();
         Rectangle HP = new Rectangle();
         Rectangle FRAME = new Rectangle();
@@ -60,32 +64,36 @@ namespace Game
         Point f1t2 = new Point(750, 312);
         Point tostore = new Point(475,312);
 
-        int x = 0, y = 200, pic = 0;
+        int x = 0, y = 312, pic = 0;
         int up = 0;
         bool canjump = true;
+        int ownhp = 100, enemyshp = 50;
 
 
         int hph = 16, hpw = 96;
 
-        //int currentFrame = 1, currentRow = 0, cr = 4;
-        //int frameW = 96, frameH = 96;
-        //bool boolat = false;
+        int currentFrame = 1, currentRow = 0, cr = 8;
+        int frameW = 96, frameH = 96;
+        bool boolat = false;
         //int time = DateTime.Now.Second;
 
         Rectangle rect1 = new Rectangle();
         Rectangle rect2 = new Rectangle();
         Rectangle rect3 = new Rectangle();
-
+        
 
         ImageBrush background = new ImageBrush();
 
         store store = new store();
+        fight wrestle = new fight();
+        Gaming draka = new Gaming();
+        bool canfight = true;
 
         public MainWindow()
         {
             InitializeComponent();
 
-            screen.KeyDown += Window_KeyDown;
+            screen.KeyDown += Window_KeyDown;            
 
             FRAME.Height = 16;
             FRAME.Width = 96;
@@ -114,41 +122,18 @@ namespace Game
             ib.ViewboxUnits = BrushMappingMode.Absolute;
             ib.ImageSource = new BitmapImage(new Uri(@"pack://application:,,,/текстурки/gg.gif", UriKind.Absolute));
             myRect.Fill = ib;
-            myRect.Margin = new Thickness(0, 100, 0, 0);
+            myRect.Margin = new Thickness(0, 0, 0, 0);
             screen.Children.Add(myRect);
 
             background.AlignmentX = AlignmentX.Left;
-            ib.Stretch = Stretch.None;
-            ib.Viewbox = new Rect(0, 0, 96, 96);
-            ib.ViewboxUnits = BrushMappingMode.Absolute;
             background.ImageSource = new BitmapImage(new Uri(@"pack://application:,,,/текстурки/внутри дома.bmp", UriKind.Absolute));
             screen.Background = background;
 
-            screen.Focusable = true;
-
-            rect1.Height = 20;
-            rect1.Width = 50;
-            rect1.Fill = Brushes.Red;
-            rect1.Margin = new Thickness(150, 360, 0, 0);
-            screen.Children.Add(rect1);
-
-            //rect2.Height = 20;
-            //rect2.Width = 50;
-            //rect2.Fill = Brushes.Red;
-            //rect2.Margin = new Thickness(190, 360, 0, 0);
-            //screen.Children.Add(rect2);
-
-            //rect3.Height = 20;
-            //rect3.Width = 50;
-            //rect3.Fill = Brushes.Red;
-            //rect3.Margin = new Thickness(300, 360, 0, 0);
-            //screen.Children.Add(rect3);;
-
+            
 
             Timer = new System.Windows.Threading.DispatcherTimer();
             Timer.Tick += new EventHandler(dispatcherTimer_Tick);
-            Timer.Interval = new TimeSpan(0, 0, 0, 1);
-            Timer.Start();
+            Timer.Interval = new TimeSpan(0, 0, 0, 0, 125);
 
             JumpTimer = new System.Windows.Threading.DispatcherTimer();
             JumpTimer.Tick += new EventHandler(JumpTimer_Tick);
@@ -187,22 +172,20 @@ namespace Game
 
         private void MoveTimer_Tick(object sender, EventArgs e)
         {
-            //TranslateTransform tt = new TranslateTransform(x, y);
-            //TransformGroup tg = new TransformGroup();
-            //tg.Children.Add(tt);
             myRect.RenderTransform = new TranslateTransform(x, y);
-            rect1.RenderTransform = new TranslateTransform(50, -4);
             screen.UpdateLayout();
-            //Rect rect = myRect.RenderTransform.TransformBounds(myRect.RenderedGeometry.Bounds);
-            //Rect rect11 = rect1.RenderTransform.TransformBounds(rect1.RenderedGeometry.Bounds);
-            //Rect rect22 = rect2.RenderTransform.TransformBounds(rect2.RenderedGeometry.Bounds);
 
-            //if (rect.IntersectsWith(rect11))
-            //{
-            //    MessageBox.Show("Da");
-            //}
+            Point e1 = new Point(350, 312);
+            Point e2 = new Point(412, 312);
+            Point e3 = new Point(412, 248);
+            Point e4 = new Point(350, 248);
 
-            //add_enemy();
+            Rect rect = myRect.RenderTransform.TransformBounds(myRect.RenderedGeometry.Bounds);
+            if ((rect.Contains(e1) || rect.Contains(e2) || rect.Contains(e3) || rect.Contains(e4)) && pic == 3 && canfight == true) // из первой во вторую
+            {
+                canfight = false;
+                wrestle.ShowDialog();
+            }
         }
 
         private void ConfirmTimer_Tick(object sender, EventArgs e)
@@ -211,20 +194,24 @@ namespace Game
 
             if (pic == 0) // из дома в деревню
             {
-                if (rect.Contains(f0t1) == true)
-                    confirm.Content = "[e]Выйти из дома";
+                if (rect.Contains(f0t1) == true && tavern == true && start == false)
+                    confirm.Content = "[t]Начать экшон";
                 else confirm.Content = "";
+                if (rect.Contains(f0t1) == true && start == true)
+                    confirm.Content = "[e]Выйти в деревню";
             }
 
             if (pic == 1) // из деревни
             {
-                if (rect.Contains(f1t0) == true)
+                if (rect.Contains(f1t0) == true && tavern == false)
                     confirm.Content = "[e]Войти в дом";
-                if (rect.Contains(f1t2) == true)
+                if (rect.Contains(f1t0) == true && tavern == true && forest== true)
+                    confirm.Content = "[t]Войти в таверну";
+                if (rect.Contains(f1t2) == true && tavern == false)
                     confirm.Content = "[e]На поляну";
                 if (rect.Contains(f1t3) == true)
                     confirm.Content = "[e]В лес";
-                if (rect.Contains(f1t4) == true)
+                if (rect.Contains(f1t4) == true && tavern == false)
                     confirm.Content = "[e]На болото";
                 if ((rect.Contains(f1t0) == false) && rect.Contains(f0t1) == false && rect.Contains(f1t3) == false && rect.Contains(f1t4) == false)
                     confirm.Content = "";
@@ -244,7 +231,7 @@ namespace Game
             {
                 if (rect.Contains(f3t1) == true)
                     confirm.Content = "[e]В деревню";
-                if (rect.Contains(f3t5) == true)
+                if (rect.Contains(f3t5) == true && tavern == false)
                     confirm.Content = "[e]В замок";
                 if (rect.Contains(f3t1) == false && rect.Contains(f3t5) == false)
                     confirm.Content = "";
@@ -344,7 +331,7 @@ namespace Game
             //    MessageBox.Show("Da");
             //}
 
-            if (y < 216 && rect11.IntersectsWith(rect) == false && rect22.IntersectsWith(rect) == false && rect33.IntersectsWith(rect) == false)
+            if (y < 312)
             {
                 y += 8;
             }
@@ -361,38 +348,55 @@ namespace Game
 
         private void dispatcherTimer_Tick(object sender, EventArgs e)
         {
-            Point e1 = new Point(0, 216);
-            Point e2 = new Point(96, 216);
-            Point e3 = new Point(0, 312);
-            Point e4 = new Point(96, 312);
+            //Point e1 = new Point(0, 216);
+            //Point e2 = new Point(96, 216);
+            //Point e3 = new Point(0, 312);
+            //Point e4 = new Point(96, 312);
 
-            Rect rect = myRect.RenderTransform.TransformBounds(myRect.RenderedGeometry.Bounds);
-            Rect pain = enemy.RenderTransform.TransformBounds(enemy.RenderedGeometry.Bounds);
-            if ((rect.Contains(e1) || rect.Contains(e2) || rect.Contains(e3) || rect.Contains(e4)) && screen.Children.Contains(enemy) ) // из первой во вторую
+            //Rect rect = myRect.RenderTransform.TransformBounds(myRect.RenderedGeometry.Bounds);
+            //Rect pain = enemy.RenderTransform.TransformBounds(enemy.RenderedGeometry.Bounds);
+            //if ((rect.Contains(e1) || rect.Contains(e2) || rect.Contains(e3) || rect.Contains(e4)) && screen.Children.Contains(enemy)) // из первой во вторую
+            //{
+            //    hpw -= 8;
+
+            //    if (hpw == 0)
+            //        if (MessageBox.Show("LOL You Died :D. Want to restart?", "/n", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
+            //        {
+            //            x = 0;
+            //            y = 0;
+            //            hpw = 96;
+            //            pic = 0;
+            //            screen.Children.Remove(enemy);
+            //            background.ImageSource = new BitmapImage(new Uri(@"pack://application:,,,/текстурки/внутри дома.bmp", UriKind.Absolute));
+            //            screen.Background = background;
+            //        }
+            //        else
+            //        {
+            //            Application.Current.Shutdown();
+            //        }
+            //    HP.Width = hpw;
+            //}
+
+            //if (hpw < 96)
+            //    hpw += 2;
+            //HP.Width = hpw;
+
+            var frameLeft = currentFrame * frameW;
+            var frameTop = currentRow * frameH;
+            (myRect.Fill as ImageBrush).Viewbox = new Rect(frameLeft, frameTop, frameLeft + frameW, frameTop + frameH);
+            if (currentFrame % cr == 0)
             {
-                hpw -= 8;
-
-                if (hpw == 0)
-                    if (MessageBox.Show("LOL You Died :D. Want to restart?", "/n", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
-                    {
-                        x = 0;
-                        y = 0;
-                        hpw = 96;
-                        pic = 0;
-                        screen.Children.Remove(enemy);
-                        background.ImageSource = new BitmapImage(new Uri(@"pack://application:,,,/текстурки/внутри дома.bmp", UriKind.Absolute));
-                        screen.Background = background;
-                    }
-                    else
-                    {
-                        Application.Current.Shutdown();
-                    }
-                HP.Width = hpw;
+                currentRow++;
+                currentFrame = 0;
             }
+            currentFrame++;
 
-            if (hpw < 96)
-                hpw += 2;
-            HP.Width = hpw;
+            if (currentFrame == 8)
+            {
+                currentFrame = 1;
+                boolat = false;
+            }
+            Timer.Stop();
         }
 
         private void Grid_KeyDown(object sender, KeyEventArgs e)
@@ -427,36 +431,44 @@ namespace Game
 
             if (e.Key == Key.Right)
             {
-                //myRect.Height = 96;
-                //myRect.Width = 96;
-                //ImageBrush ib = new ImageBrush();
-                //ib.AlignmentX = AlignmentX.Left;
-                //ib.Viewbox = new Rect(0, 0, 96, 96);
-                //ib.ViewboxUnits = BrushMappingMode.Absolute;
-                //Rect Rect = myRect.RenderTransform.TransformBounds(myRect.RenderedGeometry.Bounds);
-                //ib.Stretch = Stretch.None;
-                //ib.ImageSource = new BitmapImage(new Uri(@"pack://application:,,,/zombie test forward.gif", UriKind.Absolute));
-                //myRect.Fill = ib;
-                //myRect.Margin = new Thickness(0, 0, 0, 0);
-                //boolat = true;
+                Timer.Start();
+                if (boolat == false)
+                {
+                    boolat = true;
+                    myRect.Height = 96;
+                    myRect.Width = 96;
+                    ImageBrush ib = new ImageBrush();
+                    ib.AlignmentX = AlignmentX.Left;
+                    ib.Viewbox = new Rect(0, 0, 96, 96);
+                    ib.ViewboxUnits = BrushMappingMode.Absolute;
+                    Rect Rect = myRect.RenderTransform.TransformBounds(myRect.RenderedGeometry.Bounds);
+                    ib.Stretch = Stretch.None;
+                    ib.ImageSource = new BitmapImage(new Uri(@"pack://application:,,,/текстурки/ggrunforw.gif", UriKind.Absolute));
+                    myRect.Fill = ib;
+                    myRect.Margin = new Thickness(0, 0, 0, 0);
+                }
                 if (x < 696)
                     x += 8;
             }
 
             if (e.Key == Key.Left)
             {
-                //myRect.Height = 96;
-                //myRect.Width = 96;
-                //ImageBrush ib = new ImageBrush();
-                //ib.AlignmentX = AlignmentX.Left;
-                //ib.Viewbox = new Rect(0, 0, 96, 96);
-                //ib.ViewboxUnits = BrushMappingMode.Absolute;
-                //Rect Rect = myRect.RenderTransform.TransformBounds(myRect.RenderedGeometry.Bounds);
-                //ib.Stretch = Stretch.None;
-                //ib.ImageSource = new BitmapImage(new Uri(@"pack://application:,,,/zombie test.gif", UriKind.Absolute));
-                //myRect.Fill = ib;
-                //myRect.Margin = new Thickness(0, 0, 0, 0);
-                //boolat = true;
+                Timer.Start();
+                if (boolat == false)
+                {
+                    boolat = true;
+                    myRect.Height = 96;
+                    myRect.Width = 96;
+                    ImageBrush ib = new ImageBrush();
+                    ib.AlignmentX = AlignmentX.Left;
+                    ib.Viewbox = new Rect(0, 0, 96, 96);
+                    ib.ViewboxUnits = BrushMappingMode.Absolute;
+                    Rect Rect = myRect.RenderTransform.TransformBounds(myRect.RenderedGeometry.Bounds);
+                    ib.Stretch = Stretch.None;
+                    ib.ImageSource = new BitmapImage(new Uri(@"pack://application:,,,/текстурки/ggrunbackwa.gif", UriKind.Absolute));
+                    myRect.Fill = ib;
+                    myRect.Margin = new Thickness(0, 0, 0, 0);
+                }
                 if (x > 0)
                     x -= 8;
 
@@ -519,7 +531,7 @@ namespace Game
                 }                
             }
 
-            if ((rect.Contains(f2t5) == true) && (pic == 2)) // из поляны в замок
+            if ((rect.Contains(f2t5) == true) && (pic == 2) && tavern == false) // из поляны в замок
             {
                 if (e.Key == Key.E)
                 {
@@ -533,7 +545,7 @@ namespace Game
 
             if ((rect.Contains(f1t2) == true) && (pic == 1)) // из деревни на поляну
             {
-                if (e.Key == Key.E)
+                if (e.Key == Key.E && tavern == false)
                 {
                     x = 0;
                     y = 216;
@@ -569,26 +581,84 @@ namespace Game
 
             if ((rect.Contains(f0t1) == true) && (pic == 0)) // из дома в деревню
             {
-                if (e.Key == Key.E)
+                if (start==false)
                 {
-                    x = 0;
-                    y = 216;
-                    background.ImageSource = new BitmapImage(new Uri(@"pack://application:,,,/текстурки/деревня.png", UriKind.Absolute));
-                    screen.Background = background;
-                    pic = 1;
+                    if (e.Key == Key.T)
+                    {
+                        x = 0;
+                        y = 216;
+                        background.ImageSource = new BitmapImage(new Uri(@"pack://application:,,,/текстурки/таверна.png", UriKind.Absolute));
+                        screen.Background = background;
+                        start = true;
+                        ImageBrush girl = new ImageBrush();
+                        rect1.Height = 96;
+                        rect1.Width = 96;
+                        girl.AlignmentX = AlignmentX.Left;
+                        //ib.AlignmentY = AlignmentY.Top;
+                        girl.Stretch = Stretch.None;
+                        girl.Viewbox = new Rect(0, 0, 96, 96);
+                        girl.ViewboxUnits = BrushMappingMode.Absolute;
+                        girl.ImageSource = new BitmapImage(new Uri(@"pack://application:,,,/poses/tavernwoman.gif", UriKind.Absolute));
+                        rect1.Fill = girl;
+                        rect1.Margin = new Thickness(300, 312, 0, 0);
+                        screen.Children.Add(rect1);
+                    }
                 }
-            }
+                else
+                {
+                    if (e.Key == Key.E)
+                    {
+                        x = 0;
+                        y = 216;
+                        background.ImageSource = new BitmapImage(new Uri(@"pack://application:,,,/текстурки/деревня.png", UriKind.Absolute));
+                        screen.Background = background;
+                        pic = 1;
+                        screen.Children.Remove(rect1);
+                    }
+                }
+            }            
+            
 
             if ((rect.Contains(f1t0) == true) && (pic == 1)) // из деревни в дом
             {
-                if (e.Key == Key.E)
+                if (forest == true)
                 {
-                    x = 696;
-                    y = 216;
-                    background.ImageSource = new BitmapImage(new Uri(@"pack://application:,,,/текстурки/внутри дома.bmp", UriKind.Absolute));
-                    screen.Background = background;
-                    pic = 0;
-                }
+                    if (tavern == false)
+                    {
+                        if (e.Key == Key.E)
+                        {
+                            x = 696;
+                            y = 216;
+                            background.ImageSource = new BitmapImage(new Uri(@"pack://application:,,,/текстурки/внутри дома.bmp", UriKind.Absolute));
+                            screen.Background = background;
+                            pic = 0;
+                        }
+                    }
+                    else
+                    {
+                        if (e.Key == Key.T)
+                        {
+                            x = 696;
+                            y = 216;
+                            background.ImageSource = new BitmapImage(new Uri(@"pack://application:,,,/текстурки/таверна.png", UriKind.Absolute));
+                            screen.Background = background;
+                            tavern = false;
+                            pic = 0;
+                            ImageBrush girl = new ImageBrush();
+                            rect1.Height = 96;
+                            rect1.Width = 96;
+                            girl.AlignmentX = AlignmentX.Left;
+                            //ib.AlignmentY = AlignmentY.Top;
+                            girl.Stretch = Stretch.None;
+                            girl.Viewbox = new Rect(0, 0, 96, 96);
+                            girl.ViewboxUnits = BrushMappingMode.Absolute;
+                            girl.ImageSource = new BitmapImage(new Uri(@"pack://application:,,,/poses/tavernwoman.gif", UriKind.Absolute));
+                            rect1.Fill = girl;
+                            rect1.Margin = new Thickness(300, 312, 0, 0);
+                            screen.Children.Add(rect1);
+                        }
+                    }                   
+                }               
             }
 
             if ((rect.Contains(f1t3) == true) && (pic == 1)) // из деревни в лес
@@ -600,10 +670,23 @@ namespace Game
                     background.ImageSource = new BitmapImage(new Uri(@"pack://application:,,,/текстурки/лес.jpg", UriKind.Absolute));
                     screen.Background = background;
                     pic = 3;
+                    forest = true;
+                    enemy.Height = 96;
+                    enemy.Width = 96;
+                    ImageBrush rival = new ImageBrush();
+                    rival.AlignmentX = AlignmentX.Left;
+                    //ib.AlignmentY = AlignmentY.Top;
+                    rival.Stretch = Stretch.None;
+                    rival.Viewbox = new Rect(0, 0, 96, 96);
+                    rival.ViewboxUnits = BrushMappingMode.Absolute;
+                    rival.ImageSource = new BitmapImage(new Uri(@"pack://application:,,,/poses/slime1.gif", UriKind.Absolute));
+                    enemy.Fill = rival;
+                    enemy.Margin = new Thickness(350, 312, 0, 0);
+                    screen.Children.Add(enemy);
                 }
             }
 
-            if ((rect.Contains(f1t4) == true) && (pic == 1)) // из деревни на болото
+            if ((rect.Contains(f1t4) == true) && (pic == 1) && tavern == false) // из деревни на болото
             {
                 if (e.Key == Key.E)
                 {
@@ -636,18 +719,20 @@ namespace Game
                     background.ImageSource = new BitmapImage(new Uri(@"pack://application:,,,/текстурки/деревня.png", UriKind.Absolute));
                     screen.Background = background;
                     pic = 1;
+                    screen.Children.Remove(enemy);
                 }
             }
 
             if (rect.Contains(f3t5) == true && pic == 3) // из леса в замок
             {
-                if (e.Key == Key.E)
+                if (e.Key == Key.E && tavern == false)
                 {
                     x = 150;
                     y = 216;
                     background.ImageSource = new BitmapImage(new Uri(@"pack://application:,,,/текстурки/город3.jpg", UriKind.Absolute));
                     screen.Background = background;
                     pic = 5;
+                    screen.Children.Remove(enemy);
                 }
             }
 
@@ -708,6 +793,18 @@ namespace Game
                     background.ImageSource = new BitmapImage(new Uri(@"pack://application:,,,/текстурки/лес.jpg", UriKind.Absolute));
                     screen.Background = background;
                     pic = 3;
+                    enemy.Height = 96;
+                    enemy.Width = 96;
+                    ImageBrush rival = new ImageBrush();
+                    rival.AlignmentX = AlignmentX.Left;
+                    //ib.AlignmentY = AlignmentY.Top;
+                    rival.Stretch = Stretch.None;
+                    rival.Viewbox = new Rect(0, 0, 96, 96);
+                    rival.ViewboxUnits = BrushMappingMode.Absolute;
+                    rival.ImageSource = new BitmapImage(new Uri(@"pack://application:,,,/poses/slime1.gif", UriKind.Absolute));
+                    rect1.Fill = rival;
+                    enemy.Margin = new Thickness(350, 312, 0, 0);
+                    screen.Children.Add(enemy);
                 }
             }
 

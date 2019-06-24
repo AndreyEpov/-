@@ -26,6 +26,7 @@ namespace Game
         public int Стоимость { get; set; }
         public int Количество { get; set; }
     }
+       
 
     public partial class store : Window
     {
@@ -54,7 +55,7 @@ namespace Game
                 things.Items.Add(data);
             }
 
-        }
+        }        
 
         private void Buy_Click(object sender, RoutedEventArgs e)
         {
