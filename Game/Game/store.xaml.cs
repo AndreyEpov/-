@@ -30,7 +30,7 @@ namespace Game
     public partial class store : Window
     {
         SQLiteConnection m_dbConnection;
-        string db_name = "C:\\Users\\user\\Desktop\\store.db";
+        string db_name = "C:\\Users\\Bulat\\Desktop\\store.db";
 
         public store()
         {
