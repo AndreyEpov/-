@@ -28,6 +28,7 @@ namespace Game
         System.Windows.Threading.DispatcherTimer FallTimer;
         System.Windows.Threading.DispatcherTimer MoveTimer;
         System.Windows.Threading.DispatcherTimer ConfirmTimer;
+        System.Windows.Threading.DispatcherTimer FightTimer;
 
         bool tavern = true;
         bool start = false;
@@ -37,6 +38,8 @@ namespace Game
         Rectangle HP = new Rectangle();
         Rectangle FRAME = new Rectangle();
         Rectangle enemy = new Rectangle();
+        Rectangle HPENEMY = new Rectangle();
+        Rectangle FRAMEENEMY = new Rectangle();
 
         Point f0t1 = new Point(792, 312);
         Point f1t0 = new Point(0, 312);
@@ -67,7 +70,8 @@ namespace Game
         int x = 0, y = 312, pic = 0;
         int up = 0;
         bool canjump = true;
-        int ownhp = 100, enemyshp = 50;
+        int enemyshp = 50;
+        int weapon = 1, armor = 10;
 
 
         int hph = 16, hpw = 96;
@@ -75,7 +79,6 @@ namespace Game
         int currentFrame = 1, currentRow = 0, cr = 8;
         int frameW = 96, frameH = 96;
         bool boolat = false;
-        //int time = DateTime.Now.Second;
 
         Rectangle rect1 = new Rectangle();
         Rectangle rect2 = new Rectangle();
@@ -85,9 +88,6 @@ namespace Game
         ImageBrush background = new ImageBrush();
 
         store store = new store();
-        fight wrestle = new fight();
-        Gaming draka = new Gaming();
-        bool canfight = true;
 
         public MainWindow()
         {
@@ -154,6 +154,10 @@ namespace Game
             ConfirmTimer.Interval = new TimeSpan(0, 0, 0, 0, 10);
             ConfirmTimer.Start();
 
+            FightTimer = new System.Windows.Threading.DispatcherTimer();
+            FightTimer.Tick += new EventHandler(FightTimer_Tick);
+            FightTimer.Interval = new TimeSpan(0, 0, 0, 1);
+
         }
 
         private void JumpTimer_Tick(object sender, EventArgs e)
@@ -174,18 +178,6 @@ namespace Game
         {
             myRect.RenderTransform = new TranslateTransform(x, y);
             screen.UpdateLayout();
-
-            Point e1 = new Point(350, 312);
-            Point e2 = new Point(412, 312);
-            Point e3 = new Point(412, 248);
-            Point e4 = new Point(350, 248);
-
-            Rect rect = myRect.RenderTransform.TransformBounds(myRect.RenderedGeometry.Bounds);
-            if ((rect.Contains(e1) || rect.Contains(e2) || rect.Contains(e3) || rect.Contains(e4)) && pic == 3 && canfight == true) // из первой во вторую
-            {
-                canfight = false;
-                wrestle.ShowDialog();
-            }
         }
 
         private void ConfirmTimer_Tick(object sender, EventArgs e)
@@ -346,6 +338,26 @@ namespace Game
             store.Close();
         }
 
+        private void FightTimer_Tick(object sender, EventArgs e)
+        {
+            //Rect rect = myRect.RenderTransform.TransformBounds(myRect.RenderedGeometry.Bounds);
+
+            //Point e1 = new Point(350, 312);
+            //Point e2 = new Point(412, 312);
+            //Point e3 = new Point(412, 248);
+            //Point e4 = new Point(350, 248);
+
+            //if ((rect.Contains(e1) || rect.Contains(e2) || rect.Contains(e3) || rect.Contains(e4)) && pic == 3 && canfight == true)
+            //{
+
+            //}
+
+            if (hpw < 96)
+                hpw += 2;
+            else FightTimer.Stop();
+            HP.Width = hpw;
+        }
+
         private void dispatcherTimer_Tick(object sender, EventArgs e)
         {
             //Point e1 = new Point(0, 216);
@@ -496,6 +508,51 @@ namespace Game
                 if (e.Key==Key.B)
                 {
                     store.ShowDialog();
+                }
+            }
+
+
+            Point e1 = new Point(350, 312);
+            Point e2 = new Point(412, 312);
+            Point e3 = new Point(412, 248);
+            Point e4 = new Point(350, 248);
+
+            if ((rect.Contains(e1) || rect.Contains(e2) || rect.Contains(e3) || rect.Contains(e4)) && pic == 3) // из первой во вторую
+            {
+                if (e.Key==Key.A)
+                {
+                    FightTimer.Start();
+                    hpw = hpw - 15 + armor;
+                    enemyshp = enemyshp - (6 * weapon);
+                    if (hpw <= 0)
+                    {
+                        if (MessageBox.Show("LOL You Died :D. Want to restart?", "/n", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
+                        {
+                            x = 0;
+                            y = 0;
+                            hpw = 96;
+                            pic = 0;
+                            screen.Children.Remove(enemy);
+                            background.ImageSource = new BitmapImage(new Uri(@"pack://application:,,,/текстурки/внутри дома.bmp", UriKind.Absolute));
+                            screen.Background = background;
+                        }
+                        else
+                        {
+                            Application.Current.Shutdown();
+                        }
+                    }
+                    if (enemyshp <= 0)
+                    {
+                        forest = true;
+                        screen.Children.Remove(enemy);
+                        screen.Children.Remove(HPENEMY);
+                        screen.Children.Remove(FRAMEENEMY);
+                    }
+                    if (hpw > 0 && enemyshp > 0)
+                    {
+                        HP.Width = hpw;
+                        HPENEMY.Width = enemyshp;
+                    }
                 }
             }
 
@@ -670,7 +727,6 @@ namespace Game
                     background.ImageSource = new BitmapImage(new Uri(@"pack://application:,,,/текстурки/лес.jpg", UriKind.Absolute));
                     screen.Background = background;
                     pic = 3;
-                    forest = true;
                     enemy.Height = 96;
                     enemy.Width = 96;
                     ImageBrush rival = new ImageBrush();
@@ -683,6 +739,23 @@ namespace Game
                     enemy.Fill = rival;
                     enemy.Margin = new Thickness(350, 312, 0, 0);
                     screen.Children.Add(enemy);
+
+                    FRAMEENEMY.Height = 16;
+                    FRAMEENEMY.Width = 50;
+                    FRAMEENEMY.Stroke = Brushes.Black;
+                    FRAMEENEMY.HorizontalAlignment = HorizontalAlignment.Left;
+                    FRAMEENEMY.VerticalAlignment = VerticalAlignment.Center;
+                    FRAMEENEMY.Margin = new Thickness(0, 0, 0, 0);
+                    screen.Children.Add(FRAMEENEMY);
+
+                    HPENEMY.Height = hph;
+                    HPENEMY.Width = enemyshp;
+                    HPENEMY.Stroke = Brushes.Black;
+                    HPENEMY.Fill = Brushes.Red;
+                    HPENEMY.HorizontalAlignment = HorizontalAlignment.Left;
+                    HPENEMY.VerticalAlignment = VerticalAlignment.Center;
+                    HPENEMY.Margin = new Thickness(0, 0, 0, 0);
+                    screen.Children.Add(HPENEMY);
                 }
             }
 
@@ -720,6 +793,8 @@ namespace Game
                     screen.Background = background;
                     pic = 1;
                     screen.Children.Remove(enemy);
+                    screen.Children.Remove(HPENEMY);
+                    screen.Children.Remove(FRAMEENEMY);
                 }
             }
 
@@ -733,6 +808,8 @@ namespace Game
                     screen.Background = background;
                     pic = 5;
                     screen.Children.Remove(enemy);
+                    screen.Children.Remove(HPENEMY);
+                    screen.Children.Remove(FRAMEENEMY);
                 }
             }
 
@@ -805,6 +882,22 @@ namespace Game
                     rect1.Fill = rival;
                     enemy.Margin = new Thickness(350, 312, 0, 0);
                     screen.Children.Add(enemy);
+                    FRAMEENEMY.Height = 16;
+                    FRAMEENEMY.Width = 96;
+                    FRAMEENEMY.Stroke = Brushes.Black;
+                    FRAMEENEMY.HorizontalAlignment = HorizontalAlignment.Left;
+                    FRAMEENEMY.VerticalAlignment = VerticalAlignment.Center;
+                    FRAMEENEMY.Margin = new Thickness(0, 0, 0, 0);
+                    screen.Children.Add(FRAMEENEMY);
+
+                    HPENEMY.Height = hph;
+                    HPENEMY.Width = enemyshp;
+                    HPENEMY.Stroke = Brushes.Black;
+                    HPENEMY.Fill = Brushes.Red;
+                    HPENEMY.HorizontalAlignment = HorizontalAlignment.Left;
+                    HPENEMY.VerticalAlignment = VerticalAlignment.Center;
+                    HPENEMY.Margin = new Thickness(0, 0, 0, 0);
+                    screen.Children.Add(HPENEMY);
                 }
             }
 
@@ -895,15 +988,22 @@ namespace Game
             }
         }
 
+        protected override void OnClosed(EventArgs e)
+        {
+            base.OnClosed(e);
+
+            Application.Current.Shutdown();
+        }
+
         //private void add_enemy()
         //{
-            
+
 
         //    switch (pic)
         //    {
         //        case '8':
         //            {
-                        
+
         //                break;
         //            }
         //        default:
