@@ -70,9 +70,9 @@ namespace Game
                     if (ch != 0)
                     {
                         things.Items.RemoveAt(choice);
-                        string sql = "UPDATE Товары SET Количество = " + ch + " WHERE Стоимость = " + val.Стоимость;
-                        SQLiteCommand command = new SQLiteCommand(sql, m_dbConnection);
-                        command.ExecuteNonQuery();
+                        //string sql = "UPDATE Товары SET Количество = " + ch + " WHERE Стоимость = " + val.Стоимость;
+                        //SQLiteCommand command = new SQLiteCommand(sql, m_dbConnection);
+                        //command.ExecuteNonQuery();
 
                         var data = new grid { Наименование = val.Наименование, Описание = val.Описание, Количество = ch, Стоимость = val.Стоимость };
                         things.Items.Insert(choice, data);
@@ -80,9 +80,9 @@ namespace Game
                     }
                     else
                     {
-                        string sql = "DELETE FROM Товары WHERE Стоимость = " + val.Стоимость;
-                        SQLiteCommand command = new SQLiteCommand(sql, m_dbConnection);
-                        command.ExecuteNonQuery();
+                        //string sql = "DELETE FROM Товары WHERE Стоимость = " + val.Стоимость;
+                        //SQLiteCommand command = new SQLiteCommand(sql, m_dbConnection);
+                        //command.ExecuteNonQuery();
                         things.Items.RemoveAt(choice);
                         things.Items.Refresh();
                     }
