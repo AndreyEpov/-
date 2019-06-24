@@ -20,6 +20,7 @@ namespace Game
     /// Логика взаимодействия для MainWindow.xaml
     /// </summary>
     /// 
+        
 
     public partial class MainWindow : Window
     {
@@ -71,8 +72,9 @@ namespace Game
         int up = 0;
         bool canjump = true;
         int enemyshp = 50;
-        int weapon = 1, armor = 10;
+        int zombhp = 100;
 
+        Gaming gema = new Gaming();        
 
         int hph = 16, hpw = 96;
 
@@ -82,8 +84,7 @@ namespace Game
 
         Rectangle rect1 = new Rectangle();
         Rectangle rect2 = new Rectangle();
-        Rectangle rect3 = new Rectangle();
-        
+        Rectangle rect3 = new Rectangle();        
 
         ImageBrush background = new ImageBrush();
 
@@ -158,6 +159,8 @@ namespace Game
             FightTimer.Tick += new EventHandler(FightTimer_Tick);
             FightTimer.Interval = new TimeSpan(0, 0, 0, 1);
 
+
+
         }
 
         private void JumpTimer_Tick(object sender, EventArgs e)
@@ -178,6 +181,7 @@ namespace Game
         {
             myRect.RenderTransform = new TranslateTransform(x, y);
             screen.UpdateLayout();
+            you.Content = " Золото: "+gema.gold+"  \n Защита: "+ gema.armor +"  \n Оружие: "+ gema.weapon +"  ";
         }
 
         private void ConfirmTimer_Tick(object sender, EventArgs e)
@@ -355,7 +359,8 @@ namespace Game
             if (hpw < 96)
                 hpw += 2;
             else FightTimer.Stop();
-            HP.Width = hpw;
+            if (hpw>=0)
+                HP.Width = hpw;
         }
 
         private void dispatcherTimer_Tick(object sender, EventArgs e)
@@ -522,8 +527,8 @@ namespace Game
                 if (e.Key==Key.A)
                 {
                     FightTimer.Start();
-                    hpw = hpw - 15 + armor;
-                    enemyshp = enemyshp - (6 * weapon);
+                    hpw = hpw - 15 + gema.armor;
+                    enemyshp = enemyshp - (6 * gema.weapon);
                     if (hpw <= 0)
                     {
                         if (MessageBox.Show("LOL You Died :D. Want to restart?", "/n", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
@@ -535,6 +540,9 @@ namespace Game
                             screen.Children.Remove(enemy);
                             background.ImageSource = new BitmapImage(new Uri(@"pack://application:,,,/текстурки/внутри дома.bmp", UriKind.Absolute));
                             screen.Background = background;
+                            tavern = true;
+                            start = false;
+                            forest = false;
                         }
                         else
                         {
@@ -547,11 +555,60 @@ namespace Game
                         screen.Children.Remove(enemy);
                         screen.Children.Remove(HPENEMY);
                         screen.Children.Remove(FRAMEENEMY);
+                        enemyshp = 50;
                     }
                     if (hpw > 0 && enemyshp > 0)
                     {
                         HP.Width = hpw;
                         HPENEMY.Width = enemyshp;
+                    }
+                }
+            }
+
+            Point e11 = new Point(0, 312);
+            Point e22 = new Point(96, 312);
+            Point e33= new Point(0, 248);
+            Point e44 = new Point(96, 248);
+
+            if ((rect.Contains(e11) || rect.Contains(e22) || rect.Contains(e33) || rect.Contains(e44)) && pic == 8) // из первой во вторую
+            {
+                if (e.Key == Key.A)
+                {
+                    FightTimer.Start();
+                    hpw = hpw - 30 + gema.armor;
+                    zombhp = zombhp - (6 * gema.weapon);
+                    if (hpw <= 0)
+                    {
+                        if (MessageBox.Show("LOL You Died :D. Want to restart?", "/n", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
+                        {
+                            x = 0;
+                            y = 0;
+                            hpw = 96;
+                            pic = 0;
+                            screen.Children.Remove(enemy);
+                            background.ImageSource = new BitmapImage(new Uri(@"pack://application:,,,/текстурки/внутри дома.bmp", UriKind.Absolute));
+                            screen.Background = background;
+                            tavern = true;
+                            start = false;
+                            forest = false;
+                        }
+                        else
+                        {
+                            Application.Current.Shutdown();
+                        }
+                    }
+                    if (zombhp <= 0)
+                    {
+                        screen.Children.Remove(enemy);
+                        screen.Children.Remove(HPENEMY);
+                        screen.Children.Remove(FRAMEENEMY);
+                        zombhp = 100;
+
+                    }
+                    if (hpw > 0 && enemyshp > 0)
+                    {
+                        HP.Width = hpw;
+                        HPENEMY.Width = zombhp;
                     }
                 }
             }
@@ -700,6 +757,7 @@ namespace Game
                             background.ImageSource = new BitmapImage(new Uri(@"pack://application:,,,/текстурки/таверна.png", UriKind.Absolute));
                             screen.Background = background;
                             tavern = false;
+                            gema.gold = 500;
                             pic = 0;
                             ImageBrush girl = new ImageBrush();
                             rect1.Height = 96;
@@ -918,10 +976,27 @@ namespace Game
                     ib.Stretch = Stretch.None;
                     ib.Viewbox = new Rect(0, 0, 96, 96);
                     ib.ViewboxUnits = BrushMappingMode.Absolute;
-                    ib.ImageSource = new BitmapImage(new Uri(@"pack://application:,,,/текстурки/zomb.gif", UriKind.Absolute));
+                    ib.ImageSource = new BitmapImage(new Uri(@"pack://application:,,,/poses/23.gif", UriKind.Absolute));
                     enemy.Fill = ib;
                     enemy.Margin = new Thickness(0, 312, 0, 0);
                     screen.Children.Add(enemy);
+
+                    FRAMEENEMY.Height = 16;
+                    FRAMEENEMY.Width = 100;
+                    FRAMEENEMY.Stroke = Brushes.Black;
+                    FRAMEENEMY.HorizontalAlignment = HorizontalAlignment.Left;
+                    FRAMEENEMY.VerticalAlignment = VerticalAlignment.Center;
+                    FRAMEENEMY.Margin = new Thickness(0, 0, 0, 0);
+                    screen.Children.Add(FRAMEENEMY);
+
+                    HPENEMY.Height = hph;
+                    HPENEMY.Width = zombhp;
+                    HPENEMY.Stroke = Brushes.Black;
+                    HPENEMY.Fill = Brushes.Red;
+                    HPENEMY.HorizontalAlignment = HorizontalAlignment.Left;
+                    HPENEMY.VerticalAlignment = VerticalAlignment.Center;
+                    HPENEMY.Margin = new Thickness(0, 0, 0, 0);
+                    screen.Children.Add(HPENEMY);
                 }
             }
 
@@ -946,8 +1021,9 @@ namespace Game
                     background.ImageSource = new BitmapImage(new Uri(@"pack://application:,,,/текстурки/подземелье.png", UriKind.Absolute));
                     screen.Background = background;
                     pic = 6;
-                    screen.Children.Remove(rect1);
                     screen.Children.Remove(enemy);
+                    screen.Children.Remove(HPENEMY);
+                    screen.Children.Remove(FRAMEENEMY);
                 }
             }
 

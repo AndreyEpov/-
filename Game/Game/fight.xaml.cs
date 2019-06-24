@@ -68,7 +68,7 @@ namespace Game
 
         private void Punch_Click_1(object sender, RoutedEventArgs e)
         {
-            wrestle.hit(0, 3);
+            //wrestle.hit(0, 3);
             log.Items.Add("У противника осталось " + wrestle.hpenemy + ", У вас осталось" + wrestle.hp);
             if (wrestle.hpenemy <= 0)
             {

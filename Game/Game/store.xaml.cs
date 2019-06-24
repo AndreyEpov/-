@@ -33,6 +33,8 @@ namespace Game
         SQLiteConnection m_dbConnection;
         string db_name = "C:\\Users\\user\\Desktop\\store.db";
 
+        Gaming staff = new Gaming();
+
         public store()
         {
             InitializeComponent();
@@ -86,6 +88,16 @@ namespace Game
                         //command.ExecuteNonQuery();
                         things.Items.RemoveAt(choice);
                         things.Items.Refresh();
+                    }
+                    if (val.Наименование == "Нагрудник")
+                    {
+                        staff.armor += 20;
+                        staff.gold = staff.gold - 12;
+                    }
+                    if (val.Наименование == "Хороший меч")
+                    {
+                        staff.weapon = 4;
+                        staff.gold = staff.gold - 15;
                     }
                 }
             }

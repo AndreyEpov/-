@@ -8,14 +8,15 @@ namespace Game
 {
     class Gaming
     {
-        public int hp = 100, hpenemy = 50;
+        public int hp = 100, hpenemy = 50, gold = 0;
+        public int weapon = 1, armor = 10;
         public bool canfight = true;
         static Random rand = new Random();
 
-       public void hit(int weapon,int armor)
-        {
-            hpenemy = hpenemy - (1+5 * weapon);
-            hp = hp - 10 + armor;
-        }
+       //public void hit(int weapon,int armor)
+       // {
+       //     hpenemy = hpenemy - (1+5 * weapon);
+       //     hp = hp - 10 + armor;
+       // }
     }
 }
