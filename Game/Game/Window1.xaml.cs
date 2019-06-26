@@ -35,7 +35,7 @@ namespace Game
 
             //MP.Source = new Uri(@"pack://application:,,,/video/predhistor.wmv", UriKind.Absolute);
             MP.Play();
-            MP.SpeedRatio = 20;
+            //MP.SpeedRatio = 20;
         }
 
         private void MP_MediaOpened(object sender,RoutedEventArgs e)

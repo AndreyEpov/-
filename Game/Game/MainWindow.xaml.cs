@@ -32,6 +32,7 @@ namespace Game
         System.Windows.Threading.DispatcherTimer MoveTimer;
         System.Windows.Threading.DispatcherTimer ConfirmTimer;
         System.Windows.Threading.DispatcherTimer FightTimer;
+        System.Windows.Threading.DispatcherTimer MoveBardTimer;
 
         bool tavern = true;
         bool start = false;
@@ -155,6 +156,10 @@ namespace Game
             JumpTimer.Tick += new EventHandler(JumpTimer_Tick);
             JumpTimer.Interval = new TimeSpan(0, 0, 0, 0, 50);
 
+            MoveBardTimer = new System.Windows.Threading.DispatcherTimer();
+            MoveBardTimer.Tick += new EventHandler(MoveBardTimer_Tick);
+            MoveBardTimer.Interval = new TimeSpan(0, 0, 0, 1);
+
             FallTimer = new System.Windows.Threading.DispatcherTimer();
             FallTimer.Tick += new EventHandler(FallTimer_Tick);
             FallTimer.Interval = new TimeSpan(0, 0, 0, 0, 50);
@@ -193,9 +198,14 @@ namespace Game
         {
             myRect.RenderTransform = new TranslateTransform(x, y);
             you.Content = " Золото: " + gold + "  \n Защита: " + gema.armor + "  \n Оружие: " + gema.weapon + "  \n [h]Хилка: " + gema.heal + " ";
+            
+        }
+
+        private void MoveBardTimer_Tick(object sender, EventArgs e)
+        {            
             if (bard == 1)
             {
-                if (right==false)
+                if (right == false)
                 {
                     xb -= 8;
                     if (xb < 10)
@@ -207,7 +217,7 @@ namespace Game
                     if (xb > 680)
                         right = false;
                 }
-                enemy1.RenderTransform = new TranslateTransform(xb, by);
+                enemy1.RenderTransform = new TranslateTransform(xb, 250);
                 screen.UpdateLayout();
             }
         }
@@ -417,10 +427,10 @@ namespace Game
                 hpw = hpw - 30 + gema.armor;
             }
 
-            Point e111 = new Point(696, 312);
-            Point e222 = new Point(792, 312);
-            Point e333 = new Point(696, 248);
-            Point e444 = new Point(792, 248);
+            Point e111 = new Point(600, 312);
+            Point e222 = new Point(696, 312);
+            Point e333 = new Point(600, 248);
+            Point e444 = new Point(696, 248);
 
             if ((rect.Contains(e111) || rect.Contains(e222) || rect.Contains(e333) || rect.Contains(e444)) && pic == 15 && screen.Children.Contains(enemy))
             {
@@ -777,6 +787,7 @@ namespace Game
 
                 if (e.Key == Key.E)
                 {
+                    MoveBardTimer.Start();
                     bard = 1;
                     background.ImageSource = new BitmapImage(new Uri(@"pack://application:,,,/текстурки/bard.png", UriKind.Absolute));
                     screen.Background = background;
@@ -992,7 +1003,7 @@ namespace Game
                     screen.Children.Add(enemy2);
 
                     FRAMEENEMY.Height = 16;
-                    FRAMEENEMY.Width = 120;
+                    FRAMEENEMY.Width = 150;
                     FRAMEENEMY.Stroke = Brushes.Black;
                     FRAMEENEMY.HorizontalAlignment = HorizontalAlignment.Left;
                     FRAMEENEMY.VerticalAlignment = VerticalAlignment.Center;
@@ -1000,7 +1011,7 @@ namespace Game
                     screen.Children.Add(FRAMEENEMY);
 
                     HPENEMY.Height = hph;
-                    HPENEMY.Width = enemyshp;
+                    HPENEMY.Width = pirate;
                     HPENEMY.Stroke = Brushes.Black;
                     HPENEMY.Fill = Brushes.Red;
                     HPENEMY.HorizontalAlignment = HorizontalAlignment.Left;
@@ -1009,7 +1020,7 @@ namespace Game
                     screen.Children.Add(HPENEMY);
 
                     FRAMEENEMY1.Height = 16;
-                    FRAMEENEMY1.Width = 120;
+                    FRAMEENEMY1.Width = 150;
                     FRAMEENEMY1.Stroke = Brushes.Black;
                     FRAMEENEMY1.HorizontalAlignment = HorizontalAlignment.Left;
                     FRAMEENEMY1.VerticalAlignment = VerticalAlignment.Center;
@@ -1017,7 +1028,7 @@ namespace Game
                     screen.Children.Add(FRAMEENEMY1);
 
                     HPENEMY1.Height = hph;
-                    HPENEMY1.Width = enemyshp;
+                    HPENEMY1.Width = knighthp;
                     HPENEMY1.Stroke = Brushes.Black;
                     HPENEMY1.Fill = Brushes.Red;
                     HPENEMY1.HorizontalAlignment = HorizontalAlignment.Left;
@@ -1966,17 +1977,17 @@ namespace Game
                     screen.Children.Remove(enemy2);
                     screen.Children.Remove(HPENEMY1);
                     screen.Children.Remove(FRAMEENEMY1);
-                    enemy.Height = 96;
-                    enemy.Width = 96;
+                    enemy.Height = 192;
+                    enemy.Width = 192;
                     ImageBrush rival = new ImageBrush();
                     rival.AlignmentX = AlignmentX.Left;
                     //ib.AlignmentY = AlignmentY.Top;
                     rival.Stretch = Stretch.None;
-                    rival.Viewbox = new Rect(0, 0, 96, 96);
+                    rival.Viewbox = new Rect(0, 0, 192, 192);
                     rival.ViewboxUnits = BrushMappingMode.Absolute;
                     rival.ImageSource = new BitmapImage(new Uri(@"pack://application:,,,/poses/GOLIY.gif", UriKind.Absolute));
                     enemy.Fill = rival;
-                    enemy.Margin = new Thickness(696, 312, 0, 0);
+                    enemy.Margin = new Thickness(600, 216, 0, 0);
                     screen.Children.Add(enemy);
 
                     FRAMEENEMY.Height = 16;
@@ -1998,10 +2009,10 @@ namespace Game
                 }
             }
 
-            Point e111 = new Point(696, 312);
-            Point e222 = new Point(792, 312);
-            Point e333 = new Point(696, 248);
-            Point e444= new Point(792, 248);
+            Point e111 = new Point(600, 312);
+            Point e222 = new Point(696, 312);
+            Point e333 = new Point(600, 248);
+            Point e444= new Point(696, 248);
 
             if ((rect.Contains(e111) || rect.Contains(e222) || rect.Contains(e333) || rect.Contains(e444)) && pic == 15 && screen.Children.Contains(enemy))
             {
