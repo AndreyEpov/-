@@ -20,20 +20,18 @@ namespace Game
     /// Логика взаимодействия для MainWindow.xaml
     /// </summary>
     /// 
-        
+
 
     public partial class MainWindow : Window
     {
-        
-         
-        
+        Gaming gema = new Gaming();
+
         System.Windows.Threading.DispatcherTimer Timer;
         System.Windows.Threading.DispatcherTimer JumpTimer;
         System.Windows.Threading.DispatcherTimer FallTimer;
         System.Windows.Threading.DispatcherTimer MoveTimer;
         System.Windows.Threading.DispatcherTimer ConfirmTimer;
         System.Windows.Threading.DispatcherTimer FightTimer;
-        System.Windows.Threading.DispatcherTimer MediaTimer;
 
         bool tavern = true;
         bool start = false;
@@ -67,18 +65,19 @@ namespace Game
         Point f7t5 = new Point(792, 312);
         Point f9t11 = new Point(696, 312);
         Point f11t12 = new Point(396, 312);
-        Point f12t14 = new Point(600, 300);
+        Point f12t14 = new Point(600, 312);
         Point f14t15 = new Point(400, 312);
         Point f1t2 = new Point(750, 312);
-        Point tostore = new Point(475,312);
+        Point tostore = new Point(475, 312);
 
         int x = 0, y = 312, pic = 0;
         int up = 0;
         bool canjump = true;
         int enemyshp = 50;
         int zombhp = 100;
-
-        Gaming gema = new Gaming();        
+        public int usedheal = 0;
+        public int gold = 0;
+        int cost;
 
         int hph = 16, hpw = 96;
 
@@ -88,23 +87,17 @@ namespace Game
 
         Rectangle rect1 = new Rectangle();
         Rectangle rect2 = new Rectangle();
-        Rectangle rect3 = new Rectangle();        
+        Rectangle rect3 = new Rectangle();
 
         ImageBrush background = new ImageBrush();
 
         store store = new store();
-        
-        MediaElement MP = new MediaElement();
-        
+
         public MainWindow()
         {
             InitializeComponent();
-            //загрузка видео файла
-            
 
-
-
-            screen.KeyDown += Window_KeyDown;            
+            screen.KeyDown += Window_KeyDown;
 
             FRAME.Height = 16;
             FRAME.Width = 96;
@@ -140,8 +133,6 @@ namespace Game
             background.ImageSource = new BitmapImage(new Uri(@"pack://application:,,,/текстурки/внутри дома.bmp", UriKind.Absolute));
             screen.Background = background;
 
-            
-
             Timer = new System.Windows.Threading.DispatcherTimer();
             Timer.Tick += new EventHandler(dispatcherTimer_Tick);
             Timer.Interval = new TimeSpan(0, 0, 0, 0, 125);
@@ -168,9 +159,6 @@ namespace Game
             FightTimer = new System.Windows.Threading.DispatcherTimer();
             FightTimer.Tick += new EventHandler(FightTimer_Tick);
             FightTimer.Interval = new TimeSpan(0, 0, 0, 1);
-
-
-
         }
 
         private void JumpTimer_Tick(object sender, EventArgs e)
@@ -191,7 +179,7 @@ namespace Game
         {
             myRect.RenderTransform = new TranslateTransform(x, y);
             screen.UpdateLayout();
-            you.Content = " Золото: "+gema.gold+"  \n Защита: "+ gema.armor +"  \n Оружие: "+ gema.weapon +"  ";
+            you.Content = " Золото: " + gold + "  \n Защита: " + gema.armor + "  \n Оружие: " + gema.weapon + "  \n [h]Хилка: " + gema.heal + " ";
         }
 
         private void ConfirmTimer_Tick(object sender, EventArgs e)
@@ -211,7 +199,7 @@ namespace Game
             {
                 if (rect.Contains(f1t0) == true && tavern == false)
                     confirm.Content = "[e]Войти в дом";
-                if (rect.Contains(f1t0) == true && tavern == true && forest== true)
+                if (rect.Contains(f1t0) == true && tavern == true && forest == true)
                     confirm.Content = "[t]Войти в таверну";
                 if (rect.Contains(f1t2) == true && tavern == false)
                     confirm.Content = "[e]На поляну";
@@ -267,7 +255,7 @@ namespace Game
                     confirm.Content = "[e]В пещеру\n[t]К руинам";
                 if (rect.Contains(f5t9) == true)
                     confirm.Content = "[e]На рыцарский турнир";
-                if (rect.Contains(f5t2) == false && rect.Contains(f5t3) == false && rect.Contains(f5t4) == false && rect.Contains(f5t67) == false && rect.Contains(f5t9) == false && rect.Contains(tostore)==false)
+                if (rect.Contains(f5t2) == false && rect.Contains(f5t3) == false && rect.Contains(f5t4) == false && rect.Contains(f5t67) == false && rect.Contains(f5t9) == false && rect.Contains(tostore) == false)
                     confirm.Content = "";
             }
 
@@ -365,12 +353,81 @@ namespace Game
             //{
 
             //}
-
+            Rect rect = myRect.RenderTransform.TransformBounds(myRect.RenderedGeometry.Bounds);
             if (hpw < 96)
                 hpw += 2;
-            else FightTimer.Stop();
-            if (hpw>=0)
+            if (hpw >= 0)
                 HP.Width = hpw;
+
+            Point e1 = new Point(350, 312);
+            Point e2 = new Point(412, 312);
+            Point e3 = new Point(412, 248);
+            Point e4 = new Point(350, 248);// в лесу
+
+            Point e11 = new Point(0, 312);
+            Point e22 = new Point(96, 312);
+            Point e33 = new Point(0, 248);
+            Point e44 = new Point(96, 248);// в сердце пещеры
+
+            if ((rect.Contains(e1) || rect.Contains(e2) || rect.Contains(e3) || rect.Contains(e4)) && pic == 3 && screen.Children.Contains(enemy)) // из первой во вторую
+            {
+                hpw = hpw - 15 + gema.armor;
+            }
+
+            if ((rect.Contains(e11) || rect.Contains(e22) || rect.Contains(e33) || rect.Contains(e44)) && pic == 8 && screen.Children.Contains(enemy))
+            {
+                hpw = hpw - 30 + gema.armor;
+            }
+
+            if (hpw <= 0)
+            {
+                if (MessageBox.Show("LOL You Died :D. Want to continue without money?", "/n", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
+                {
+                    x = 0;
+                    y = 0;
+                    hpw = 96;
+                    pic = 0;
+                    gold = 0;
+                    screen.Children.Remove(enemy);
+                    background.ImageSource = new BitmapImage(new Uri(@"pack://application:,,,/текстурки/внутри дома.bmp", UriKind.Absolute));
+                    screen.Background = background;
+                    tavern = true;
+                    start = false;
+                    forest = false;
+                    screen.Children.Remove(HPENEMY);
+                    screen.Children.Remove(FRAMEENEMY);
+                }
+                else
+                {
+                    Application.Current.Shutdown();
+                }
+            }
+            if (zombhp <= 0)
+            {
+                screen.Children.Remove(enemy);
+                screen.Children.Remove(HPENEMY);
+                screen.Children.Remove(FRAMEENEMY);
+                zombhp = 100;
+            }
+            if (hpw > 0 && enemyshp > 0 && pic == 8)
+            {
+                HP.Width = hpw;
+                HPENEMY.Width = zombhp;
+            }
+
+            if (enemyshp <= 0)
+            {
+                forest = true;
+                screen.Children.Remove(enemy);
+                screen.Children.Remove(HPENEMY);
+                screen.Children.Remove(FRAMEENEMY);
+                enemyshp = 50;
+            }
+            if (hpw > 0 && enemyshp > 0 && pic == 3)
+            {
+                HP.Width = hpw;
+                HPENEMY.Width = enemyshp;
+            }
         }
 
         private void dispatcherTimer_Tick(object sender, EventArgs e)
@@ -433,6 +490,7 @@ namespace Game
 
         private void Window_KeyDown(object sender, KeyEventArgs e)
         {
+
 
             if (e.Key == Key.F9)
             {
@@ -520,106 +578,71 @@ namespace Game
 
             if (rect.Contains(tostore) && pic == 5)
             {
-                if (e.Key==Key.B)
+                if (e.Key == Key.B)
                 {
+                    cost = store.gold;
+
                     store.ShowDialog();
+
+                    gema.armor = store.armor;
+
+                    gema.weapon = store.weapon;
+
+                    gema.heal = store.heal - usedheal;
+                    //store.staff
+                    gold = gold - store.gold + cost;
                 }
             }
 
+            if (gema.heal > 0)
+            {
+                if (e.Key == Key.H)
+                {
+                    gema.heal = gema.heal - 1;
+                    hpw = hpw + 30;
+                }
+            }
 
             Point e1 = new Point(350, 312);
             Point e2 = new Point(412, 312);
             Point e3 = new Point(412, 248);
             Point e4 = new Point(350, 248);
 
-            if ((rect.Contains(e1) || rect.Contains(e2) || rect.Contains(e3) || rect.Contains(e4)) && pic == 3) // из первой во вторую
+            if ((rect.Contains(e1) || rect.Contains(e2) || rect.Contains(e3) || rect.Contains(e4)) && pic == 3 && screen.Children.Contains(enemy)) // из первой во вторую
             {
-                if (e.Key==Key.A)
+                FightTimer.Start();
+                if (e.Key == Key.A && screen.Children.Contains(enemy))
                 {
-                    FightTimer.Start();
-                    hpw = hpw - 15 + gema.armor;
                     enemyshp = enemyshp - (6 * gema.weapon);
-                    if (hpw <= 0)
-                    {
-                        if (MessageBox.Show("LOL You Died :D. Want to restart?", "/n", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
-                        {
-                            x = 0;
-                            y = 0;
-                            hpw = 96;
-                            pic = 0;
-                            screen.Children.Remove(enemy);
-                            background.ImageSource = new BitmapImage(new Uri(@"pack://application:,,,/текстурки/внутри дома.bmp", UriKind.Absolute));
-                            screen.Background = background;
-                            tavern = true;
-                            start = false;
-                            forest = false;
-                        }
-                        else
-                        {
-                            Application.Current.Shutdown();
-                        }
-                    }
-                    if (enemyshp <= 0)
-                    {
-                        forest = true;
-                        screen.Children.Remove(enemy);
-                        screen.Children.Remove(HPENEMY);
-                        screen.Children.Remove(FRAMEENEMY);
-                        enemyshp = 50;
-                    }
-                    if (hpw > 0 && enemyshp > 0)
-                    {
-                        HP.Width = hpw;
-                        HPENEMY.Width = enemyshp;
-                    }
                 }
             }
 
             Point e11 = new Point(0, 312);
             Point e22 = new Point(96, 312);
-            Point e33= new Point(0, 248);
+            Point e33 = new Point(0, 248);
             Point e44 = new Point(96, 248);
 
-            if ((rect.Contains(e11) || rect.Contains(e22) || rect.Contains(e33) || rect.Contains(e44)) && pic == 8) // из первой во вторую
+            if ((rect.Contains(e11) || rect.Contains(e22) || rect.Contains(e33) || rect.Contains(e44)) && pic == 8 && screen.Children.Contains(enemy))
             {
-                if (e.Key == Key.A)
+                FightTimer.Start();
+                if (e.Key == Key.A && screen.Children.Contains(enemy))
                 {
-                    FightTimer.Start();
-                    hpw = hpw - 30 + gema.armor;
                     zombhp = zombhp - (6 * gema.weapon);
-                    if (hpw <= 0)
-                    {
-                        if (MessageBox.Show("LOL You Died :D. Want to restart?", "/n", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
-                        {
-                            x = 0;
-                            y = 0;
-                            hpw = 96;
-                            pic = 0;
-                            screen.Children.Remove(enemy);
-                            background.ImageSource = new BitmapImage(new Uri(@"pack://application:,,,/текстурки/внутри дома.bmp", UriKind.Absolute));
-                            screen.Background = background;
-                            tavern = true;
-                            start = false;
-                            forest = false;
-                        }
-                        else
-                        {
-                            Application.Current.Shutdown();
-                        }
-                    }
-                    if (zombhp <= 0)
-                    {
-                        screen.Children.Remove(enemy);
-                        screen.Children.Remove(HPENEMY);
-                        screen.Children.Remove(FRAMEENEMY);
-                        zombhp = 100;
+                }
 
-                    }
-                    if (hpw > 0 && enemyshp > 0)
-                    {
-                        HP.Width = hpw;
-                        HPENEMY.Width = zombhp;
-                    }
+            }
+
+
+
+            if (rect.Contains(f5t9) == true && pic == 5) // из замка на рыцарский турнир
+            {
+                if (e.Key == Key.E)
+                {
+                    x = 0;
+                    y = 216;
+                    background.ImageSource = new BitmapImage(new Uri(@"pack://application:,,,/текстурки/арена2.png.jpg", UriKind.Absolute));
+                    screen.Background = background;
+                    pic = 9;
                 }
             }
 
@@ -652,7 +675,7 @@ namespace Game
                     background.ImageSource = new BitmapImage(new Uri(@"pack://application:,,,/текстурки/руины.jpg", UriKind.Absolute));
                     screen.Background = background;
                     pic = 7;
-                }                
+                }
             }
 
             if ((rect.Contains(f2t5) == true) && (pic == 2) && tavern == false) // из поляны в замок
@@ -691,21 +714,9 @@ namespace Game
                 }
             }
 
-            if (rect.Contains(f5t9) == true && pic == 5) // из замка на рыцарский турнир
-            {
-                if (e.Key == Key.E)
-                {
-                    x = 0;
-                    y = 216;
-                    background.ImageSource = new BitmapImage(new Uri(@"pack://application:,,,/текстурки/арена2.png.jpg", UriKind.Absolute));
-                    screen.Background = background;
-                    pic = 9;
-                }
-            }
-
             if ((rect.Contains(f0t1) == true) && (pic == 0)) // из дома в деревню
             {
-                if (start==false)
+                if (start == false)
                 {
                     if (e.Key == Key.T)
                     {
@@ -740,8 +751,8 @@ namespace Game
                         screen.Children.Remove(rect1);
                     }
                 }
-            }            
-            
+            }
+
 
             if ((rect.Contains(f1t0) == true) && (pic == 1)) // из деревни в дом
             {
@@ -767,7 +778,7 @@ namespace Game
                             background.ImageSource = new BitmapImage(new Uri(@"pack://application:,,,/текстурки/таверна.png", UriKind.Absolute));
                             screen.Background = background;
                             tavern = false;
-                            gema.gold = 500;
+                            gold = gold + 300;
                             pic = 0;
                             ImageBrush girl = new ImageBrush();
                             rect1.Height = 96;
@@ -782,8 +793,8 @@ namespace Game
                             rect1.Margin = new Thickness(300, 312, 0, 0);
                             screen.Children.Add(rect1);
                         }
-                    }                   
-                }               
+                    }
+                }
             }
 
             if ((rect.Contains(f1t3) == true) && (pic == 1)) // из деревни в лес
@@ -1081,20 +1092,6 @@ namespace Game
             Application.Current.Shutdown();
         }
 
-        //private void add_enemy()
-        //{
 
-
-        //    switch (pic)
-        //    {
-        //        case '8':
-        //            {
-
-        //                break;
-        //            }
-        //        default:
-        //            break;
-        //    }
-        //}
     }
 }

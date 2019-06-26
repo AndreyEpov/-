@@ -26,19 +26,24 @@ namespace Game
         public int Стоимость { get; set; }
         public int Количество { get; set; }
     }
-       
 
     public partial class store : Window
     {
         SQLiteConnection m_dbConnection;
-        string db_name = "E:\\Game\\NewRepo\\Game\\Game\\store.db";
+        string db_name = "C:\\Users\\user\\Desktop\\store.db";
 
-        Gaming staff = new Gaming();
+        public Gaming staff = new Gaming();
+
+        public bool armorb = false, weaponb = false, healb = false, goldb = false;
+        public int armor = 5, weapon = 1, heal = 0, idk = 0, gold = 0;
+
 
         public store()
         {
             InitializeComponent();
-            
+
+            gold = 0;
+
             m_dbConnection = new SQLiteConnection("Data Source=" + db_name + ";Version=3;");
             m_dbConnection.Open();
 
@@ -56,11 +61,11 @@ namespace Game
                 };
                 things.Items.Add(data);
             }
-
-        }        
+        }
 
         private void Buy_Click(object sender, RoutedEventArgs e)
         {
+            armorb = false; weaponb = false; healb = false;
             try
             {
                 grid val = (grid)things.SelectedItem;
@@ -89,35 +94,49 @@ namespace Game
                         things.Items.RemoveAt(choice);
                         things.Items.Refresh();
                     }
-                    if (val.Наименование == "Нагрудник")
+                    if (val.Стоимость == 12)
                     {
-                        staff.armor += 20;
-                        staff.gold = staff.gold - 12;
+                        armorb = true;
+                        armor = armor + 10;
+                        gold += 12;
+
                     }
-                    if (val.Наименование == "Хороший меч")
+                    if (val.Стоимость == 10)
                     {
-                        staff.weapon = 4;
-                        staff.gold = staff.gold - 15;
+                        weaponb = true;
+                        weapon = weapon + 3;
+                        gold += 10;
+                    }
+                    if (val.Стоимость == 5)
+                    {
+                        healb = true;
+                        heal = heal + 1;
+                        gold += 5;
+                    }
+                    if (val.Стоимость == 100)
+                    {
+                        idk = 1;
+                        gold += 100;
                     }
                 }
             }
             catch (FormatException)
             {
-               
+
             }
             catch (SQLiteException)
             {
-             
+
             }
             catch (ArgumentOutOfRangeException)
             {
-             
+
             }
         }
 
         private void Things_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            
+
         }
 
         private void Exit_Click(object sender, RoutedEventArgs e)
@@ -127,7 +146,7 @@ namespace Game
 
         private void Window_Closed(object sender, EventArgs e)
         {
-           
+
         }
     }
 }

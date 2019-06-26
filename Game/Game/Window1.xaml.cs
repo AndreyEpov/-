@@ -29,7 +29,8 @@ namespace Game
             //timerStart();
             MP.MediaOpened += MP_MediaOpened;
             MP.MediaEnded += MP_MediaEnded;
-            MP.Source = new Uri("E:\\Game\\NewRepo\\Game\\Game\\video\\Я сам испугался.wmv");
+            //MP.Source = new Uri("E:\\Game\\NewRepo\\Game\\Game\\video\\Я сам испугался.wmv");
+            MP.Source = new Uri("@pack://application:,,,/video/Я сам испугался.wmv", UriKind.RelativeOrAbsolute); 
             MP.Volume = 1;
             
 
