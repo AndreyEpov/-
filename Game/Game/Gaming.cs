@@ -8,7 +8,6 @@ namespace Game
 {
     public class Gaming
     {
-
         public int hp = 100, hpenemy = 50, gold = 0, heal = 0;
         public int weapon = 1, armor = 5;
         public bool canfight = true;

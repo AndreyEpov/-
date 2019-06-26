@@ -27,7 +27,6 @@ namespace Game
         public int Количество { get; set; }
     }
 
-
     public partial class store : Window
     {
         SQLiteConnection m_dbConnection;
