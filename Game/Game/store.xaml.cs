@@ -32,7 +32,7 @@ namespace Game
         SQLiteConnection m_dbConnection;
         string db_name = "C:\\Users\\user\\Desktop\\store.db";
 
-        public Gaming staff = new Gaming();
+        Gaming staff = new Gaming();
 
         public bool armorb = false, weaponb = false, healb = false, goldb = false;
         public int armor = 5, weapon = 1, heal = 0, idk = 0, gold = 0;
@@ -61,7 +61,8 @@ namespace Game
                 };
                 things.Items.Add(data);
             }
-        }
+
+        }        
 
         private void Buy_Click(object sender, RoutedEventArgs e)
         {
