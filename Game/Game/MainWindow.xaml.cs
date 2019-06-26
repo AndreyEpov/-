@@ -408,7 +408,7 @@ namespace Game
                 screen.Children.Remove(HPENEMY);
                 screen.Children.Remove(FRAMEENEMY);
                 zombhp = 100;
-            }                
+            }
             if (hpw > 0 && enemyshp > 0 && pic == 8)
             {
                 HP.Width = hpw;
@@ -588,9 +588,9 @@ namespace Game
 
                     gema.weapon = store.weapon;
 
-                    gema.heal = store.heal-usedheal;
+                    gema.heal = store.heal - usedheal;
                     //store.staff
-                    gold = gold- store.gold+cost;
+                    gold = gold - store.gold + cost;
                 }
             }
 
@@ -613,8 +613,8 @@ namespace Game
                 FightTimer.Start();
                 if (e.Key == Key.A && screen.Children.Contains(enemy))
                 {
-                    enemyshp = enemyshp - (6 * gema.weapon);                   
-                }               
+                    enemyshp = enemyshp - (6 * gema.weapon);
+                }
             }
 
             Point e11 = new Point(0, 312);
@@ -622,14 +622,14 @@ namespace Game
             Point e33 = new Point(0, 248);
             Point e44 = new Point(96, 248);
 
-            if ((rect.Contains(e11) || rect.Contains(e22) || rect.Contains(e33) || rect.Contains(e44)) && pic == 8 && screen.Children.Contains(enemy)) 
+            if ((rect.Contains(e11) || rect.Contains(e22) || rect.Contains(e33) || rect.Contains(e44)) && pic == 8 && screen.Children.Contains(enemy))
             {
                 FightTimer.Start();
                 if (e.Key == Key.A && screen.Children.Contains(enemy))
                 {
-                    zombhp = zombhp - (6 * gema.weapon);                    
+                    zombhp = zombhp - (6 * gema.weapon);
                 }
-                
+
             }
 
 
@@ -1092,6 +1092,6 @@ namespace Game
             Application.Current.Shutdown();
         }
 
-        
+
     }
 }
