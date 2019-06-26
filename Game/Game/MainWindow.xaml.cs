@@ -24,12 +24,16 @@ namespace Game
 
     public partial class MainWindow : Window
     {
+        
+         
+        
         System.Windows.Threading.DispatcherTimer Timer;
         System.Windows.Threading.DispatcherTimer JumpTimer;
         System.Windows.Threading.DispatcherTimer FallTimer;
         System.Windows.Threading.DispatcherTimer MoveTimer;
         System.Windows.Threading.DispatcherTimer ConfirmTimer;
         System.Windows.Threading.DispatcherTimer FightTimer;
+        System.Windows.Threading.DispatcherTimer MediaTimer;
 
         bool tavern = true;
         bool start = false;
@@ -89,10 +93,16 @@ namespace Game
         ImageBrush background = new ImageBrush();
 
         store store = new store();
-
+        
+        MediaElement MP = new MediaElement();
+        
         public MainWindow()
         {
             InitializeComponent();
+            //загрузка видео файла
+            
+
+
 
             screen.KeyDown += Window_KeyDown;            
 
