@@ -29,14 +29,13 @@ namespace Game
             //timerStart();
             MP.MediaOpened += MP_MediaOpened;
             MP.MediaEnded += MP_MediaEnded;
-            //MP.Source = new Uri("E:\\Game\\NewRepo\\Game\\Game\\video\\Я сам испугался.wmv");
-            MP.Source = new Uri("@pack://application:,,,/video/Я сам испугался.wmv", UriKind.RelativeOrAbsolute); 
+            MP.Source = new Uri("C:\\Users\\user\\Desktop\\Я сам испугался.wmv");
+            //MP.Source = new Uri("@pack://application:,,,/video/Я сам испугался.wmv", UriKind.RelativeOrAbsolute); 
             MP.Volume = 1;
-            
 
             //MP.Source = new Uri(@"pack://application:,,,/video/predhistor.wmv", UriKind.Absolute);
             MP.Play();
-           // MP.SpeedRatio = 20;
+            MP.SpeedRatio = 20;
         }
 
         private void MP_MediaOpened(object sender,RoutedEventArgs e)
@@ -48,9 +47,7 @@ namespace Game
         {
             MP.Stop();
             this.Hide();
-            game.ShowDialog();                             
-            
-            
+            game.ShowDialog();
         }
 
     }

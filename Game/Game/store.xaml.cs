@@ -33,6 +33,7 @@ namespace Game
         string db_name = "C:\\Users\\user\\Desktop\\store.db";
 
         Gaming staff = new Gaming();
+        //MainWindow mon = new MainWindow();
 
         public bool armorb = false, weaponb = false, healb = false, goldb = false;
         public int armor = 5, weapon = 1, heal = 0, idk = 0, gold = 0;
@@ -41,8 +42,6 @@ namespace Game
         public store()
         {
             InitializeComponent();
-
-            gold = 0;
 
             m_dbConnection = new SQLiteConnection("Data Source=" + db_name + ";Version=3;");
             m_dbConnection.Open();

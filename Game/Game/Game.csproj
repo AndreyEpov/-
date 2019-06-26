@@ -27,7 +27,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <UseVSHostingProcess>true</UseVSHostingProcess>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -82,9 +82,6 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="fight.xaml.cs">
-      <DependentUpon>fight.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Gaming.cs" />
     <Compile Include="store.xaml.cs">
       <DependentUpon>store.xaml</DependentUpon>
@@ -93,10 +90,6 @@
     <Compile Include="Window1.xaml.cs">
       <DependentUpon>Window1.xaml</DependentUpon>
     </Compile>
-    <Page Include="fight.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -208,6 +201,53 @@
     <Resource Include="текстурки\ggrunforw.gif" />
   </ItemGroup>
   <ItemGroup>
+    <Resource Include="текстурки\bard.png" />
+    <Resource Include="poses\Wizard.gif" />
+    <Resource Include="poses\tavernwomanreverse.gif" />
+    <Resource Include="poses\loh1reverse.gif" />
+    <Resource Include="poses\loh2reverse.gif" />
+    <Resource Include="poses\nelohreverse.gif" />
+    <Resource Include="animations\00back.gif" />
+    <Resource Include="animations\00forw.gif" />
+    <Resource Include="animations\01back.gif" />
+    <Resource Include="animations\01forw.gif" />
+    <Resource Include="animations\02back.gif" />
+    <Resource Include="animations\02forw.gif" />
+    <Resource Include="animations\03back.gif" />
+    <Resource Include="animations\03forw.gif" />
+    <Resource Include="animations\10back.gif" />
+    <Resource Include="animations\10forw.gif" />
+    <Resource Include="animations\11back.gif" />
+    <Resource Include="animations\11forw.gif" />
+    <Resource Include="animations\12back.gif" />
+    <Resource Include="animations\12forw.gif" />
+    <Resource Include="animations\13back.gif" />
+    <Resource Include="animations\13forw.gif" />
+    <Resource Include="animations\20back.gif" />
+    <Resource Include="animations\20forw.gif" />
+    <Resource Include="animations\21back.gif" />
+    <Resource Include="animations\21forw.gif" />
+    <Resource Include="animations\22back.gif" />
+    <Resource Include="animations\22forw.gif" />
+    <Resource Include="animations\23back.gif" />
+    <Resource Include="animations\23forw.gif" />
+    <Resource Include="animations\30back.gif" />
+    <Resource Include="animations\30forw.gif" />
+    <Resource Include="animations\31back.gif" />
+    <Resource Include="animations\31forw.gif" />
+    <Resource Include="animations\32back.gif" />
+    <Resource Include="animations\32forw.gif" />
+    <Resource Include="animations\33back.gif" />
+    <Resource Include="animations\33forw.gif" />
+    <Resource Include="poses\loh1.gif" />
+    <Resource Include="poses\loh2.gif" />
+    <Resource Include="poses\neloh.gif" />
+    <Resource Include="poses\enchantedsoldier1.gif" />
+    <Resource Include="poses\enchantedsoldier2.gif" />
+    <Resource Include="poses\PIRATE.gif" />
+    <Resource Include="poses\na_areny.gif" />
+    <Resource Include="poses\GOLIY.gif" />
+    <Resource Include="poses\BLYANT.gif" />
     <Content Include="video\Я сам испугался.wmv" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
