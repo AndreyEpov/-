@@ -81,9 +81,10 @@ namespace Game
         bool canjump = true;
         int enemyshp = 120;
         int enemyshp1 = 120;
+        int enemyshp2 = 120;
         int zombhp = 100;
         int wizardshp = 300;
-        int planthp = 120;
+        int planthp = 120, planthp1 = 120, planthp2 = 120;
         public int usedheal = 0;
         public int gold = 0;
         int cost;
@@ -420,7 +421,17 @@ namespace Game
             if ((rect.Contains(e1) || rect.Contains(e2) || rect.Contains(e3) || rect.Contains(e4)) && pic == 3 && screen.Children.Contains(enemy1)) // из первой во вторую
             {
                 hpw = hpw - 15 + gema.armor;
-            }       
+            }
+
+            Point p11 = new Point(542, 312);
+            Point p22 = new Point(636, 312);
+            Point p33 = new Point(542, 248);
+            Point p44 = new Point(636, 248);// в лесу
+
+            if ((rect.Contains(p11) || rect.Contains(p22) || rect.Contains(p33) || rect.Contains(p44)) && pic == 3 && screen.Children.Contains(enemy3)) // из первой во вторую
+            {
+                hpw = hpw - 15 + gema.armor;
+            }
 
             if ((rect.Contains(e11) || rect.Contains(e22) || rect.Contains(e33) || rect.Contains(e44)) && (pic == 8 || pic == 7) && screen.Children.Contains(enemy))
             {
@@ -457,7 +468,12 @@ namespace Game
                 hpw = hpw - 30 + gema.armor;
             }
 
-            if ((rect.Contains(e1) || rect.Contains(e2) || rect.Contains(e3) || rect.Contains(e4)) && pic == 2 && screen.Children.Contains(enemy1)) // из первой во вторую
+            Point pl111 = new Point(350,312);
+            Point pl222 = new Point(446,216);
+            Point pl333 = new Point(350,216);
+            Point pl444 = new Point(446,312);
+
+            if ((rect.Contains(pl111) || rect.Contains(pl222) || rect.Contains(pl333) || rect.Contains(pl444)) && pic == 2 && screen.Children.Contains(enemy1)) // из первой во вторую
             {
                 hpw = hpw - 20 + gema.armor;
             }
@@ -481,6 +497,26 @@ namespace Game
             Point en22 = new Point(396, 312);
             Point en33 = new Point(300, 216);
             Point en44 = new Point(396, 216);
+
+            Point pl1 = new Point(355, 312);
+            Point pl2 = new Point(264, 216);
+            Point pl3 = new Point(355, 216);
+            Point pl4 = new Point(264, 312);
+
+            Point pl11 = new Point(172, 312);
+            Point pl22 = new Point(268, 216);
+            Point pl33 = new Point(172, 216);
+            Point pl44 = new Point(268, 312);
+
+            if ((rect.Contains(pl1) || rect.Contains(pl2) || rect.Contains(pl3) || rect.Contains(pl4)) && pic == 2 && screen.Children.Contains(enemy2)) // из первой во вторую
+            {
+                hpw = hpw - 20 + gema.armor;
+            }
+
+            if ((rect.Contains(pl11) || rect.Contains(pl22) || rect.Contains(pl33) || rect.Contains(pl44)) && pic == 2 && screen.Children.Contains(enemy3)) // из первой во вторую
+            {
+                hpw = hpw - 20 + gema.armor;
+            }
 
             if ((rect.Contains(en1) || rect.Contains(en2) || rect.Contains(en3) || rect.Contains(en4)) && pic == 14 && screen.Children.Contains(enemy1))
             {
@@ -527,6 +563,22 @@ namespace Game
                 screen.Children.Remove(HPENEMY);
                 screen.Children.Remove(FRAMEENEMY);
                 planthp = 120;
+            }
+
+            if (planthp1 <= 0)
+            {
+                screen.Children.Remove(enemy2);
+                screen.Children.Remove(HPENEMY1);
+                screen.Children.Remove(FRAMEENEMY1);
+                planthp1 = 120;
+            }
+
+            if (planthp2 <= 0)
+            {
+                screen.Children.Remove(enemy3);
+                screen.Children.Remove(HPENEMY2);
+                screen.Children.Remove(FRAMEENEMY2);
+                planthp2 = 120;
             }
 
             if (knighthp <= 0)
@@ -650,7 +702,15 @@ namespace Game
                 screen.Children.Remove(FRAMEENEMY1);
                 enemyshp1 = 120;
             }
-            if (count==2)
+            if (enemyshp2 <= 0)
+            {
+                count++;
+                screen.Children.Remove(enemy3);
+                screen.Children.Remove(HPENEMY2);
+                screen.Children.Remove(FRAMEENEMY2);
+                enemyshp2 = 120;
+            }
+            if (count==3)
             {
                 forest = true;
             }
@@ -831,7 +891,12 @@ namespace Game
                 }
             }
 
-            if ((rect.Contains(e1) || rect.Contains(e2) || rect.Contains(e3) || rect.Contains(e4)) && pic == 2 && screen.Children.Contains(enemy1)) // из первой во вторую
+            Point pl111 = new Point(350, 312);
+            Point pl222 = new Point(446, 216);
+            Point pl333 = new Point(350, 216);
+            Point pl444 = new Point(446, 312);
+
+            if ((rect.Contains(pl111) || rect.Contains(pl222) || rect.Contains(pl333) || rect.Contains(pl444)) && pic == 2 && screen.Children.Contains(enemy1)) // из первой во вторую
             {
                 FightTimer.Start();
                 if (e.Key == Key.A && screen.Children.Contains(enemy1))
@@ -839,6 +904,38 @@ namespace Game
                     planthp = planthp - (6 * gema.weapon);
                     if (planthp > 0 && pic == 2)
                         HPENEMY.Width = planthp;
+                }
+            }
+
+            Point pl1 = new Point(355,312);
+            Point pl2 = new Point(264,216);
+            Point pl3 = new Point(355,216);
+            Point pl4 = new Point(264,312);
+
+            Point pl11 = new Point(172,312);
+            Point pl22 = new Point(268,216);
+            Point pl33 = new Point(172,216);
+            Point pl44 = new Point(268,312);
+
+            if ((rect.Contains(pl1) || rect.Contains(pl2) || rect.Contains(pl3) || rect.Contains(pl4)) && pic == 2 && screen.Children.Contains(enemy2)) // из первой во вторую
+            {
+                FightTimer.Start();
+                if (e.Key == Key.A && screen.Children.Contains(enemy2))
+                {
+                    planthp1 = planthp1 - (6 * gema.weapon);
+                    if (planthp1 > 0 && pic == 2)
+                        HPENEMY1.Width = planthp1;
+                }
+            }
+
+            if ((rect.Contains(pl11) || rect.Contains(pl22) || rect.Contains(pl33) || rect.Contains(pl44)) && pic == 2 && screen.Children.Contains(enemy3)) // из первой во вторую
+            {
+                FightTimer.Start();
+                if (e.Key == Key.A && screen.Children.Contains(enemy3))
+                {
+                    planthp2 = planthp2 - (6 * gema.weapon);
+                    if (planthp2 > 0 && pic == 2)
+                        HPENEMY2.Width = planthp2;
                 }
             }
 
@@ -855,6 +952,22 @@ namespace Game
                     enemyshp1 = enemyshp1 - (6 * gema.weapon);
                     if (enemyshp1 > 0 && pic == 3)
                         HPENEMY1.Width = enemyshp1;
+                }
+            }
+
+            Point p11 = new Point(542, 312);
+            Point p22 = new Point(636, 312);
+            Point p33 = new Point(542, 248);
+            Point p44 = new Point(636, 248);// в лесу
+
+            if ((rect.Contains(p11) || rect.Contains(p22) || rect.Contains(p33) || rect.Contains(p44)) && pic == 3 && screen.Children.Contains(enemy3)) // из первой во вторую
+            {
+                FightTimer.Start();
+                if (e.Key == Key.A && screen.Children.Contains(enemy3))
+                {
+                    enemyshp2 = enemyshp2 - (6 * gema.weapon);
+                    if (enemyshp2 > 0 && pic == 3)
+                        HPENEMY2.Width = enemyshp2;
                 }
             }
 
@@ -1111,6 +1224,12 @@ namespace Game
                     screen.Children.Remove(enemy1);
                     screen.Children.Remove(HPENEMY);
                     screen.Children.Remove(FRAMEENEMY);
+                    screen.Children.Remove(enemy2);
+                    screen.Children.Remove(HPENEMY1);
+                    screen.Children.Remove(FRAMEENEMY1);
+                    screen.Children.Remove(enemy3);
+                    screen.Children.Remove(HPENEMY2);
+                    screen.Children.Remove(FRAMEENEMY2);
                 }
             }
 
@@ -1146,13 +1265,73 @@ namespace Game
                     screen.Children.Add(FRAMEENEMY);
 
                     HPENEMY.Height = hph;
-                    HPENEMY.Width = enemyshp;
+                    HPENEMY.Width = planthp;
                     HPENEMY.Stroke = Brushes.Black;
                     HPENEMY.Fill = Brushes.Red;
                     HPENEMY.HorizontalAlignment = HorizontalAlignment.Left;
                     HPENEMY.VerticalAlignment = VerticalAlignment.Center;
                     HPENEMY.Margin = new Thickness(350, 296, 0, 0);
                     screen.Children.Add(HPENEMY);
+
+                    enemy2.Height = 96;
+                    enemy2.Width = 96;
+                    ImageBrush rival1 = new ImageBrush();
+                    rival.AlignmentX = AlignmentX.Left;
+                    //ib.AlignmentY = AlignmentY.Top;
+                    rival1.Stretch = Stretch.None;
+                    rival1.Viewbox = new Rect(0, 0, 96, 96);
+                    rival1.ViewboxUnits = BrushMappingMode.Absolute;
+                    rival1.ImageSource = new BitmapImage(new Uri(@"pack://application:,,,/poses/BLYANT.gif", UriKind.Absolute));
+                    enemy2.Fill = rival1;
+                    enemy2.Margin = new Thickness(264, 312, 0, 0);
+                    screen.Children.Add(enemy2);
+
+                    FRAMEENEMY1.Height = 16;
+                    FRAMEENEMY1.Width = 120;
+                    FRAMEENEMY1.Stroke = Brushes.Black;
+                    FRAMEENEMY1.HorizontalAlignment = HorizontalAlignment.Left;
+                    FRAMEENEMY1.VerticalAlignment = VerticalAlignment.Center;
+                    FRAMEENEMY1.Margin = new Thickness(264, 278, 0, 0);
+                    screen.Children.Add(FRAMEENEMY1);
+
+                    HPENEMY1.Height = hph;
+                    HPENEMY1.Width = planthp;
+                    HPENEMY1.Stroke = Brushes.Black;
+                    HPENEMY1.Fill = Brushes.Red;
+                    HPENEMY1.HorizontalAlignment = HorizontalAlignment.Left;
+                    HPENEMY1.VerticalAlignment = VerticalAlignment.Center;
+                    HPENEMY1.Margin = new Thickness(264, 278, 0, 0);
+                    screen.Children.Add(HPENEMY1);
+
+                    enemy3.Height = 96;
+                    enemy3.Width = 96;
+                    ImageBrush rival2 = new ImageBrush();
+                    rival2.AlignmentX = AlignmentX.Left;
+                    //ib.AlignmentY = AlignmentY.Top;
+                    rival2.Stretch = Stretch.None;
+                    rival2.Viewbox = new Rect(0, 0, 96, 96);
+                    rival2.ViewboxUnits = BrushMappingMode.Absolute;
+                    rival2.ImageSource = new BitmapImage(new Uri(@"pack://application:,,,/poses/BLYANT.gif", UriKind.Absolute));
+                    enemy3.Fill = rival2;
+                    enemy3.Margin = new Thickness(172, 312, 0, 0);
+                    screen.Children.Add(enemy3);
+
+                    FRAMEENEMY2.Height = 16;
+                    FRAMEENEMY2.Width = 120;
+                    FRAMEENEMY2.Stroke = Brushes.Black;
+                    FRAMEENEMY2.HorizontalAlignment = HorizontalAlignment.Left;
+                    FRAMEENEMY2.VerticalAlignment = VerticalAlignment.Center;
+                    FRAMEENEMY2.Margin = new Thickness(172, 260, 0, 0);
+                    screen.Children.Add(FRAMEENEMY2);
+
+                    HPENEMY2.Height = hph;
+                    HPENEMY2.Width = planthp;
+                    HPENEMY2.Stroke = Brushes.Black;
+                    HPENEMY2.Fill = Brushes.Red;
+                    HPENEMY2.HorizontalAlignment = HorizontalAlignment.Left;
+                    HPENEMY2.VerticalAlignment = VerticalAlignment.Center;
+                    HPENEMY2.Margin = new Thickness(172, 260, 0, 0);
+                    screen.Children.Add(HPENEMY2);
                 }
             }
 
@@ -1342,6 +1521,36 @@ namespace Game
                     HPENEMY1.VerticalAlignment = VerticalAlignment.Center;
                     HPENEMY1.Margin = new Thickness(446, 278, 0, 0);
                     screen.Children.Add(HPENEMY1);
+
+                    enemy3.Height = 96;
+                    enemy3.Width = 96;
+                    ImageBrush rival2 = new ImageBrush();
+                    rival2.AlignmentX = AlignmentX.Left;
+                    //ib.AlignmentY = AlignmentY.Top;
+                    rival2.Stretch = Stretch.None;
+                    rival2.Viewbox = new Rect(0, 0, 96, 96);
+                    rival2.ViewboxUnits = BrushMappingMode.Absolute;
+                    rival2.ImageSource = new BitmapImage(new Uri(@"pack://application:,,,/poses/nelohreverse.gif", UriKind.Absolute));
+                    enemy3.Fill = rival2;
+                    enemy3.Margin = new Thickness(542, 312, 0, 0);
+                    screen.Children.Add(enemy3);
+
+                    FRAMEENEMY2.Height = 16;
+                    FRAMEENEMY2.Width = 120;
+                    FRAMEENEMY2.Stroke = Brushes.Black;
+                    FRAMEENEMY2.HorizontalAlignment = HorizontalAlignment.Left;
+                    FRAMEENEMY2.VerticalAlignment = VerticalAlignment.Center;
+                    FRAMEENEMY2.Margin = new Thickness(542, 260, 0, 0);
+                    screen.Children.Add(FRAMEENEMY2);
+
+                    HPENEMY2.Height = hph;
+                    HPENEMY2.Width = enemyshp;
+                    HPENEMY2.Stroke = Brushes.Black;
+                    HPENEMY2.Fill = Brushes.Red;
+                    HPENEMY2.HorizontalAlignment = HorizontalAlignment.Left;
+                    HPENEMY2.VerticalAlignment = VerticalAlignment.Center;
+                    HPENEMY2.Margin = new Thickness(542, 260, 0, 0);
+                    screen.Children.Add(HPENEMY2);
                 }
             }
 
@@ -1392,7 +1601,7 @@ namespace Game
                     rival2.ImageSource = new BitmapImage(new Uri(@"pack://application:,,,/poses/slime1.gif", UriKind.Absolute));
                     enemy3.Fill = rival2;
                     enemy3.Margin = new Thickness(128, 344, 0, 0);
-                    screen.Children.Add(enemy3);
+                    screen.Children.Add(enemy3);                    
 
                     FRAMEENEMY.Height = 16;
                     FRAMEENEMY.Width = 175;
@@ -1460,6 +1669,12 @@ namespace Game
                     screen.Children.Remove(enemy1);
                     screen.Children.Remove(HPENEMY);
                     screen.Children.Remove(FRAMEENEMY);
+                    screen.Children.Remove(enemy2);
+                    screen.Children.Remove(HPENEMY1);
+                    screen.Children.Remove(FRAMEENEMY1);
+                    screen.Children.Remove(enemy3);
+                    screen.Children.Remove(HPENEMY2);
+                    screen.Children.Remove(FRAMEENEMY2);
                 }
             }
 
@@ -1478,6 +1693,9 @@ namespace Game
                     screen.Children.Remove(enemy2);
                     screen.Children.Remove(HPENEMY1);
                     screen.Children.Remove(FRAMEENEMY1);
+                    screen.Children.Remove(enemy3);
+                    screen.Children.Remove(HPENEMY2);
+                    screen.Children.Remove(FRAMEENEMY2);
                 }
             }
 
@@ -1499,6 +1717,9 @@ namespace Game
                     screen.Children.Remove(enemy2);
                     screen.Children.Remove(HPENEMY1);
                     screen.Children.Remove(FRAMEENEMY1);
+                    screen.Children.Remove(enemy3);
+                    screen.Children.Remove(HPENEMY2);
+                    screen.Children.Remove(FRAMEENEMY2);
                 }
             }
 
@@ -1684,6 +1905,66 @@ namespace Game
                     HPENEMY.VerticalAlignment = VerticalAlignment.Center;
                     HPENEMY.Margin = new Thickness(350, 296, 0, 0);
                     screen.Children.Add(HPENEMY);
+
+                    enemy2.Height = 96;
+                    enemy2.Width = 96;
+                    ImageBrush rival1 = new ImageBrush();
+                    rival.AlignmentX = AlignmentX.Left;
+                    //ib.AlignmentY = AlignmentY.Top;
+                    rival1.Stretch = Stretch.None;
+                    rival1.Viewbox = new Rect(0, 0, 96, 96);
+                    rival1.ViewboxUnits = BrushMappingMode.Absolute;
+                    rival1.ImageSource = new BitmapImage(new Uri(@"pack://application:,,,/poses/BLYANT.gif", UriKind.Absolute));
+                    enemy2.Fill = rival1;
+                    enemy2.Margin = new Thickness(264, 312, 0, 0);
+                    screen.Children.Add(enemy2);
+
+                    FRAMEENEMY1.Height = 16;
+                    FRAMEENEMY1.Width = 120;
+                    FRAMEENEMY1.Stroke = Brushes.Black;
+                    FRAMEENEMY1.HorizontalAlignment = HorizontalAlignment.Left;
+                    FRAMEENEMY1.VerticalAlignment = VerticalAlignment.Center;
+                    FRAMEENEMY1.Margin = new Thickness(264, 278, 0, 0);
+                    screen.Children.Add(FRAMEENEMY1);
+
+                    HPENEMY1.Height = hph;
+                    HPENEMY1.Width = planthp;
+                    HPENEMY1.Stroke = Brushes.Black;
+                    HPENEMY1.Fill = Brushes.Red;
+                    HPENEMY1.HorizontalAlignment = HorizontalAlignment.Left;
+                    HPENEMY1.VerticalAlignment = VerticalAlignment.Center;
+                    HPENEMY1.Margin = new Thickness(264, 278, 0, 0);
+                    screen.Children.Add(HPENEMY1);
+
+                    enemy3.Height = 96;
+                    enemy3.Width = 96;
+                    ImageBrush rival2 = new ImageBrush();
+                    rival2.AlignmentX = AlignmentX.Left;
+                    //ib.AlignmentY = AlignmentY.Top;
+                    rival2.Stretch = Stretch.None;
+                    rival2.Viewbox = new Rect(0, 0, 96, 96);
+                    rival2.ViewboxUnits = BrushMappingMode.Absolute;
+                    rival2.ImageSource = new BitmapImage(new Uri(@"pack://application:,,,/poses/BLYANT.gif", UriKind.Absolute));
+                    enemy3.Fill = rival2;
+                    enemy3.Margin = new Thickness(172, 312, 0, 0);
+                    screen.Children.Add(enemy3);
+
+                    FRAMEENEMY2.Height = 16;
+                    FRAMEENEMY2.Width = 120;
+                    FRAMEENEMY2.Stroke = Brushes.Black;
+                    FRAMEENEMY2.HorizontalAlignment = HorizontalAlignment.Left;
+                    FRAMEENEMY2.VerticalAlignment = VerticalAlignment.Center;
+                    FRAMEENEMY2.Margin = new Thickness(172, 260, 0, 0);
+                    screen.Children.Add(FRAMEENEMY2);
+
+                    HPENEMY2.Height = hph;
+                    HPENEMY2.Width = planthp;
+                    HPENEMY2.Stroke = Brushes.Black;
+                    HPENEMY2.Fill = Brushes.Red;
+                    HPENEMY2.HorizontalAlignment = HorizontalAlignment.Left;
+                    HPENEMY2.VerticalAlignment = VerticalAlignment.Center;
+                    HPENEMY2.Margin = new Thickness(172, 260, 0, 0);
+                    screen.Children.Add(HPENEMY2);
                 }
             }
 
@@ -1705,7 +1986,7 @@ namespace Game
                     rival.Stretch = Stretch.None;
                     rival.Viewbox = new Rect(0, 0, 96, 96);
                     rival.ViewboxUnits = BrushMappingMode.Absolute;
-                    rival.ImageSource = new BitmapImage(new Uri(@"pack://application:,,,/poses/loh1reverse.gif", UriKind.Absolute));
+                    rival.ImageSource = new BitmapImage(new Uri(@"pack://application:,,,/poses/loh1.gif", UriKind.Absolute));
                     enemy1.Fill = rival;
                     enemy1.Margin = new Thickness(350, 312, 0, 0);
                     screen.Children.Add(enemy1);
@@ -1718,7 +1999,7 @@ namespace Game
                     rival1.Stretch = Stretch.None;
                     rival1.Viewbox = new Rect(0, 0, 96, 96);
                     rival1.ViewboxUnits = BrushMappingMode.Absolute;
-                    rival1.ImageSource = new BitmapImage(new Uri(@"pack://application:,,,/poses/loh2reverse.gif", UriKind.Absolute));
+                    rival1.ImageSource = new BitmapImage(new Uri(@"pack://application:,,,/poses/loh2.gif", UriKind.Absolute));
                     enemy2.Fill = rival1;
                     enemy2.Margin = new Thickness(446, 312, 0, 0);
                     screen.Children.Add(enemy2);
@@ -1756,6 +2037,36 @@ namespace Game
                     HPENEMY1.VerticalAlignment = VerticalAlignment.Center;
                     HPENEMY1.Margin = new Thickness(446, 278, 0, 0);
                     screen.Children.Add(HPENEMY1);
+
+                    enemy3.Height = 96;
+                    enemy3.Width = 96;
+                    ImageBrush rival2 = new ImageBrush();
+                    rival2.AlignmentX = AlignmentX.Left;
+                    //ib.AlignmentY = AlignmentY.Top;
+                    rival2.Stretch = Stretch.None;
+                    rival2.Viewbox = new Rect(0, 0, 96, 96);
+                    rival2.ViewboxUnits = BrushMappingMode.Absolute;
+                    rival2.ImageSource = new BitmapImage(new Uri(@"pack://application:,,,/poses/neloh.gif", UriKind.Absolute));
+                    enemy3.Fill = rival2;
+                    enemy3.Margin = new Thickness(542, 312, 0, 0);
+                    screen.Children.Add(enemy3);
+
+                    FRAMEENEMY2.Height = 16;
+                    FRAMEENEMY2.Width = 120;
+                    FRAMEENEMY2.Stroke = Brushes.Black;
+                    FRAMEENEMY2.HorizontalAlignment = HorizontalAlignment.Left;
+                    FRAMEENEMY2.VerticalAlignment = VerticalAlignment.Center;
+                    FRAMEENEMY2.Margin = new Thickness(542, 260, 0, 0);
+                    screen.Children.Add(FRAMEENEMY2);
+
+                    HPENEMY2.Height = hph;
+                    HPENEMY2.Width = enemyshp;
+                    HPENEMY2.Stroke = Brushes.Black;
+                    HPENEMY2.Fill = Brushes.Red;
+                    HPENEMY2.HorizontalAlignment = HorizontalAlignment.Left;
+                    HPENEMY2.VerticalAlignment = VerticalAlignment.Center;
+                    HPENEMY2.Margin = new Thickness(542, 260, 0, 0);
+                    screen.Children.Add(HPENEMY2);
                 }
             }
 
