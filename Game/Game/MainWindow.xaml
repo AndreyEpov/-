@@ -8,8 +8,8 @@
         Title="MainWindow" Height="448" Width="800" ResizeMode="NoResize" KeyDown="Window_KeyDown" Closed="Window_Closed">
     <Grid KeyDown="Grid_KeyDown" Margin="0,0,0,17">
         <Canvas x:Name="screen" HorizontalAlignment="Left" Height="440" VerticalAlignment="Top" Width="792">
-            <Label x:Name="confirm" Content="" Height="54" Canvas.Left="252" Canvas.Top="352" Width="296"/>
-            <Label x:Name="you" Content="" Height="174" Canvas.Left="10" Canvas.Top="44" Width="124"/>
+            <Label x:Name="confirm" Content="" Height="54" Canvas.Left="252" Canvas.Top="352" Width="296" Foreground="Red"/>
+            <Label x:Name="you" Content="" Height="174" Canvas.Left="10" Canvas.Top="44" Width="124" Foreground="Red"/>
         </Canvas>
     </Grid>
 </Window>

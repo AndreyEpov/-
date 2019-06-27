@@ -36,7 +36,7 @@ namespace Game
         //MainWindow mon = new MainWindow();
 
         public bool armorb = false, weaponb = false, healb = false, goldb = false;
-        public int armor = 5, weapon = 1, heal = 0, idk = 0, gold = 0;
+        public int armor = 0, weapon = 0, heal = 0, idk = 0, gold = 0;
 
 
         public store()

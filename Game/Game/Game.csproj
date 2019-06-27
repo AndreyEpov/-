@@ -201,6 +201,7 @@
     <Resource Include="текстурки\ggrunforw.gif" />
   </ItemGroup>
   <ItemGroup>
+    <Resource Include="текстурки\last.jpg" />
     <Resource Include="текстурки\bard.png" />
     <Resource Include="poses\Wizard.gif" />
     <Resource Include="poses\tavernwomanreverse.gif" />
@@ -248,6 +249,10 @@
     <Resource Include="poses\na_areny.gif" />
     <Resource Include="poses\GOLIY.gif" />
     <Resource Include="poses\BLYANT.gif" />
+    <Resource Include="poses\slime1reverse.gif" />
+    <Resource Include="poses\slime2reverse.gif" />
+    <Resource Include="poses\orc3reverse.gif" />
+    <Resource Include="poses\orc2reverse.gif" />
     <Content Include="video\Я сам испугался.wmv" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

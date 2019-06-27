@@ -83,17 +83,20 @@ namespace Game
         int enemyshp1 = 120;
         int enemyshp2 = 120;
         int zombhp = 100;
+        int orchp = 100;
         int wizardshp = 300;
         int planthp = 120, planthp1 = 120, planthp2 = 120;
         public int usedheal = 0;
         public int gold = 0;
         int cost;
-        int count = 0, victory = 0;
+        int count = 0, victory = 0, slimekill = 0, last = 0, plantkill = 0;
         int slime1hp = 175, slime2hp = 140, slime3hp = 140;
         int en1hp = 200, en2hp = 200;
         int knighthp = 150, pirate = 150;
         int bard = 0, xb = 650, by = 312;
         bool right = false;
+        int beforearm,beforeweap;
+        bool slimes = true, orcruins = false, orccave = false, plants = true, enknights = false, orcarm=true, orcweap=true, tournweap=true, enknightsarmor=true, armor1 = false, weapon1 = false;
 
         int hph = 16, hpw = 96;
 
@@ -112,6 +115,10 @@ namespace Game
         public MainWindow()
         {
             InitializeComponent();
+
+            MessageBox.Show("Я был без сознания, пока снаружи не послышались вопли петуха." +
+" Так как рядом с моим домом только распологалась деревенская таверна, взяв первое, что попалось под руку," +
+" я решил направиться туда", "\n", MessageBoxButton.OK);
 
             screen.KeyDown += Window_KeyDown;
 
@@ -204,23 +211,23 @@ namespace Game
 
         private void MoveBardTimer_Tick(object sender, EventArgs e)
         {            
-            if (bard == 1)
-            {
-                if (right == false)
-                {
-                    xb -= 8;
-                    if (xb < 10)
-                        right = true;
-                }
-                else
-                {
-                    xb += 8;
-                    if (xb > 680)
-                        right = false;
-                }
-                enemy1.RenderTransform = new TranslateTransform(xb, 250);
-                screen.UpdateLayout();
-            }
+            //if (bard == 1)
+            //{
+            //    if (right == false)
+            //    {
+            //        xb -= 8;
+            //        if (xb < 10)
+            //            right = true;
+            //    }
+            //    else
+            //    {
+            //        xb += 8;
+            //        if (xb > 680)
+            //            right = false;
+            //    }
+            //    enemy1.RenderTransform = new TranslateTransform(xb, 250);
+            //    screen.UpdateLayout();
+            //}
         }
 
         private void ConfirmTimer_Tick(object sender, EventArgs e)
@@ -297,6 +304,8 @@ namespace Game
                 if (rect.Contains(f5t9) == true)
                     confirm.Content = "[e]На рыцарский турнир";
                 if (rect.Contains(f5t2) == false && rect.Contains(f5t3) == false && rect.Contains(f5t4) == false && rect.Contains(f5t67) == false && rect.Contains(f5t9) == false && rect.Contains(tostore) == false)
+                    confirm.Content = "";
+                if (bard == 1)
                     confirm.Content = "";
             }
 
@@ -559,6 +568,7 @@ namespace Game
 
             if (planthp<=0)
             {
+                plantkill++;
                 screen.Children.Remove(enemy1);
                 screen.Children.Remove(HPENEMY);
                 screen.Children.Remove(FRAMEENEMY);
@@ -567,6 +577,7 @@ namespace Game
 
             if (planthp1 <= 0)
             {
+                plantkill++;
                 screen.Children.Remove(enemy2);
                 screen.Children.Remove(HPENEMY1);
                 screen.Children.Remove(FRAMEENEMY1);
@@ -575,10 +586,17 @@ namespace Game
 
             if (planthp2 <= 0)
             {
+                plantkill++;
                 screen.Children.Remove(enemy3);
                 screen.Children.Remove(HPENEMY2);
                 screen.Children.Remove(FRAMEENEMY2);
                 planthp2 = 120;
+            }
+
+            if (plantkill == 3)
+            {
+                if (plants == true)
+                    plusweaponpl();
             }
 
             if (knighthp <= 0)
@@ -591,8 +609,11 @@ namespace Game
             }
 
             if (victory == 2)
+            {
                 tourn = true;
-
+                if (tournweap == true)
+                    plusweapontourn();
+            }
             if (hpw <= 0)
             {
                 if (MessageBox.Show("LOL You Died :D. Want to continue without money?", "/n", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
@@ -623,6 +644,9 @@ namespace Game
             }
             if (zombhp <= 0)
             {
+                orccave = true;
+                if (orcweap==true)
+                    plusweaponorc();
                 screen.Children.Remove(enemy);
                 screen.Children.Remove(HPENEMY);
                 screen.Children.Remove(FRAMEENEMY);
@@ -636,6 +660,7 @@ namespace Game
             
             if (en1hp <= 0)
             {
+                last++;
                 screen.Children.Remove(enemy1);
                 screen.Children.Remove(HPENEMY);
                 screen.Children.Remove(FRAMEENEMY);
@@ -644,26 +669,43 @@ namespace Game
 
             if (en2hp <= 0)
             {
+                last++;
                 screen.Children.Remove(enemy2);
                 screen.Children.Remove(HPENEMY1);
                 screen.Children.Remove(FRAMEENEMY1);
                 en2hp = 200;
             }
-
+            if (last == 2)
+            {
+                enknights = true;
+                if (enknightsarmor == true)
+                    plusarmorkni();
+            }
             if (wizardshp <= 0)
             {
                 screen.Children.Remove(enemy);
                 screen.Children.Remove(HPENEMY);
                 screen.Children.Remove(FRAMEENEMY);
-                if (MessageBox.Show("WINNER WINNER CHICKEN DINNER", "\n", MessageBoxButton.OK) == MessageBoxResult.OK)
-                {
-                    Application.Current.Shutdown();
-                }
-
+                x = 0;
+                y = 312;
+                background.ImageSource = new BitmapImage(new Uri(@"pack://application:,,,/текстурки/last.jpg", UriKind.Absolute));
+                screen.Background = background;
+                enemy.Height = 96;
+                enemy.Width = 96;
+                ImageBrush ib = new ImageBrush();
+                ib.AlignmentX = AlignmentX.Left;
+                //ib.AlignmentY = AlignmentY.Top;
+                ib.Stretch = Stretch.None;
+                ib.Viewbox = new Rect(0, 0, 96, 96);
+                ib.ViewboxUnits = BrushMappingMode.Absolute;
+                ib.ImageSource = new BitmapImage(new Uri(@"pack://application:,,,/poses/Wizard.gif", UriKind.Absolute));
+                enemy.Fill = ib;
+                enemy.Margin = new Thickness(400, 312, 0, 0);
+                screen.Children.Add(enemy);
             }
             if (slime1hp <= 0)
             {
-                count++;
+                slimekill++;
                 screen.Children.Remove(enemy1);
                 screen.Children.Remove(HPENEMY);
                 screen.Children.Remove(FRAMEENEMY);
@@ -671,7 +713,7 @@ namespace Game
             }
             if (slime2hp <= 0)
             {
-                count++;
+                slimekill++;
                 screen.Children.Remove(enemy2);
                 screen.Children.Remove(HPENEMY1);
                 screen.Children.Remove(FRAMEENEMY1);
@@ -679,13 +721,26 @@ namespace Game
             }
             if (slime3hp <= 0)
             {
-                count++;
+                slimekill++;
                 screen.Children.Remove(enemy3);
                 screen.Children.Remove(HPENEMY2);
                 screen.Children.Remove(FRAMEENEMY2);
                 slime3hp = 140;
             }
-
+            if (slimekill == 3)
+            {
+                plusarmorsl();
+            }
+            if (orchp<=0)
+            {
+                orcruins = true;
+                if (orcarm==true)
+                    plusarmororc();
+                screen.Children.Remove(enemy);
+                screen.Children.Remove(HPENEMY);
+                screen.Children.Remove(FRAMEENEMY);
+                orchp = 100;
+            }
             if (enemyshp <= 0)
             {
                 count++;
@@ -780,7 +835,48 @@ namespace Game
                     ib.ViewboxUnits = BrushMappingMode.Absolute;
                     Rect Rect = myRect.RenderTransform.TransformBounds(myRect.RenderedGeometry.Bounds);
                     ib.Stretch = Stretch.None;
-                    ib.ImageSource = new BitmapImage(new Uri(@"pack://application:,,,/текстурки/ggrunforw.gif", UriKind.Absolute));
+                    //ib.ImageSource = new BitmapImage(new Uri(@"pack://application:,,,/текстурки/ggrunforw.gif", UriKind.Absolute));
+                    
+                        ib.ImageSource = new BitmapImage(new Uri(@"pack://application:,,,/animations/00forw.gif", UriKind.Absolute));
+                    if (weapon1 == true)
+                        ib.ImageSource = new BitmapImage(new Uri(@"pack://application:,,,/animations/10forw.gif", UriKind.Absolute));
+                    if (orccave == true)
+                        ib.ImageSource = new BitmapImage(new Uri(@"pack://application:,,,/animations/20forw.gif", UriKind.Absolute));
+                    if (tourn == true)
+                        ib.ImageSource = new BitmapImage(new Uri(@"pack://application:,,,/animations/30forw.gif", UriKind.Absolute));
+
+
+
+                    if (armor1 == true)
+                    {
+                            ib.ImageSource = new BitmapImage(new Uri(@"pack://application:,,,/animations/01forw.gif", UriKind.Absolute));
+                        if (weapon1 == true)
+                            ib.ImageSource = new BitmapImage(new Uri(@"pack://application:,,,/animations/11forw.gif", UriKind.Absolute));
+                        if (orccave == true)
+                            ib.ImageSource = new BitmapImage(new Uri(@"pack://application:,,,/animations/21forw.gif", UriKind.Absolute));
+                        if (tourn == true)
+                            ib.ImageSource = new BitmapImage(new Uri(@"pack://application:,,,/animations/31forw.gif", UriKind.Absolute));
+                    }
+                    if (orcruins==true)
+                    {
+                            ib.ImageSource = new BitmapImage(new Uri(@"pack://application:,,,/animations/02forw.gif", UriKind.Absolute));
+                        if (weapon1 == true)
+                            ib.ImageSource = new BitmapImage(new Uri(@"pack://application:,,,/animations/12forw.gif", UriKind.Absolute));
+                        if (orccave == true)
+                            ib.ImageSource = new BitmapImage(new Uri(@"pack://application:,,,/animations/22forw.gif", UriKind.Absolute));
+                        if (tourn == true)
+                            ib.ImageSource = new BitmapImage(new Uri(@"pack://application:,,,/animations/32forw.gif", UriKind.Absolute));
+                    }
+                    if (enknights == true)
+                    {
+                        ib.ImageSource = new BitmapImage(new Uri(@"pack://application:,,,/animations/03forw.gif", UriKind.Absolute));
+                        if (weapon1 == true)
+                            ib.ImageSource = new BitmapImage(new Uri(@"pack://application:,,,/animations/13forw.gif", UriKind.Absolute));
+                        if (orccave ==true)
+                            ib.ImageSource = new BitmapImage(new Uri(@"pack://application:,,,/animations/23forw.gif", UriKind.Absolute));
+                        if (tourn == true)
+                            ib.ImageSource = new BitmapImage(new Uri(@"pack://application:,,,/animations/33forw.gif", UriKind.Absolute));
+                    }                   
                     myRect.Fill = ib;
                     myRect.Margin = new Thickness(0, 0, 0, 0);
                 }
@@ -802,7 +898,47 @@ namespace Game
                     ib.ViewboxUnits = BrushMappingMode.Absolute;
                     Rect Rect = myRect.RenderTransform.TransformBounds(myRect.RenderedGeometry.Bounds);
                     ib.Stretch = Stretch.None;
-                    ib.ImageSource = new BitmapImage(new Uri(@"pack://application:,,,/текстурки/ggrunbackwa.gif", UriKind.Absolute));
+                    //ib.ImageSource = new BitmapImage(new Uri(@"pack://application:,,,/текстурки/ggrunbackwa.gif", UriKind.Absolute));
+                   
+                        ib.ImageSource = new BitmapImage(new Uri(@"pack://application:,,,/animations/00back.gif", UriKind.Absolute));
+                    if (weapon1 == true)
+                        ib.ImageSource = new BitmapImage(new Uri(@"pack://application:,,,/animations/10back.gif", UriKind.Absolute));
+                    if (orccave == true)
+                        ib.ImageSource = new BitmapImage(new Uri(@"pack://application:,,,/animations/20back.gif", UriKind.Absolute));
+                    if (tourn == true)
+                        ib.ImageSource = new BitmapImage(new Uri(@"pack://application:,,,/animations/30back.gif", UriKind.Absolute));
+
+
+                    if (armor1  == true)
+                    {
+                        ib.ImageSource = new BitmapImage(new Uri(@"pack://application:,,,/animations/01back.gif", UriKind.Absolute));
+                        if (weapon1 == true)
+                            ib.ImageSource = new BitmapImage(new Uri(@"pack://application:,,,/animations/11back.gif", UriKind.Absolute));
+                        if (orccave == true)
+                            ib.ImageSource = new BitmapImage(new Uri(@"pack://application:,,,/animations/21back.gif", UriKind.Absolute));
+                        if (tourn == true)
+                            ib.ImageSource = new BitmapImage(new Uri(@"pack://application:,,,/animations/31back.gif", UriKind.Absolute));
+                    }
+                    if (orcruins == true)
+                    {
+                        ib.ImageSource = new BitmapImage(new Uri(@"pack://application:,,,/animations/02back.gif", UriKind.Absolute));
+                        if (weapon1 == true)
+                            ib.ImageSource = new BitmapImage(new Uri(@"pack://application:,,,/animations/12back.gif", UriKind.Absolute));
+                        if (orccave == true)
+                            ib.ImageSource = new BitmapImage(new Uri(@"pack://application:,,,/animations/22back.gif", UriKind.Absolute));
+                        if (tourn == true)
+                            ib.ImageSource = new BitmapImage(new Uri(@"pack://application:,,,/animations/32back.gif", UriKind.Absolute));
+                    }
+                    if (enknights == true)
+                    {
+                        ib.ImageSource = new BitmapImage(new Uri(@"pack://application:,,,/animations/03back.gif", UriKind.Absolute));
+                        if (weapon1 == true)
+                            ib.ImageSource = new BitmapImage(new Uri(@"pack://application:,,,/animations/13back.gif", UriKind.Absolute));
+                        if (orccave == true)
+                            ib.ImageSource = new BitmapImage(new Uri(@"pack://application:,,,/animations/23back.gif", UriKind.Absolute));
+                        if (tourn == true)
+                            ib.ImageSource = new BitmapImage(new Uri(@"pack://application:,,,/animations/33back.gif", UriKind.Absolute));
+                    }
                     myRect.Fill = ib;
                     myRect.Margin = new Thickness(0, 0, 0, 0);
                 }
@@ -830,39 +966,53 @@ namespace Game
 
             if (rect.Contains(tostore) && pic == 5)
             {
-                if (e.Key == Key.B)
+                if (bard != 1)
                 {
-                    cost = store.gold;
+                    if (e.Key == Key.B)
+                    {
+                        if (gold != 0)
+                        {
+                            cost = store.gold;
+                            beforearm = gema.armor;
+                            beforeweap = gema.weapon;
 
-                    store.ShowDialog();
+                            store.ShowDialog();
 
-                    gema.armor = store.armor;
+                            gema.armor = gema.armor + store.armor;
 
-                    gema.weapon = store.weapon;
+                            gema.weapon += store.weapon;
 
-                    gema.heal = store.heal - usedheal;
-                    //store.staff
-                    gold = gold - store.gold + cost;
-                }
+                            gema.heal = store.heal - usedheal;
+                            //store.staff
+                            gold = gold - store.gold + cost;
+                            if (beforeweap != gema.weapon)
+                                weapon1 = true;
+                            if (beforearm != gema.armor)
+                                armor1 = true;
+                        }
+                        else MessageBox.Show("Вы слишком без денег");
+                    }
 
-                if (e.Key == Key.E)
-                {
-                    MoveBardTimer.Start();
-                    bard = 1;
-                    background.ImageSource = new BitmapImage(new Uri(@"pack://application:,,,/текстурки/bard.png", UriKind.Absolute));
-                    screen.Background = background;
-                    ImageBrush girl = new ImageBrush();
-                    enemy1.Height = 96;
-                    enemy1.Width = 96;
-                    girl.AlignmentX = AlignmentX.Left;
-                    //ib.AlignmentY = AlignmentY.Top;
-                    girl.Stretch = Stretch.None;
-                    girl.Viewbox = new Rect(0, 0, 96, 96);
-                    girl.ViewboxUnits = BrushMappingMode.Absolute;
-                    girl.ImageSource = new BitmapImage(new Uri(@"pack://application:,,,/poses/princess.gif", UriKind.Absolute));
-                    enemy1.Fill = girl;
-                    enemy1.Margin = new Thickness(650, 312, 0, 0);
-                    screen.Children.Add(enemy1);
+                    if (e.Key == Key.E)
+                    {
+                        MoveBardTimer.Start();
+                        bard = 1;
+                        background.ImageSource = new BitmapImage(new Uri(@"pack://application:,,,/текстурки/bard.png", UriKind.Absolute));
+                        screen.Background = background;
+
+                        enemy2.Height = 96;
+                        enemy2.Width = 96;
+                        ImageBrush rival = new ImageBrush();
+                        rival.AlignmentX = AlignmentX.Left;
+                        //ib.AlignmentY = AlignmentY.Top;
+                        rival.Stretch = Stretch.None;
+                        rival.Viewbox = new Rect(0, 0, 96, 96);
+                        rival.ViewboxUnits = BrushMappingMode.Absolute;
+                        rival.ImageSource = new BitmapImage(new Uri(@"pack://application:,,,/poses/merchant.gif", UriKind.Absolute));
+                        enemy2.Fill = rival;
+                        enemy2.Margin = new Thickness(350, 312, 0, 0);
+                        screen.Children.Add(enemy2);
+                    }
                 }
             }
 
@@ -993,9 +1143,9 @@ namespace Game
                 FightTimer.Start();
                 if (e.Key == Key.A && screen.Children.Contains(enemy))
                 {
-                    zombhp = zombhp - (6 * gema.weapon);
-                    if (zombhp > 0)
-                        HPENEMY.Width = zombhp;
+                    orchp = orchp - (6 * gema.weapon);
+                    if (orchp > 0)
+                        HPENEMY.Width = orchp;
                 }
 
             }
@@ -1080,7 +1230,7 @@ namespace Game
                 }
             }
 
-            if (rect.Contains(f5t9) == true && pic == 5) // из замка на рыцарский турнир
+            if (rect.Contains(f5t9) == true && pic == 5 && orccave == true && orcruins==true && bard!=1) // из замка на рыцарский турнир
             {
                 if (e.Key == Key.E)
                 {
@@ -1163,7 +1313,7 @@ namespace Game
                 }
             }
 
-            if (rect.Contains(f5t67) == true && pic == 5) // из замка в пещеру/руины
+            if (rect.Contains(f5t67) == true && pic == 5 && bard != 1) // из замка в пещеру/руины
             {
                 if (e.Key == Key.E)
                 {
@@ -1188,7 +1338,7 @@ namespace Game
                     ib.Stretch = Stretch.None;
                     ib.Viewbox = new Rect(0, 0, 128, 128);
                     ib.ViewboxUnits = BrushMappingMode.Absolute;
-                    ib.ImageSource = new BitmapImage(new Uri(@"pack://application:,,,/poses/orc3.gif", UriKind.Absolute));
+                    ib.ImageSource = new BitmapImage(new Uri(@"pack://application:,,,/poses/orc3reverse.gif", UriKind.Absolute));
                     enemy.Fill = ib;
                     enemy.Margin = new Thickness(0, 280, 0, 0);
                     screen.Children.Add(enemy);
@@ -1202,7 +1352,7 @@ namespace Game
                     screen.Children.Add(FRAMEENEMY);
 
                     HPENEMY.Height = hph;
-                    HPENEMY.Width = zombhp;
+                    HPENEMY.Width = orchp;
                     HPENEMY.Stroke = Brushes.Black;
                     HPENEMY.Fill = Brushes.Red;
                     HPENEMY.HorizontalAlignment = HorizontalAlignment.Left;
@@ -1388,6 +1538,11 @@ namespace Game
                         enemy1.Fill = girl;
                         enemy1.Margin = new Thickness(300, 312, 0, 0);
                         screen.Children.Add(enemy1);
+                        MessageBox.Show("В таверне я увидел торговку, она выглядела крайне подавленной." +
+"Я:Привет, Торговка! Что случилось?" +
+"Торговка:Бандиты...Бандиты ограбили мою лавку и унесли все самое ценное." +
+"Я:Я сейчас же направлюсь за ними и все верну! А,где их искать?" +
+"Торговка:О-Они направились в сторону леса, думаю ты их там и найдешь. ", "\n", MessageBoxButton.OK);
                     }
                 }
                 else
@@ -1449,6 +1604,9 @@ namespace Game
 
             if (rect.Contains(tav) == true && pic == 0 && tavern == true && forest == true)
             {
+                MessageBox.Show("Я:Вот твои товары, Бетти.Больше эти разбойники тебя не побеспокоят."+
+                   "Бетти:Большое спасибо!Я собиралась заплатить страже, но раз проблема решена, эти деньги принадлежат тебе.И, еще слушай, раз у тебя есть сила и способности, ты вполне можешь испытать себя на рыцарском турнире в ближайшем городе.На эти деньги ты можешь купить какое-никакое снаряжение."+
+"Я: Спасибо за совет!Тогда до встречи...", "\n", MessageBoxButton.OK);
                 tavern = false;
                 gold = gold + 300;
             }
@@ -1551,6 +1709,16 @@ namespace Game
                     HPENEMY2.VerticalAlignment = VerticalAlignment.Center;
                     HPENEMY2.Margin = new Thickness(542, 260, 0, 0);
                     screen.Children.Add(HPENEMY2);
+                    if (forest==false)
+                    {
+                        MessageBox.Show("Углубившись в лесную глубь, я услышал грубые голоса. Выйдя на них я увидел трех непривлекательных людей,очень похожих на бандитов"+
+"Я: Эй!Это вы ограбили торговку в деревне ?"+
+"Бандит : Ну мы а что ?"+
+"Я : Требую немедленно вернуть все украденное!"+
+"Бандит:Кхем - кхе..Или что ?"+
+"Я : Иначе вам придется иметь дело со мной!"+
+"Бандит:Что - ж, еще один напрашивается. ", "\n", MessageBoxButton.OK);
+                    }
                 }
             }
 
@@ -1572,7 +1740,7 @@ namespace Game
                     rival.Stretch = Stretch.None;
                     rival.Viewbox = new Rect(0, 0, 96, 96);
                     rival.ViewboxUnits = BrushMappingMode.Absolute;
-                    rival.ImageSource = new BitmapImage(new Uri(@"pack://application:,,,/poses/slime2.gif", UriKind.Absolute));
+                    rival.ImageSource = new BitmapImage(new Uri(@"pack://application:,,,/poses/slime2reverse.gif", UriKind.Absolute));
                     enemy1.Fill = rival;
                     enemy1.Margin = new Thickness(0, 344, 0, 0);
                     screen.Children.Add(enemy1);
@@ -1585,7 +1753,7 @@ namespace Game
                     rival1.Stretch = Stretch.None;
                     rival1.Viewbox = new Rect(0, 0, 96, 96);
                     rival1.ViewboxUnits = BrushMappingMode.Absolute;
-                    rival1.ImageSource = new BitmapImage(new Uri(@"pack://application:,,,/poses/slime1.gif", UriKind.Absolute));
+                    rival1.ImageSource = new BitmapImage(new Uri(@"pack://application:,,,/poses/slime1reverse.gif", UriKind.Absolute));
                     enemy2.Fill = rival1;
                     enemy2.Margin = new Thickness(64, 344, 0, 0);
                     screen.Children.Add(enemy2);
@@ -1598,7 +1766,7 @@ namespace Game
                     rival2.Stretch = Stretch.None;
                     rival2.Viewbox = new Rect(0, 0, 96, 96);
                     rival2.ViewboxUnits = BrushMappingMode.Absolute;
-                    rival2.ImageSource = new BitmapImage(new Uri(@"pack://application:,,,/poses/slime1.gif", UriKind.Absolute));
+                    rival2.ImageSource = new BitmapImage(new Uri(@"pack://application:,,,/poses/slime1reverse.gif", UriKind.Absolute));
                     enemy3.Fill = rival2;
                     enemy3.Margin = new Thickness(128, 344, 0, 0);
                     screen.Children.Add(enemy3);                    
@@ -1744,7 +1912,7 @@ namespace Game
                 }
             }
 
-            if (rect.Contains(f5t4) == true && pic == 5) // из замка на болото
+            if (rect.Contains(f5t4) == true && pic == 5 && bard != 1) // из замка на болото
             {
                 if (e.Key == Key.E)
                 {
@@ -1761,7 +1929,7 @@ namespace Game
                     rival.Stretch = Stretch.None;
                     rival.Viewbox = new Rect(0, 0, 96, 96);
                     rival.ViewboxUnits = BrushMappingMode.Absolute;
-                    rival.ImageSource = new BitmapImage(new Uri(@"pack://application:,,,/poses/slime2.gif", UriKind.Absolute));
+                    rival.ImageSource = new BitmapImage(new Uri(@"pack://application:,,,/poses/slime2reverse.gif", UriKind.Absolute));
                     enemy1.Fill = rival;
                     enemy1.Margin = new Thickness(0, 344, 0, 0);
                     screen.Children.Add(enemy1);
@@ -1774,7 +1942,7 @@ namespace Game
                     rival1.Stretch = Stretch.None;
                     rival1.Viewbox = new Rect(0, 0, 96, 96);
                     rival1.ViewboxUnits = BrushMappingMode.Absolute;
-                    rival1.ImageSource = new BitmapImage(new Uri(@"pack://application:,,,/poses/slime1.gif", UriKind.Absolute));
+                    rival1.ImageSource = new BitmapImage(new Uri(@"pack://application:,,,/poses/slime1reverse.gif", UriKind.Absolute));
                     enemy2.Fill = rival1;
                     enemy2.Margin = new Thickness(64, 344, 0, 0);
                     screen.Children.Add(enemy2);
@@ -1787,7 +1955,7 @@ namespace Game
                     rival2.Stretch = Stretch.None;
                     rival2.Viewbox = new Rect(0, 0, 96, 96);
                     rival2.ViewboxUnits = BrushMappingMode.Absolute;
-                    rival2.ImageSource = new BitmapImage(new Uri(@"pack://application:,,,/poses/slime1.gif", UriKind.Absolute));
+                    rival2.ImageSource = new BitmapImage(new Uri(@"pack://application:,,,/poses/slime1reverse.gif", UriKind.Absolute));
                     enemy3.Fill = rival2;
                     enemy3.Margin = new Thickness(128, 344, 0, 0);
                     screen.Children.Add(enemy3);
@@ -1866,7 +2034,7 @@ namespace Game
                 }
             }
 
-            if (rect.Contains(f5t2) == true && pic == 5) // из замка на поляну
+            if (rect.Contains(f5t2) == true && pic == 5 && bard != 1) // из замка на поляну
             {
                 if (e.Key == Key.E)
                 {
@@ -1968,7 +2136,7 @@ namespace Game
                 }
             }
 
-            if (rect.Contains(f5t3) == true && pic == 5) // из замка в лес
+            if (rect.Contains(f5t3) == true && pic == 5 && bard != 1) // из замка в лес
             {
                 if (e.Key == Key.E)
                 {
@@ -2087,7 +2255,7 @@ namespace Game
                     ib.Stretch = Stretch.None;
                     ib.Viewbox = new Rect(0, 0, 128, 128);
                     ib.ViewboxUnits = BrushMappingMode.Absolute;
-                    ib.ImageSource = new BitmapImage(new Uri(@"pack://application:,,,/poses/orc2.gif", UriKind.Absolute));
+                    ib.ImageSource = new BitmapImage(new Uri(@"pack://application:,,,/poses/orc2reverse.gif", UriKind.Absolute));
                     enemy.Fill = ib;
                     enemy.Margin = new Thickness(0, 280, 0, 0);
                     screen.Children.Add(enemy);
@@ -2344,6 +2512,48 @@ namespace Game
             Application.Current.Shutdown();
         }
 
+        private void plusarmorsl()
+        {
+            if (slimes == true)
+            {
+                gema.armor += 7;
+                slimekill = 0;
+                slimes = false;
+            }
+        }
+
+        private void plusarmororc()
+        {
+            gema.armor += 7;
+            orcarm = false;
+        }
+
+        private void plusarmorkni()
+        {
+            gema.armor += 7;
+            last = 0;
+            enknightsarmor = false;
+        }
+
+        private void plusweaponorc()
+        {
+            gema.weapon+=1;
+            orcweap = false;
+        }
+
+        private void plusweapontourn()
+        {
+            gema.weapon+=1;
+            victory = 0;
+            tournweap = false;
+        }
+
+        private void plusweaponpl()
+        {
+            gema.weapon += 1;
+            plantkill = 0;
+            plants = false;
+        }
 
     }
 }
