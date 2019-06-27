@@ -103,6 +103,18 @@ namespace Game
         int currentFrame = 1, currentRow = 0, cr = 8;
         int frameW = 96, frameH = 96;
         bool boolat = false;
+        bool cveti = false;
+        bool castle = false;
+        bool boloto = false;
+        bool cave = false;
+        bool sosed = false;
+        bool lutni = false;
+        bool ricari = false;
+        bool mayak = false;
+        bool korabl = false;
+        bool bashnya = false;
+        bool boss = false;
+
 
         Rectangle enemy1 = new Rectangle();
         Rectangle enemy2 = new Rectangle();
@@ -114,11 +126,7 @@ namespace Game
 
         public MainWindow()
         {
-            InitializeComponent();
-
-            MessageBox.Show("Я был без сознания, пока снаружи не послышались вопли петуха." +
-" Так как рядом с моим домом только распологалась деревенская таверна, взяв первое, что попалось под руку," +
-" я решил направиться туда", "\n", MessageBoxButton.OK);
+            InitializeComponent();            
 
             screen.KeyDown += Window_KeyDown;
 
@@ -186,6 +194,13 @@ namespace Game
             FightTimer = new System.Windows.Threading.DispatcherTimer();
             FightTimer.Tick += new EventHandler(FightTimer_Tick);
             FightTimer.Interval = new TimeSpan(0, 0, 0, 0, 400);
+
+            Thread.Sleep(1000);
+
+            MessageBox.Show("Я спал, когда снаружи послышались какие-то крики(а может петух). \n" +
+" Так как рядом с моим домом только располагалась деревенская таверна, взяв первое, что попалось под руку," +
+" я решил направиться туда", "\n", MessageBoxButton.OK);
+
         }
 
         private void JumpTimer_Tick(object sender, EventArgs e)
@@ -360,6 +375,11 @@ namespace Game
                 if (rect.Contains(f14t15) == true)
                     confirm.Content = "[e]Финальный бой";
                 else confirm.Content = "";
+            }
+
+            if (pic == 15)
+            {
+                confirm.Content = "";
             }
         }
 
@@ -610,9 +630,13 @@ namespace Game
 
             if (victory == 2)
             {
+                victory++;
                 tourn = true;
                 if (tournweap == true)
                     plusweapontourn();
+                if (MessageBox.Show("В итоге вы супер мускул идёте на посвящение в рыцари, вам дают чин и задание спасти принцессу от бывшего придворного мага. Он заточил бедную принцессу(не такую уж и бедную) в башне на острове Пасхи(Христос Воскресе).") == MessageBoxResult.OK)
+                    MessageBox.Show("Король:(обедая) Идите,идите!, потом просите чё хотите. (Няям ням...) \n" +
+                        "Я: Служу короне!!!");
             }
             if (hpw <= 0)
             {
@@ -702,6 +726,18 @@ namespace Game
                 enemy.Fill = ib;
                 enemy.Margin = new Thickness(400, 312, 0, 0);
                 screen.Children.Add(enemy);
+
+                Thread.Sleep(1000);
+
+                if (MessageBox.Show("Эй где же ты прячешься маг? \n" +
+                    "Маг: Выслушай меня, юный рыцарь, раз ты сумел победить голема, то ты достоин нечто большего, чем награда от этого гнусного короля.", "Выслушать?", MessageBoxButton.YesNo)==MessageBoxResult.Yes)
+                {
+
+                }
+                else
+                {
+
+                }
             }
             if (slime1hp <= 0)
             {
@@ -768,6 +804,13 @@ namespace Game
             if (count==3)
             {
                 forest = true;
+                if (tavern==true)
+                    MessageBox.Show("Закончив с бандитами,я оглянулся:ко мне бежал стражник из деревни(или нет) \n"+
+"Стражник: Ого, посмотрите-ка, кажется, ты перебил воров которые досаждали всем деревням(так уж всем:)) в округе.Кхм...От лица рыцарского ордена выражаю тебе нашу признательность, спасибо тебе парень. Раз ты смог с ними справиться(на вилы насадил), предлагаю тебе поучаствовать в рыцарском турнире.Можешь сам вернуть украденное? \n" +
+"Я: Да сэр! \n" +
+"Стражник: Удачи на турнире!(уходит) \n" +
+"Я: Спасибо, но что за турнир?(а стражник то ушёл уже) ", "\n", MessageBoxButton.OK);
+                count++;
             }
         }
 
@@ -995,23 +1038,68 @@ namespace Game
 
                     if (e.Key == Key.E)
                     {
-                        MoveBardTimer.Start();
-                        bard = 1;
-                        background.ImageSource = new BitmapImage(new Uri(@"pack://application:,,,/текстурки/bard.png", UriKind.Absolute));
-                        screen.Background = background;
+                        if (lutni == false)
+                        {
+                            MoveBardTimer.Start();
+                            bard = 1;
+                            lutni = true;
+                            background.ImageSource = new BitmapImage(new Uri(@"pack://application:,,,/текстурки/bard.png", UriKind.Absolute));
+                            screen.Background = background;
 
-                        enemy2.Height = 96;
-                        enemy2.Width = 96;
-                        ImageBrush rival = new ImageBrush();
-                        rival.AlignmentX = AlignmentX.Left;
-                        //ib.AlignmentY = AlignmentY.Top;
-                        rival.Stretch = Stretch.None;
-                        rival.Viewbox = new Rect(0, 0, 96, 96);
-                        rival.ViewboxUnits = BrushMappingMode.Absolute;
-                        rival.ImageSource = new BitmapImage(new Uri(@"pack://application:,,,/poses/merchant.gif", UriKind.Absolute));
-                        enemy2.Fill = rival;
-                        enemy2.Margin = new Thickness(350, 312, 0, 0);
-                        screen.Children.Add(enemy2);
+                            enemy2.Height = 96;
+                            enemy2.Width = 96;
+                            ImageBrush rival = new ImageBrush();
+                            rival.AlignmentX = AlignmentX.Left;
+                            //ib.AlignmentY = AlignmentY.Top;
+                            rival.Stretch = Stretch.None;
+                            rival.Viewbox = new Rect(0, 0, 96, 96);
+                            rival.ViewboxUnits = BrushMappingMode.Absolute;
+                            rival.ImageSource = new BitmapImage(new Uri(@"pack://application:,,,/poses/merchant.gif", UriKind.Absolute));
+                            enemy2.Fill = rival;
+                            enemy2.Margin = new Thickness(350, 312, 0, 0);
+                            screen.Children.Add(enemy2);
+
+                            Thread.Sleep(1000);
+
+                            if (MessageBox.Show("Николай: Эй садись и слушай ,ну ка! что многие бабы любят? \n " +
+                                "Я: Сладкое? \n " +
+                                "Николай: Ещё варианты, у тебя 2 попытки, и мы идём выпить за твой счёт. \n" +
+                                "Вы: Музыку? \n" +
+                                "Николай:В точку мой милый дружок. Музыка это то что вскружит голову любой барышне. А ну ка иди ка сюда, щя научу играть на лютне.Конечно не за день и не за бесплатно. Недельку позаниматься надо)", "Лютня????", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
+                            {
+                                if (gold < 250)
+                                {
+                                    bard = 0;
+                                    MessageBox.Show("Вы слишком без денег");
+                                    x = 475;
+                                    y = 312;
+                                    background.ImageSource = new BitmapImage(new Uri(@"pack://application:,,,/текстурки/город3.jpg", UriKind.Absolute));
+                                    screen.Background = background;
+                                    pic = 5;
+                                    screen.Children.Remove(enemy2);
+                                }
+                                gold -= 250;
+                                bard = 2;
+                                MessageBox.Show("Неделю спустя---- \n" +
+                                    "Недельку вы учились... Красавчик... У тебя были неплохие успехи. Мой озорной друг рад был тебя чему-то научить. В добрый путь, покорять женские сердца...");
+                                x = 475;
+                                y = 312;
+                                background.ImageSource = new BitmapImage(new Uri(@"pack://application:,,,/текстурки/город3.jpg", UriKind.Absolute));
+                                screen.Background = background;
+                                pic = 5;
+                                screen.Children.Remove(enemy2);
+                            }
+                            else
+                            {
+                                bard = 0;
+                                x = 475;
+                                y = 312;
+                                background.ImageSource = new BitmapImage(new Uri(@"pack://application:,,,/текстурки/город3.jpg", UriKind.Absolute));
+                                screen.Background = background;
+                                pic = 5;
+                                screen.Children.Remove(enemy2);
+                            }
+                        }
                     }
                 }
             }
@@ -1298,6 +1386,14 @@ namespace Game
                     HPENEMY1.VerticalAlignment = VerticalAlignment.Center;
                     HPENEMY1.Margin = new Thickness(500, 278, 0, 0);
                     screen.Children.Add(HPENEMY1);
+
+                    Thread.Sleep(1000);
+
+                    if (ricari==false)
+                    {
+                        ricari = true;
+                        MessageBox.Show("Я:Вау, а что тут делать то надо?");
+                    }
                 }
             }
 
@@ -1322,6 +1418,11 @@ namespace Game
                     background.ImageSource = new BitmapImage(new Uri(@"pack://application:,,,/текстурки/подземелье.png", UriKind.Absolute));
                     screen.Background = background;
                     pic = 6;
+                    if (cave == false)
+                    {
+                        cave = true;
+                        MessageBox.Show("Я: Ого вот это реально стоящий квест, говорят только каждый второй возвращается отсюда живым....(Звук всяких пещерных животных)");
+                    }
                 }
                 if (e.Key == Key.T)
                 {
@@ -1359,6 +1460,12 @@ namespace Game
                     HPENEMY.VerticalAlignment = VerticalAlignment.Center;
                     HPENEMY.Margin = new Thickness(0, 262, 0, 0);
                     screen.Children.Add(HPENEMY);
+
+                    if (sosed == false)
+                    {
+                        sosed = true;
+                        MessageBox.Show("Орк: Альянс сосед!1!11!");
+                    }
                 }
             }
 
@@ -1380,6 +1487,20 @@ namespace Game
                     screen.Children.Remove(enemy3);
                     screen.Children.Remove(HPENEMY2);
                     screen.Children.Remove(FRAMEENEMY2);
+                    if (castle == false)
+                    {
+                        castle = true;
+                        if (MessageBox.Show("“При входе в замок нас(вас) встречает бард“ \n" +
+                            "Бард: О ты новенький? Меня зовут Николай, я местный бард . Не хочешь выпить кружечки эля!? \n" +
+                            "Я: “После предыдущей битвы я на истощении” Почему бы и нет... Мы зашли в обычную таверну и только успел я опомниться как в моей руке уже полная кружка бодрящего напитка. Вечер прошёл незаметно...", "\n", MessageBoxButton.OK) == MessageBoxResult.OK)
+                        {
+                            if (MessageBox.Show("На след. утро \n" +
+                                "Я:”Оу чем воняет? А это от меня(кек)... Дааа, повеселились мы от души(вот оторвы) \n -шипящае окно- \n Я даже непомню где и заснул. Помню только, что бард сказал, что может научить меня чему-то \n" +
+                                " Ладно, пойду вступлю в гильдию.“", "\n", MessageBoxButton.OK) == MessageBoxResult.OK)
+                                MessageBox.Show("Пройдя по улицам замка, я заметил, что рыцарей в этом королевстве почитают. Всюду памятники , монументы, все мальчишки играют в рыцарей и колбасят(колбасят, хы) друг друга. Но лицезреть это долго мне не пришлось... \n" +
+                                    "Я дошёл до главного здания гильдии. Мне без каких либо проблем дали нашивку гильдии и сказали, еcли хочу участвовать в турнире, то мне нужно сначала убить Орков в руинах и в сердце пещеры", "\n", MessageBoxButton.OK);
+                        }
+                    }
                 }
             }
 
@@ -1392,6 +1513,17 @@ namespace Game
                     background.ImageSource = new BitmapImage(new Uri(@"pack://application:,,,/текстурки/поляна.jpg", UriKind.Absolute));
                     screen.Background = background;
                     pic = 2;
+
+                    if (cveti==false)
+                    {
+                        cveti = true;
+                        if (MessageBox.Show("Дойдя до поляны полной разными видами цветов,мой взор упал на красный мак. Его манящий аромат,заставил меня вспомнить --окно с шипением-- \n Я:”что это было? С этим вопросом мне никто не мог помочь.Но вдруг один из цветков заговорил со мной(ого)”", "\n", MessageBoxButton.OK) == MessageBoxResult.OK)
+                            MessageBox.Show("Цветок: Do you speak English? Do you understand me? \n" +
+                                " Я:Что ты говоришь!?ВАУ!А здесь все цветы говорить могут ?А если я тебя сорву ты будешь говорить? \n" +
+                                "Цветок: What are you doing man?! Ne trosh menya krestyanskaya kurwa(ochen' grubo) \n" +
+                                "Я: “Чёт он разозлился...” Эй, стоп, погодь,а у тебя братья чем заняты?Что это они творят?Успокой их!Ты же живой!? \n" +
+                                "Цветок: Ti pokoinik...");
+                    }
 
                     enemy1.Height = 96;
                     enemy1.Width = 96;
@@ -1512,6 +1644,22 @@ namespace Game
                     enemy1.Fill = rival;
                     enemy1.Margin = new Thickness(350, 312, 0, 0);
                     screen.Children.Add(enemy1);
+
+                    Thread.Sleep(1000);
+
+                    if (mayak==false)
+                    {
+                        mayak = true;
+                        if (MessageBox.Show("Вы сие-минутно же собираетесь в путешествие на остров. \n" +
+                            "Взяв пару сменных трусов, ни о чём не заботясь вы отправились к маяку.По пути вы повстречали иноземного купца, который продавал одежды из шёлка и драгоценности, вы завязали с ним разговор, он спокойно общался с вами, и вы вместе отправились к маяку. Но вот неждан, издалека вы видете над маяком пиратский флаг, а купец стоит и афигеваeт...") == MessageBoxResult.OK)
+                            if (MessageBox.Show("Купец: Пираты карибского происхождения захватили маяк! А возглавляет эту шайку, самый остроумный и любимый женщинами на всём белом море Капитан Джон Птица. Совратил мою дочку, чёртов негодяй! \n" +
+                                "У него был самый быстроходный корабль из всех наземных существ, кто имел флот, от пиратов до королевств. \n" +
+                                "Наш герой предвкушал не простую битву против целый команды пиратов. Но луна убывала, а с ней отплывали и пираты. Разрушив весь флот, имеющийся на пристани, и захватив добычу они отправились за новыми приключениями. \n" +
+                                "С расстройством смотря на уходящий корабль... Иван решает исследовать маяк День близился к концу, и наш герой решает заглянуть что же осталось в маяке... Благоразумные пираты, не разрушили освещение, что очень хорошо для наших торговцев из королевства Синдрия.Во главе корабля был наставник принца Синдбада повелителя семи белых морей, он тоже был на рыцарском турнире.Но удача была на вашей стороне.Видать пираты узнали о том что скоро в этот порт должен был пришвартоваться корабль королевства Синдрия и покинули его заблаговременно.") == MessageBoxResult.OK)
+                                MessageBox.Show("Я: Сегодня удача была на моей стороне. “Может меня подкинут до острова Тёмный?(был же остров Пасхи, хмхмхм)” \n" +
+                                    "Наш герой был без ума от радости, когда узнал, что их маршрут лежит через “Тёмный” остров.");
+
+                    }
                 }
             }
 
@@ -1538,10 +1686,10 @@ namespace Game
                         enemy1.Fill = girl;
                         enemy1.Margin = new Thickness(300, 312, 0, 0);
                         screen.Children.Add(enemy1);
-                        MessageBox.Show("В таверне я увидел торговку, она выглядела крайне подавленной." +
-"Я:Привет, Торговка! Что случилось?" +
-"Торговка:Бандиты...Бандиты ограбили мою лавку и унесли все самое ценное." +
-"Я:Я сейчас же направлюсь за ними и все верну! А,где их искать?" +
+                        MessageBox.Show("В таверне я увидел торговку, она выглядела крайне подавленной. \n" +
+"Я:Привет, Торговка! Что случилось? \n" +
+"Торговка:Бандиты...Бандиты ограбили мою лавку и унесли все самое ценное. \n" +
+"Я:Я сейчас же направлюсь за ними и все верну! А,где их искать? \n" +
 "Торговка:О-Они направились в сторону леса, думаю ты их там и найдешь. ", "\n", MessageBoxButton.OK);
                     }
                 }
@@ -1549,6 +1697,7 @@ namespace Game
                 {
                     if (e.Key == Key.E)
                     {
+
                         x = 0;
                         y = 216;
                         background.ImageSource = new BitmapImage(new Uri(@"pack://application:,,,/текстурки/деревня.png", UriKind.Absolute));
@@ -1596,7 +1745,7 @@ namespace Game
                             girl.ImageSource = new BitmapImage(new Uri(@"pack://application:,,,/poses/tavernwomanreverse.gif", UriKind.Absolute));
                             enemy1.Fill = girl;
                             enemy1.Margin = new Thickness(300, 312, 0, 0);
-                            screen.Children.Add(enemy1);
+                            screen.Children.Add(enemy1);                            
                         }
                     }
                 }
@@ -1604,9 +1753,30 @@ namespace Game
 
             if (rect.Contains(tav) == true && pic == 0 && tavern == true && forest == true)
             {
-                MessageBox.Show("Я:Вот твои товары, Бетти.Больше эти разбойники тебя не побеспокоят."+
-                   "Бетти:Большое спасибо!Я собиралась заплатить страже, но раз проблема решена, эти деньги принадлежат тебе.И, еще слушай, раз у тебя есть сила и способности, ты вполне можешь испытать себя на рыцарском турнире в ближайшем городе.На эти деньги ты можешь купить какое-никакое снаряжение."+
-"Я: Спасибо за совет!Тогда до встречи...", "\n", MessageBoxButton.OK);
+                 if (MessageBox.Show("Я:Вот ваши товары, Торговка(до сих пор имени не спросил...).Больше эти разбойники вас не побеспокоят. \n"+
+                   "Безымянная торговка:Большое спасибо! \n" +
+                   "Я: “Для начала, представьтесь- хотел сказать я, но быстро опомнялся, своего имени я не знал...(это мысли были, если что)” Может вы знаете как меня зовут миледи? \n" +
+                   "Торговка: Ой простите, совсем забыла представиться, меня зовут Беатрис, вы можете звать меня Бэтти. А вас я вижу первый раз... \n" +
+                   "Я: Конечно, о чём это я... Кхм... меня зовут Иван(оригинально). Бэтти, не могли бы вы меня покормить? \n" +
+                   "Бэтти: Извольте чуток подождать, я накрою вам самый вкусный ужин в вашей жизни(сильное заявление). (уходит) \n" +
+                   "Я: О, какаой аромат, благодарю вас, вы меня спасли. Расскажите, что это за рыцарский турнир? \n" +
+                   "Бэтти: Кушайте.... Не стесняйтесь. Я сама знаю не очень много, только лишь одно: кто удостоится звание рыцаря, будет иметь привилегии на королевском дворе, а так же золотой меч.Но чтобы пройти на турнир. Необходимо получить от главной гильдии замка разрешение на участие. Его можно получить выполняя квесты гильдии. А больше я ничего не знаю... \n" +
+                   "Я: ”Хм. Я узнал от неё что такое рыцарский турнир и как я могу на него попасть. Я чувствовал себя неловко, не знал о чём нам с ней ещё поговорить, ведь я вообще ещё ничего не знал про этот мир, но везде одна истина - без золота никуда... везде нужны деньги. Решение отправиться на рыцарский турнир, за золотым мечом(а в майнкрафте он был самым плохим), мне показалось вполне логичным.” Ням, Ням(ням-ням лол).Спасибо за вкусный ужин. \n" +
+                   "Бэтти: Да что вам, не за что.", "\n", MessageBoxButton.OK)==MessageBoxResult.OK)
+                 {
+                    if (MessageBox.Show("Я: А можно у вас переночевать? \n" +
+                        "Бэтти: Конечно наши двери всегда открыты для вас.Пройдём-те я покажу вам вашу комнату... \n" +
+                        "Я: О да, наконец-то кроватушка...(eee) \n" +
+                        "Бэтти: Спокойной ночи. \n" +
+                        "Я: ”И вам - хотел сказать я, но она уже ушла, оставив меня наедине со своими мыслями” \n" +
+                        "Я:” А завтра мне предстоит отправиться в замок за квестами для получения разрешения.Но всё-таки что со мной случилось? Почему я ничего до сегодняшнего утра не помню? Ладно, утро вечер, мудренее”(как в сказках говорят)", "\n", MessageBoxButton.OK) == MessageBoxResult.OK)
+                    {
+                        MessageBox.Show("Утро----- \n" +
+                            "(звук Петуха(Булата)) \n" +
+                            "Я: Ладно всего доброго! \n" +
+                            "Бэтти: Удачи!", "\n", MessageBoxButton.OK);
+                    }
+                 }
                 tavern = false;
                 gold = gold + 300;
             }
@@ -1615,6 +1785,7 @@ namespace Game
             {
                 if (e.Key == Key.E)
                 {
+                    
                     x = 0;
                     y = 216;
                     background.ImageSource = new BitmapImage(new Uri(@"pack://application:,,,/текстурки/лес.jpg", UriKind.Absolute));
@@ -1709,15 +1880,19 @@ namespace Game
                     HPENEMY2.VerticalAlignment = VerticalAlignment.Center;
                     HPENEMY2.Margin = new Thickness(542, 260, 0, 0);
                     screen.Children.Add(HPENEMY2);
+                    Thread.Sleep(1000);
+                    if (forest == true)
+                        MessageBox.Show("Бандиты(очень похожи на тех, что были раньше, но это другие): Эй, парнишь, бабки или жизнь?)");
                     if (forest==false)
                     {
-                        MessageBox.Show("Углубившись в лесную глубь, я услышал грубые голоса. Выйдя на них я увидел трех непривлекательных людей,очень похожих на бандитов"+
-"Я: Эй!Это вы ограбили торговку в деревне ?"+
-"Бандит : Ну мы а что ?"+
-"Я : Требую немедленно вернуть все украденное!"+
-"Бандит:Кхем - кхе..Или что ?"+
-"Я : Иначе вам придется иметь дело со мной!"+
-"Бандит:Что - ж, еще один напрашивается. ", "\n", MessageBoxButton.OK);
+                        Thread.Sleep(1000);
+                        MessageBox.Show("Углубившись в лесную глубь, я услышал грубые(крайне неприятные) голоса. Выйдя на них я увидел трех непривлекательных людей, очень похожих на бандитов \n"+
+"Я: Эй!Это вы ограбили торговку в деревне? \n"+
+"Бандит : Ну мы а что? \n"+
+"Я : Требую немедленно вернуть все украденное! \n"+
+"Бандит:Кхем - кхе..Или что? \n"+
+"Я : Иначе вам придется иметь дело со мной!(как в фильмах говорят) \n"+
+"Бандит:Что - ж, еще один напрашивается.(у него вилы так-то) ", "\n", MessageBoxButton.OK);
                     }
                 }
             }
@@ -1822,6 +1997,13 @@ namespace Game
                     HPENEMY2.Margin = new Thickness(114, 326, 0, 0);
                     screen.Children.Add(HPENEMY2);
 
+                    Thread.Sleep(1000);
+
+                    if (boloto == false)
+                    {
+                        boloto = true;
+                        MessageBox.Show("Я: Что это за монстрики? Я ожидал чего-нибудь по-серъёзнее (удачи их победить лол)");
+                    }
                 }
             }
 
@@ -1888,6 +2070,20 @@ namespace Game
                     screen.Children.Remove(enemy3);
                     screen.Children.Remove(HPENEMY2);
                     screen.Children.Remove(FRAMEENEMY2);
+                    if (castle == false)
+                    {
+                        castle = true;
+                        if (MessageBox.Show("“При входе в замок нас(вас) встречает бард“ \n" +
+                            "Бард: О ты новенький? Меня зовут Николай, я местный бард . Не хочешь выпить кружечки эля!? \n" +
+                            "Я: “После предыдущей битвы я на истощении” Почему бы и нет... Мы зашли в обычную таверну и только успел я опомниться как в моей руке уже полная кружка бодрящего напитка. Вечер прошёл незаметно...", "\n", MessageBoxButton.OK) == MessageBoxResult.OK)
+                        {
+                            if (MessageBox.Show("На след. утро \n" +
+                                "Я:”Оу чем воняет? А это от меня(кек)... Дааа, повеселились мы от души(вот оторвы) \n -шипящае окно- \n Я даже непомню где и заснул. Помню только, что бард сказал, что может научить меня чему-то \n" +
+                                " Ладно, пойду вступлю в гильдию.“", "\n", MessageBoxButton.OK) == MessageBoxResult.OK)
+                                MessageBox.Show("Пройдя по улицам замка, я заметил, что рыцарей в этом королевстве почитают. Всюду памятники , монументы, все мальчишки играют в рыцарей и колбасят(колбасят, хы) друг друга. Но лицезреть это долго мне не пришлось... \n" +
+                                    "Я дошёл до главного здания гильдии. Мне без каких либо проблем дали нашивку гильдии и сказали, еcли хочу участвовать в турнире, то мне нужно сначала убить Орков в руинах и в сердце пещеры", "\n", MessageBoxButton.OK);
+                        }
+                    }
                 }
             }
 
@@ -2010,6 +2206,14 @@ namespace Game
                     HPENEMY2.VerticalAlignment = VerticalAlignment.Center;
                     HPENEMY2.Margin = new Thickness(128, 326, 0, 0);
                     screen.Children.Add(HPENEMY2);
+
+                    Thread.Sleep(1000);
+
+                    if (boloto == false)
+                    {
+                        boloto = true;
+                        MessageBox.Show("Я: Что это за монстрики? Я ожидал чего-нибудь по-серъёзнее (удачи их победить лол)");
+                    }
                 }
             }
 
@@ -2031,6 +2235,20 @@ namespace Game
                     screen.Children.Remove(enemy3);
                     screen.Children.Remove(HPENEMY2);
                     screen.Children.Remove(FRAMEENEMY2);
+                    if (castle == false)
+                    {
+                        castle = true;
+                        if (MessageBox.Show("“При входе в замок нас(вас) встречает бард“ \n" +
+                            "Бард: О ты новенький? Меня зовут Николай, я местный бард . Не хочешь выпить кружечки эля!? \n" +
+                            "Я: “После предыдущей битвы я на истощении” Почему бы и нет... Мы зашли в обычную таверну и только успел я опомниться как в моей руке уже полная кружка бодрящего напитка. Вечер прошёл незаметно...", "\n", MessageBoxButton.OK) == MessageBoxResult.OK)
+                        {
+                            if (MessageBox.Show("На след. утро \n" +
+                                "Я:”Оу чем воняет? А это от меня(кек)... Дааа, повеселились мы от души(вот оторвы) \n -шипящае окно- \n Я даже непомню где и заснул. Помню только, что бард сказал, что может научить меня чему-то \n" +
+                                " Ладно, пойду вступлю в гильдию.“", "\n", MessageBoxButton.OK) == MessageBoxResult.OK)
+                                MessageBox.Show("Пройдя по улицам замка, я заметил, что рыцарей в этом королевстве почитают. Всюду памятники , монументы, все мальчишки играют в рыцарей и колбасят(колбасят, хы) друг друга. Но лицезреть это долго мне не пришлось... \n" +
+                                    "Я дошёл до главного здания гильдии. Мне без каких либо проблем дали нашивку гильдии и сказали, еcли хочу участвовать в турнире, то мне нужно сначала убить Орков в руинах и в сердце пещеры", "\n", MessageBoxButton.OK);
+                        }
+                    }
                 }
             }
 
@@ -2133,6 +2351,17 @@ namespace Game
                     HPENEMY2.VerticalAlignment = VerticalAlignment.Center;
                     HPENEMY2.Margin = new Thickness(172, 260, 0, 0);
                     screen.Children.Add(HPENEMY2);
+                    Thread.Sleep(1000);
+                    if (cveti == false)
+                    {
+                        cveti = true;
+                        if (MessageBox.Show("Дойдя до поляны полной разными видами цветов,мой взор упал на красный мак. Его манящий аромат,заставил меня вспомнить --окно с шипением-- \n Я:”что это было? С этим вопросом мне никто не мог помочь.Но вдруг один из цветков заговорил со мной(ого)”", "\n", MessageBoxButton.OK) == MessageBoxResult.OK)
+                            MessageBox.Show("Цветок: Do you speak English? Do you understand me? \n" +
+                                " Я:Что ты говоришь!?ВАУ!А здесь все цветы говорить могут ?А если я тебя сорву ты будешь говорить? \n" +
+                                "Цветок: What are you doing man?! Ne trosh menya krestyanskaya kurwa(ochen' grubo) \n" +
+                                "Я: “Чёт он разозлился...” Эй, стоп, погодь,а у тебя братья чем заняты?Что это они творят?Успокой их!Ты же живой!? \n" +
+                                "Цветок: Ti pokoinik...");
+                    }
                 }
             }
 
@@ -2235,6 +2464,8 @@ namespace Game
                     HPENEMY2.VerticalAlignment = VerticalAlignment.Center;
                     HPENEMY2.Margin = new Thickness(542, 260, 0, 0);
                     screen.Children.Add(HPENEMY2);
+                    Thread.Sleep(1000);
+                    MessageBox.Show("Бандиты(очень похожи на тех, что были раньше, но это другие(или нет?): Эй, парнишь, бабки или жизнь?)");
                 }
             }
 
@@ -2276,6 +2507,11 @@ namespace Game
                     HPENEMY.VerticalAlignment = VerticalAlignment.Center;
                     HPENEMY.Margin = new Thickness(0, 262, 0, 0);
                     screen.Children.Add(HPENEMY);
+                    if (sosed == false)
+                    {
+                        sosed = true;
+                        MessageBox.Show("Орк: Альянс сосед!1!11!");
+                    }
                 }
             }
 
@@ -2331,6 +2567,15 @@ namespace Game
                     enemy1.Fill = rival;
                     enemy1.Margin = new Thickness(350, 312, 0, 0);
                     screen.Children.Add(enemy1);
+
+                    if (korabl == false)
+                    {
+                        korabl = true;
+                        MessageBox.Show("Правда пришлось подождать пока торговцы разгрузят товар, подождут Синдбада с замка и соберутся в новое плавание. \n" +
+                            "Спустя 2 дня ----- \n" +
+                            "Жгучие лучи солнца, закрыли дождевые тучи,и наш бесславный герой-рыцарь отправляется в морское путешествие. \n" +
+                            "Волны заливают, то правый, то левый борт.И был готов помогать команде справляться со штормом.");
+                    }
                 }
             }
 
@@ -2438,6 +2683,13 @@ namespace Game
                     HPENEMY1.VerticalAlignment = VerticalAlignment.Center;
                     HPENEMY1.Margin = new Thickness(250, 278, 0, 0);
                     screen.Children.Add(HPENEMY1);
+
+                    if (bashnya==false)
+                    {
+                        bashnya = true;
+                        MessageBox.Show("Я: Наконец-то суша! “Осталось совсем чуть-чуть и я спасу принцессу” \n" +
+                            "Охрана острова: Далеко собрался? Ты не пройдёшь!!!(это отсылка, если кто не понял)");
+                    }
                 }
             }
 
@@ -2485,6 +2737,14 @@ namespace Game
                     HPENEMY.VerticalAlignment = VerticalAlignment.Center;
                     HPENEMY.Margin = new Thickness(0, 0, 0, 0);
                     screen.Children.Add(HPENEMY);
+                    Thread.Sleep(1000);
+                    if (boss == false)
+                    {
+                        boss = true;
+                        MessageBox.Show("Я: Эй чучело отпусти принцессу! \n" +
+                            "Огненый голем: БУУУУУУУ! \n" +
+                            "Я: Дружочек, ты видимо не понял с кем общаешься. Вот эта твоя манера речи “клоунская“ меня не впечатляет, давай я объясню на понятном тебе языке,ЯЗЫКЕ БОЛИ!");
+                    }
                 }
             }
 
