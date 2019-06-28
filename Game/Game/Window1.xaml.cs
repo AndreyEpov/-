@@ -10,7 +10,10 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Threading;
+
 
 namespace Game
 {
@@ -29,13 +32,15 @@ namespace Game
             //timerStart();
             MP.MediaOpened += MP_MediaOpened;
             MP.MediaEnded += MP_MediaEnded;
-            MP.Source = new Uri("C:\\Users\\user\\Desktop\\Я сам испугался.wmv");
-            //MP.Source = new Uri("@pack://application:,,,/video/Я сам испугался.wmv", UriKind.RelativeOrAbsolute); 
+            MP.Source = new Uri("C:\\Users\\Admin\\Desktop\\Game--\\Game\\Game\\video\\Я сам испугался.wmv");
+            //MP.Source = new Uri(@"pack://application:,,,/video/Я сам испугался.wmv", UriKind.RelativeOrAbsolute);
+            //string filename = Game.Properties.Resources.Начало.ToString();
+            //MP.Source = new Uri(filename, UriKind.RelativeOrAbsolute);
             MP.Volume = 1;
 
             //MP.Source = new Uri(@"pack://application:,,,/video/predhistor.wmv", UriKind.Absolute);
             MP.Play();
-            //MP.SpeedRatio = 20;
+            MP.SpeedRatio = 20;
         }
 
         private void MP_MediaOpened(object sender,RoutedEventArgs e)
@@ -47,6 +52,12 @@ namespace Game
         {
             MP.Stop();
             this.Hide();
+
+            Thread.Sleep(1000);
+
+            if (MessageBox.Show("Я спал, когда снаружи послышались какие-то крики(а может петух). \n" +
+" Так как рядом с моим домом только располагалась деревенская таверна, взяв первое, что попалось под руку," +
+" я решил направиться туда", "\n", MessageBoxButton.OK)==MessageBoxResult.OK)
             game.ShowDialog();
         }
 

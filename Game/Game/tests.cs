@@ -13,10 +13,8 @@ namespace Game
         [TestCase]
         public void fight()
         {
-            Gaming game = new Gaming();
-            //game.hit(0, 0);
-            Assert.AreEqual(49, game.hpenemy);
-            Assert.AreEqual(90, game.hp);
+            MainWindow test = new MainWindow();
+            test.plusarmorkni();
         }
     }
 }

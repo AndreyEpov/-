@@ -195,11 +195,7 @@ namespace Game
             FightTimer.Tick += new EventHandler(FightTimer_Tick);
             FightTimer.Interval = new TimeSpan(0, 0, 0, 0, 400);
 
-            Thread.Sleep(1000);
-
-            MessageBox.Show("Я спал, когда снаружи послышались какие-то крики(а может петух). \n" +
-" Так как рядом с моим домом только располагалась деревенская таверна, взяв первое, что попалось под руку," +
-" я решил направиться туда", "\n", MessageBoxButton.OK);
+            
 
         }
 
@@ -2772,7 +2768,7 @@ namespace Game
             Application.Current.Shutdown();
         }
 
-        private void plusarmorsl()
+        public void plusarmorsl()
         {
             if (slimes == true)
             {
@@ -2782,33 +2778,33 @@ namespace Game
             }
         }
 
-        private void plusarmororc()
+        public void plusarmororc()
         {
             gema.armor += 7;
             orcarm = false;
         }
 
-        private void plusarmorkni()
+        public void plusarmorkni()
         {
             gema.armor += 7;
             last = 0;
             enknightsarmor = false;
         }
 
-        private void plusweaponorc()
+        public void plusweaponorc()
         {
             gema.weapon+=1;
             orcweap = false;
         }
 
-        private void plusweapontourn()
+        public void plusweapontourn()
         {
             gema.weapon+=1;
             victory = 0;
             tournweap = false;
         }
 
-        private void plusweaponpl()
+        public void plusweaponpl()
         {
             gema.weapon += 1;
             plantkill = 0;
