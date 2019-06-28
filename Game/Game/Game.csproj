@@ -65,6 +65,7 @@
     <Reference Include="System.Data.SQLite.Linq, Version=1.0.111.0, Culture=neutral, PublicKeyToken=db937bc2d44ff139, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Data.SQLite.Linq.1.0.111.0\lib\net46\System.Data.SQLite.Linq.dll</HintPath>
     </Reference>
+    <Reference Include="System.Drawing" />
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Core" />
@@ -140,121 +141,325 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="текстурки\арена2.png.jpg" />
-    <Resource Include="текстурки\болото.jpg" />
-    <Resource Include="текстурки\вид с корабля.gif" />
-    <Resource Include="текстурки\внутри дома.bmp" />
-    <Resource Include="текстурки\город3.jpg" />
-    <Resource Include="текстурки\деревня.png" />
-    <Resource Include="текстурки\лес.jpg" />
-    <Resource Include="текстурки\маяк.jpg" />
-    <Resource Include="текстурки\мб башня босса.jpg" />
-    <Resource Include="текстурки\море.png" />
-    <Resource Include="текстурки\подземелье.png" />
-    <Resource Include="текстурки\поляна.jpg" />
-    <Resource Include="текстурки\руины.jpg" />
-    <Resource Include="текстурки\сердце пещеры.jpg" />
-    <Resource Include="текстурки\сердце пещеры2.jpg" />
+    <None Include="store.db">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="текстурки\арена2.png.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="текстурки\болото.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="текстурки\вид с корабля.gif">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="текстурки\внутри дома.bmp">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="текстурки\город3.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="текстурки\деревня.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="текстурки\лес.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="текстурки\маяк.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="текстурки\мб башня босса.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="текстурки\море.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="текстурки\подземелье.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="текстурки\поляна.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="текстурки\руины.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="текстурки\сердце пещеры.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="текстурки\сердце пещеры2.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="текстурки\gg.gif" />
+    <None Include="текстурки\gg.gif">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="текстурки\zomb.gif" />
+    <None Include="текстурки\zomb.gif">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="poses\00.gif" />
-    <Resource Include="poses\01.gif" />
-    <Resource Include="poses\02.gif" />
-    <Resource Include="poses\03.gif" />
-    <Resource Include="poses\10.gif" />
-    <Resource Include="poses\11.gif" />
-    <Resource Include="poses\12.gif" />
-    <Resource Include="poses\13.gif" />
-    <Resource Include="poses\20.gif" />
-    <Resource Include="poses\21.gif" />
-    <Resource Include="poses\22.gif" />
-    <Resource Include="poses\23.gif" />
-    <Resource Include="poses\30.gif" />
-    <Resource Include="poses\31.gif" />
-    <Resource Include="poses\32.gif" />
-    <Resource Include="poses\33.gif" />
+    <None Include="poses\00.gif">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="poses\01.gif">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="poses\02.gif">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="poses\03.gif">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="poses\10.gif">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="poses\11.gif">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="poses\12.gif">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="poses\13.gif">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="poses\20.gif">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="poses\21.gif">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="poses\22.gif">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="poses\23.gif">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="poses\30.gif">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="poses\31.gif">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="poses\32.gif">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="poses\33.gif">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="текстурки\таверна.png" />
+    <None Include="текстурки\таверна.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="poses\king.gif" />
-    <Resource Include="poses\merchant.gif" />
-    <Resource Include="poses\orc1.gif" />
-    <Resource Include="poses\orc2.gif" />
-    <Resource Include="poses\orc3.gif" />
-    <Resource Include="poses\princess.gif" />
-    <Resource Include="poses\slime1.gif" />
-    <Resource Include="poses\slime2.gif" />
-    <Resource Include="poses\tavernwoman.gif" />
-    <Resource Include="poses\zomb1.gif" />
+    <None Include="poses\king.gif">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="poses\merchant.gif">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="poses\orc1.gif">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="poses\orc2.gif">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="poses\orc3.gif">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="poses\princess.gif">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="poses\slime1.gif">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="poses\slime2.gif">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="poses\tavernwoman.gif">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="poses\zomb1.gif">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="текстурки\ggrunbackwa.gif" />
+    <None Include="текстурки\ggrunbackwa.gif">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="текстурки\ggrunforw.gif" />
+    <None Include="текстурки\ggrunforw.gif">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="текстурки\last.jpg" />
-    <Resource Include="текстурки\bard.png" />
-    <Resource Include="poses\Wizard.gif" />
-    <Resource Include="poses\tavernwomanreverse.gif" />
-    <Resource Include="poses\loh1reverse.gif" />
-    <Resource Include="poses\loh2reverse.gif" />
-    <Resource Include="poses\nelohreverse.gif" />
-    <Resource Include="animations\00back.gif" />
-    <Resource Include="animations\00forw.gif" />
-    <Resource Include="animations\01back.gif" />
-    <Resource Include="animations\01forw.gif" />
-    <Resource Include="animations\02back.gif" />
-    <Resource Include="animations\02forw.gif" />
-    <Resource Include="animations\03back.gif" />
-    <Resource Include="animations\03forw.gif" />
-    <Resource Include="animations\10back.gif" />
-    <Resource Include="animations\10forw.gif" />
-    <Resource Include="animations\11back.gif" />
-    <Resource Include="animations\11forw.gif" />
-    <Resource Include="animations\12back.gif" />
-    <Resource Include="animations\12forw.gif" />
-    <Resource Include="animations\13back.gif" />
-    <Resource Include="animations\13forw.gif" />
-    <Resource Include="animations\20back.gif" />
-    <Resource Include="animations\20forw.gif" />
-    <Resource Include="animations\21back.gif" />
-    <Resource Include="animations\21forw.gif" />
-    <Resource Include="animations\22back.gif" />
-    <Resource Include="animations\22forw.gif" />
-    <Resource Include="animations\23back.gif" />
-    <Resource Include="animations\23forw.gif" />
-    <Resource Include="animations\30back.gif" />
-    <Resource Include="animations\30forw.gif" />
-    <Resource Include="animations\31back.gif" />
-    <Resource Include="animations\31forw.gif" />
-    <Resource Include="animations\32back.gif" />
-    <Resource Include="animations\32forw.gif" />
-    <Resource Include="animations\33back.gif" />
-    <Resource Include="animations\33forw.gif" />
-    <Resource Include="poses\loh1.gif" />
-    <Resource Include="poses\loh2.gif" />
-    <Resource Include="poses\neloh.gif" />
-    <Resource Include="poses\enchantedsoldier1.gif" />
-    <Resource Include="poses\enchantedsoldier2.gif" />
-    <Resource Include="poses\PIRATE.gif" />
-    <Resource Include="poses\na_areny.gif" />
-    <Resource Include="poses\GOLIY.gif" />
-    <Resource Include="poses\BLYANT.gif" />
-    <Resource Include="poses\slime1reverse.gif" />
-    <Resource Include="poses\slime2reverse.gif" />
-    <Resource Include="poses\orc3reverse.gif" />
-    <Resource Include="poses\orc2reverse.gif" />
-    <Content Include="video\Я сам испугался.wmv" />
+    <None Include="текстурки\last.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="текстурки\bard.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="poses\Wizard.gif">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="poses\tavernwomanreverse.gif">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="poses\loh1reverse.gif">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="poses\loh2reverse.gif">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="poses\nelohreverse.gif">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="animations\00back.gif">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="animations\00forw.gif">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="animations\01back.gif">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="animations\01forw.gif">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="animations\02back.gif">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="animations\02forw.gif">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="animations\03back.gif">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="animations\03forw.gif">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="animations\10back.gif">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="animations\10forw.gif">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="animations\11back.gif">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="animations\11forw.gif">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="animations\12back.gif">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="animations\12forw.gif">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="animations\13back.gif">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="animations\13forw.gif">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="animations\20back.gif">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="animations\20forw.gif">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="animations\21back.gif">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="animations\21forw.gif">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="animations\22back.gif">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="animations\22forw.gif">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="animations\23back.gif">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="animations\23forw.gif">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="animations\30back.gif">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="animations\30forw.gif">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="animations\31back.gif">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="animations\31forw.gif">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="animations\32back.gif">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="animations\32forw.gif">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="animations\33back.gif">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="animations\33forw.gif">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="poses\loh1.gif">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="poses\loh2.gif">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="poses\neloh.gif">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="poses\enchantedsoldier1.gif">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="poses\enchantedsoldier2.gif">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="poses\PIRATE.gif">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="poses\na_areny.gif">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="poses\GOLIY.gif">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="poses\BLYANT.gif">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="poses\slime1reverse.gif">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="poses\slime2reverse.gif">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="poses\orc3reverse.gif">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="poses\orc2reverse.gif">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="video\final.wmv">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="video\Я сам испугался.wmv">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

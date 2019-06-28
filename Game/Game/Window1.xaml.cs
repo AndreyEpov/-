@@ -25,6 +25,9 @@ namespace Game
         MainWindow game = new MainWindow();
         //Window1 intro = new Window1();
         //MainWindow video = new MainWindow();
+        //bool final = false;
+
+        System.Windows.Threading.DispatcherTimer FinalTimer;
         public Window1()
         {
             InitializeComponent();
@@ -32,15 +35,37 @@ namespace Game
             //timerStart();
             MP.MediaOpened += MP_MediaOpened;
             MP.MediaEnded += MP_MediaEnded;
-            MP.Source = new Uri("C:\\Users\\Admin\\Desktop\\Game--\\Game\\Game\\video\\Я сам испугался.wmv");
-            //MP.Source = new Uri(@"pack://application:,,,/video/Я сам испугался.wmv", UriKind.RelativeOrAbsolute);
-            //string filename = Game.Properties.Resources.Начало.ToString();
-            //MP.Source = new Uri(filename, UriKind.RelativeOrAbsolute);
-            MP.Volume = 1;
-
+            if (game.final == false)
+            {
+                //MP.Source = new Uri("C:\\Users\\Admin\\Desktop\\Game--\\Game\\Game\\video\\Я сам испугался.wmv");
+                MP.Source = new Uri(@"pack://application:,,,/video/Я сам испугался.wmv", UriKind.RelativeOrAbsolute);
+                //string filename = Game.Properties.Resources.Начало.ToString();
+                //MP.Source = new Uri(filename, UriKind.RelativeOrAbsolute);
+                MP.Volume = 1;
+            }
             //MP.Source = new Uri(@"pack://application:,,,/video/predhistor.wmv", UriKind.Absolute);
             MP.Play();
             MP.SpeedRatio = 20;
+
+            FinalTimer = new System.Windows.Threading.DispatcherTimer();
+            FinalTimer.Tick += new EventHandler(FinalTimer_Tick);
+            FinalTimer.Interval = new TimeSpan(0, 0, 0, 0, 400);
+        }
+
+        private void FinalTimer_Tick(object sender, EventArgs e)
+        {
+            if (game.final==true)
+            {
+                this.Show();
+                FinalTimer.Stop();
+                MP.Source = new Uri("C:\\Users\\Admin\\Desktop\\Game--\\Game\\Game\\video\\final.wmv");
+                //MP.Source = new Uri(@"pack://application:,,,/video/Я сам испугался.wmv", UriKind.RelativeOrAbsolute);
+                //string filename = Game.Properties.Resources.Начало.ToString();
+                //MP.Source = new Uri(filename, UriKind.RelativeOrAbsolute);
+                MP.Volume = 1;
+                MP.Play();
+                MP.SpeedRatio = 20;
+            }
         }
 
         private void MP_MediaOpened(object sender,RoutedEventArgs e)
@@ -50,15 +75,20 @@ namespace Game
 
         private void MP_MediaEnded(object sender, RoutedEventArgs e)
         {
-            MP.Stop();
-            this.Hide();
+            if (game.final == true)
+                game.Close();
+            if (game.final == false)
+            {
+                MP.Stop();
+                this.Hide();
+                FinalTimer.Start();
+                Thread.Sleep(1000);
 
-            Thread.Sleep(1000);
-
-            if (MessageBox.Show("Я спал, когда снаружи послышались какие-то крики(а может петух). \n" +
-" Так как рядом с моим домом только располагалась деревенская таверна, взяв первое, что попалось под руку," +
-" я решил направиться туда", "\n", MessageBoxButton.OK)==MessageBoxResult.OK)
-            game.ShowDialog();
+                if (MessageBox.Show("Я спал, когда снаружи послышались какие-то крики(а может петух). \n" +
+    " Так как рядом с моим домом только располагалась деревенская таверна, взяв первое, что попалось под руку," +
+    " я решил направиться туда", "\n", MessageBoxButton.OK) == MessageBoxResult.OK)
+                    game.ShowDialog();
+            }
         }
 
     }

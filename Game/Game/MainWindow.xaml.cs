@@ -24,7 +24,8 @@ namespace Game
 
     public partial class MainWindow : Window
     {
-        Gaming gema = new Gaming();
+        public Gaming gema = new Gaming();
+        //Window1 video = new Window1();
 
         System.Windows.Threading.DispatcherTimer Timer;
         System.Windows.Threading.DispatcherTimer JumpTimer;
@@ -36,7 +37,7 @@ namespace Game
 
         bool tavern = true;
         bool start = false;
-        bool forest = false;
+        public bool forest = false;
         bool tourn = false;
 
         Rectangle myRect = new Rectangle();
@@ -89,14 +90,14 @@ namespace Game
         public int usedheal = 0;
         public int gold = 0;
         int cost;
-        int count = 0, victory = 0, slimekill = 0, last = 0, plantkill = 0;
+        public int count = 0, victory = 0, slimekill = 0, last = 0, plantkill = 0;
         int slime1hp = 175, slime2hp = 140, slime3hp = 140;
         int en1hp = 200, en2hp = 200;
         int knighthp = 150, pirate = 150;
         int bard = 0, xb = 650, by = 312;
         bool right = false;
         int beforearm,beforeweap;
-        bool slimes = true, orcruins = false, orccave = false, plants = true, enknights = false, orcarm=true, orcweap=true, tournweap=true, enknightsarmor=true, armor1 = false, weapon1 = false;
+        public bool slimes = true, orcruins = false, orccave = false, plants = true, enknights = false, orcarm=true, orcweap=true, tournweap=true, enknightsarmor=true, armor1 = false, weapon1 = false;
 
         int hph = 16, hpw = 96;
 
@@ -114,6 +115,7 @@ namespace Game
         bool korabl = false;
         bool bashnya = false;
         bool boss = false;
+        public bool final = false;
 
 
         Rectangle enemy1 = new Rectangle();
@@ -401,6 +403,7 @@ namespace Game
         private void Window_Closed(object sender, EventArgs e)
         {
             store.Close();
+            //video.Close();
         }
 
         private void FightTimer_Tick(object sender, EventArgs e)
@@ -725,14 +728,18 @@ namespace Game
 
                 Thread.Sleep(1000);
 
-                if (MessageBox.Show("Эй где же ты прячешься маг? \n" +
+                if (MessageBox.Show("Эй, где же ты прячешься, маг? \n" +
                     "Маг: Выслушай меня, юный рыцарь, раз ты сумел победить голема, то ты достоин нечто большего, чем награда от этого гнусного короля.", "Выслушать?", MessageBoxButton.YesNo)==MessageBoxResult.Yes)
                 {
-
+                    final = true;
+                    FightTimer.Stop();
+                    //video.Show();
                 }
                 else
                 {
-
+                    FightTimer.Stop();
+                    final = true;
+                    //video.Show();
                 }
             }
             if (slime1hp <= 0)

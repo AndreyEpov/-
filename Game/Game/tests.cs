@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Threading;
 
 namespace Game
 {
@@ -11,10 +12,33 @@ namespace Game
     class tests
     {
         [TestCase]
-        public void fight()
+        public void weapon()
         {
-            MainWindow test = new MainWindow();
-            test.plusarmorkni();
+            Gaming test = new Gaming();
+            Assert.AreEqual(1, test.weapon);
         }
+
+        [TestCase]
+        public void armor()
+        {
+            Gaming test = new Gaming();
+            Assert.AreEqual(5, test.armor);
+        }
+
+        [TestCase]
+        public void weaponp()
+        {
+            Gaming test = new Gaming();
+            test.buyingweapon(6);
+            Assert.AreEqual(6, test.weapon);
+        }
+
+        //[STAThread]
+        //[TestCase]
+        //public void forest()
+        //{
+        //    MainWindow test = new MainWindow();
+        //    Assert.AreEqual(false, test.forest);
+        //}
     }
 }
