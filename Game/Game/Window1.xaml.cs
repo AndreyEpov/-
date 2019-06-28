@@ -37,8 +37,8 @@ namespace Game
             MP.MediaEnded += MP_MediaEnded;
             if (game.final == false)
             {
-                //MP.Source = new Uri("C:\\Users\\Admin\\Desktop\\Game--\\Game\\Game\\video\\Я сам испугался.wmv");
-                MP.Source = new Uri(@"pack://application:,,,/video/Я сам испугался.wmv", UriKind.RelativeOrAbsolute);
+                MP.Source = new Uri("video/begin.wmv", UriKind.RelativeOrAbsolute);
+                //MP.Source = new Uri(@"pack://application:,,,/video/begin.wmv", UriKind.RelativeOrAbsolute);
                 //string filename = Game.Properties.Resources.Начало.ToString();
                 //MP.Source = new Uri(filename, UriKind.RelativeOrAbsolute);
                 MP.Volume = 1;
@@ -58,8 +58,8 @@ namespace Game
             {
                 this.Show();
                 FinalTimer.Stop();
-                MP.Source = new Uri("C:\\Users\\Admin\\Desktop\\Game--\\Game\\Game\\video\\final.wmv");
-                //MP.Source = new Uri(@"pack://application:,,,/video/Я сам испугался.wmv", UriKind.RelativeOrAbsolute);
+                //MP.Source = new Uri(@"pack://application:,,,/video/final.wmv");
+                MP.Source = new Uri(@"video/begin.wmv", UriKind.RelativeOrAbsolute);
                 //string filename = Game.Properties.Resources.Начало.ToString();
                 //MP.Source = new Uri(filename, UriKind.RelativeOrAbsolute);
                 MP.Volume = 1;
@@ -85,7 +85,7 @@ namespace Game
                 Thread.Sleep(1000);
 
                 if (MessageBox.Show("Я спал, когда снаружи послышались какие-то крики(а может петух). \n" +
-    " Так как рядом с моим домом только располагалась деревенская таверна, взяв первое, что попалось под руку," +
+    " Так как рядом с моим домом только располагалась деревенская tavern, взяв первое, что попалось под руку," +
     " я решил направиться туда", "\n", MessageBoxButton.OK) == MessageBoxResult.OK)
                     game.ShowDialog();
             }

@@ -157,13 +157,13 @@ namespace Game
             ib.Stretch = Stretch.None;
             ib.Viewbox = new Rect(0, 0, 96, 96);
             ib.ViewboxUnits = BrushMappingMode.Absolute;
-            ib.ImageSource = new BitmapImage(new Uri(@"pack://application:,,,/текстурки/gg.gif", UriKind.Absolute));
+            ib.ImageSource = new BitmapImage(new Uri(@"pack://application:,,,/texture/gg.gif", UriKind.Absolute));
             myRect.Fill = ib;
             myRect.Margin = new Thickness(0, 0, 0, 0);
             screen.Children.Add(myRect);
 
             background.AlignmentX = AlignmentX.Left;
-            background.ImageSource = new BitmapImage(new Uri(@"pack://application:,,,/текстурки/внутри дома.bmp", UriKind.Absolute));
+            background.ImageSource = new BitmapImage(new Uri(@"pack://application:,,,/texture/home.bmp", UriKind.Absolute));
             screen.Background = background;
 
             Timer = new System.Windows.Threading.DispatcherTimer();
@@ -265,9 +265,9 @@ namespace Game
                 if (rect.Contains(f1t2) == true && tavern == false)
                     confirm.Content = "[e]На поляну";
                 if (rect.Contains(f1t3) == true)
-                    confirm.Content = "[e]В лес";
+                    confirm.Content = "[e]В forest";
                 if (rect.Contains(f1t4) == true && tavern == false)
-                    confirm.Content = "[e]На болото";
+                    confirm.Content = "[e]На swamp";
                 if ((rect.Contains(f1t0) == false) && rect.Contains(f0t1) == false && rect.Contains(f1t3) == false && rect.Contains(f1t4) == false)
                     confirm.Content = "";
             }
@@ -282,7 +282,7 @@ namespace Game
                     confirm.Content = "";
             }
 
-            if (pic == 3) // из леса
+            if (pic == 3) // из forestа
             {
                 if (rect.Contains(f3t1) == true)
                     confirm.Content = "[e]В деревню";
@@ -309,9 +309,9 @@ namespace Game
                 if (rect.Contains(f5t2) == true)
                     confirm.Content = "[e]На поляну";
                 if (rect.Contains(f5t3) == true)
-                    confirm.Content = "[e]В лес";
+                    confirm.Content = "[e]В forest";
                 if (rect.Contains(f5t4) == true)
-                    confirm.Content = "[e]На болото";
+                    confirm.Content = "[e]На swamp";
                 if (rect.Contains(f5t67) == true)
                     confirm.Content = "[e]В пещеру\n[t]К руинам";
                 if (rect.Contains(f5t9) == true)
@@ -327,7 +327,7 @@ namespace Game
                 if (rect.Contains(f6t5) == true)
                     confirm.Content = "[e]В замок";
                 if (rect.Contains(f6t8) == true)
-                    confirm.Content = "[e]В сердце пещеры";
+                    confirm.Content = "[e]В incave1";
                 if (rect.Contains(f6t8) == false && rect.Contains(f6t5) == false)
                     confirm.Content = "";
             }
@@ -350,11 +350,11 @@ namespace Game
             if (pic == 9) // из рыцарского турнира
             {
                 if (rect.Contains(f9t11) == true)
-                    confirm.Content = "[e]К маяку";
+                    confirm.Content = "[e]К mayacу";
                 else confirm.Content = "";
             }
 
-            if (pic == 11) // от маяка
+            if (pic == 11) // от mayacа
             {
                 if (rect.Contains(f11t12) == true)
                     confirm.Content = "[e]На корабль";
@@ -429,12 +429,12 @@ namespace Game
             Point e1 = new Point(350, 312);
             Point e2 = new Point(412, 312);
             Point e3 = new Point(412, 248);
-            Point e4 = new Point(350, 248);// в лесу
+            Point e4 = new Point(350, 248);// в forestу
 
             Point p1 = new Point(446, 312);
             Point p2 = new Point(508, 312);
             Point p3 = new Point(508, 248);
-            Point p4 = new Point(446, 248);// в лесу
+            Point p4 = new Point(446, 248);// в forestу
 
             if ((rect.Contains(p1) || rect.Contains(p2) || rect.Contains(p3) || rect.Contains(p4)) && pic == 3 && screen.Children.Contains(enemy2)) // из первой во вторую
             {
@@ -444,7 +444,7 @@ namespace Game
             Point e11 = new Point(0, 312);
             Point e22 = new Point(96, 312);
             Point e33 = new Point(0, 248);
-            Point e44 = new Point(96, 248);// в сердце пещеры
+            Point e44 = new Point(96, 248);// в incave1
 
             if ((rect.Contains(e1) || rect.Contains(e2) || rect.Contains(e3) || rect.Contains(e4)) && pic == 3 && screen.Children.Contains(enemy1)) // из первой во вторую
             {
@@ -454,7 +454,7 @@ namespace Game
             Point p11 = new Point(542, 312);
             Point p22 = new Point(636, 312);
             Point p33 = new Point(542, 248);
-            Point p44 = new Point(636, 248);// в лесу
+            Point p44 = new Point(636, 248);// в forestу
 
             if ((rect.Contains(p11) || rect.Contains(p22) || rect.Contains(p33) || rect.Contains(p44)) && pic == 3 && screen.Children.Contains(enemy3)) // из первой во вторую
             {
@@ -648,7 +648,7 @@ namespace Game
                     gold = 0;
                     count = 0;
                     screen.Children.Remove(enemy);
-                    background.ImageSource = new BitmapImage(new Uri(@"pack://application:,,,/текстурки/внутри дома.bmp", UriKind.Absolute));
+                    background.ImageSource = new BitmapImage(new Uri(@"pack://application:,,,/texture/home.bmp", UriKind.Absolute));
                     screen.Background = background;
                     screen.Children.Remove(HPENEMY);
                     screen.Children.Remove(FRAMEENEMY);
@@ -711,7 +711,7 @@ namespace Game
                 screen.Children.Remove(FRAMEENEMY);
                 x = 0;
                 y = 312;
-                background.ImageSource = new BitmapImage(new Uri(@"pack://application:,,,/текстурки/last.jpg", UriKind.Absolute));
+                background.ImageSource = new BitmapImage(new Uri(@"pack://application:,,,/texture/last.jpg", UriKind.Absolute));
                 screen.Background = background;
                 enemy.Height = 96;
                 enemy.Width = 96;
@@ -809,7 +809,7 @@ namespace Game
                 forest = true;
                 if (tavern==true)
                     MessageBox.Show("Закончив с бандитами,я оглянулся:ко мне бежал стражник из деревни(или нет) \n"+
-"Стражник: Ого, посмотрите-ка, кажется, ты перебил воров которые досаждали всем деревням(так уж всем:)) в округе.Кхм...От лица рыцарского ордена выражаю тебе нашу признательность, спасибо тебе парень. Раз ты смог с ними справиться(на вилы насадил), предлагаю тебе поучаствовать в рыцарском турнире.Можешь сам вернуть украденное? \n" +
+"Стражник: Ого, посмотрите-ка, кажется, ты перебил воров которые досаждали всем villageм(так уж всем:)) в округе.Кхм...От лица рыцарского ордена выражаю тебе нашу признательность, спасибо тебе парень. Раз ты смог с ними справиться(на вилы насадил), предлагаю тебе поучаствовать в рыцарском турнире.Можешь сам вернуть украденное? \n" +
 "Я: Да сэр! \n" +
 "Стражник: Удачи на турнире!(уходит) \n" +
 "Я: Спасибо, но что за турнир?(а стражник то ушёл уже) ", "\n", MessageBoxButton.OK);
@@ -881,7 +881,7 @@ namespace Game
                     ib.ViewboxUnits = BrushMappingMode.Absolute;
                     Rect Rect = myRect.RenderTransform.TransformBounds(myRect.RenderedGeometry.Bounds);
                     ib.Stretch = Stretch.None;
-                    //ib.ImageSource = new BitmapImage(new Uri(@"pack://application:,,,/текстурки/ggrunforw.gif", UriKind.Absolute));
+                    //ib.ImageSource = new BitmapImage(new Uri(@"pack://application:,,,/texture/ggrunforw.gif", UriKind.Absolute));
                     
                         ib.ImageSource = new BitmapImage(new Uri(@"pack://application:,,,/animations/00forw.gif", UriKind.Absolute));
                     if (weapon1 == true)
@@ -944,7 +944,7 @@ namespace Game
                     ib.ViewboxUnits = BrushMappingMode.Absolute;
                     Rect Rect = myRect.RenderTransform.TransformBounds(myRect.RenderedGeometry.Bounds);
                     ib.Stretch = Stretch.None;
-                    //ib.ImageSource = new BitmapImage(new Uri(@"pack://application:,,,/текстурки/ggrunbackwa.gif", UriKind.Absolute));
+                    //ib.ImageSource = new BitmapImage(new Uri(@"pack://application:,,,/texture/ggrunbackwa.gif", UriKind.Absolute));
                    
                         ib.ImageSource = new BitmapImage(new Uri(@"pack://application:,,,/animations/00back.gif", UriKind.Absolute));
                     if (weapon1 == true)
@@ -1046,7 +1046,7 @@ namespace Game
                             MoveBardTimer.Start();
                             bard = 1;
                             lutni = true;
-                            background.ImageSource = new BitmapImage(new Uri(@"pack://application:,,,/текстурки/bard.png", UriKind.Absolute));
+                            background.ImageSource = new BitmapImage(new Uri(@"pack://application:,,,/texture/bard.png", UriKind.Absolute));
                             screen.Background = background;
 
                             enemy2.Height = 96;
@@ -1076,7 +1076,7 @@ namespace Game
                                     MessageBox.Show("Вы слишком без денег");
                                     x = 475;
                                     y = 312;
-                                    background.ImageSource = new BitmapImage(new Uri(@"pack://application:,,,/текстурки/город3.jpg", UriKind.Absolute));
+                                    background.ImageSource = new BitmapImage(new Uri(@"pack://application:,,,/texture/city3.jpg", UriKind.Absolute));
                                     screen.Background = background;
                                     pic = 5;
                                     screen.Children.Remove(enemy2);
@@ -1087,7 +1087,7 @@ namespace Game
                                     "Недельку вы учились... Красавчик... У тебя были неплохие успехи. Мой озорной друг рад был тебя чему-то научить. В добрый путь, покорять женские сердца...");
                                 x = 475;
                                 y = 312;
-                                background.ImageSource = new BitmapImage(new Uri(@"pack://application:,,,/текстурки/город3.jpg", UriKind.Absolute));
+                                background.ImageSource = new BitmapImage(new Uri(@"pack://application:,,,/texture/city3.jpg", UriKind.Absolute));
                                 screen.Background = background;
                                 pic = 5;
                                 screen.Children.Remove(enemy2);
@@ -1097,7 +1097,7 @@ namespace Game
                                 bard = 0;
                                 x = 475;
                                 y = 312;
-                                background.ImageSource = new BitmapImage(new Uri(@"pack://application:,,,/текстурки/город3.jpg", UriKind.Absolute));
+                                background.ImageSource = new BitmapImage(new Uri(@"pack://application:,,,/texture/city3.jpg", UriKind.Absolute));
                                 screen.Background = background;
                                 pic = 5;
                                 screen.Children.Remove(enemy2);
@@ -1183,7 +1183,7 @@ namespace Game
             Point p1 = new Point(446, 312);
             Point p2 = new Point(508, 312);
             Point p3 = new Point(508, 248);
-            Point p4 = new Point(446, 248);// в лесу
+            Point p4 = new Point(446, 248);// в forestу
 
             if ((rect.Contains(p1) || rect.Contains(p2) || rect.Contains(p3) || rect.Contains(p4)) && pic == 3 && screen.Children.Contains(enemy2)) // из первой во вторую
             {
@@ -1199,7 +1199,7 @@ namespace Game
             Point p11 = new Point(542, 312);
             Point p22 = new Point(636, 312);
             Point p33 = new Point(542, 248);
-            Point p44 = new Point(636, 248);// в лесу
+            Point p44 = new Point(636, 248);// в forestу
 
             if ((rect.Contains(p11) || rect.Contains(p22) || rect.Contains(p33) || rect.Contains(p44)) && pic == 3 && screen.Children.Contains(enemy3)) // из первой во вторую
             {
@@ -1327,7 +1327,7 @@ namespace Game
                 {
                     x = 0;
                     y = 216;
-                    background.ImageSource = new BitmapImage(new Uri(@"pack://application:,,,/текстурки/арена2.png.jpg", UriKind.Absolute));
+                    background.ImageSource = new BitmapImage(new Uri(@"pack://application:,,,/texture/arena2.png.jpg", UriKind.Absolute));
                     screen.Background = background;
                     pic = 9;
                     enemy1.Height = 96;
@@ -1406,7 +1406,7 @@ namespace Game
                 {
                     x = 650;
                     y = 216;
-                    background.ImageSource = new BitmapImage(new Uri(@"pack://application:,,,/текстурки/город3.jpg", UriKind.Absolute));
+                    background.ImageSource = new BitmapImage(new Uri(@"pack://application:,,,/texture/city3.jpg", UriKind.Absolute));
                     screen.Background = background;
                     pic = 5;
                 }
@@ -1418,7 +1418,7 @@ namespace Game
                 {
                     x = 696;
                     y = 216;
-                    background.ImageSource = new BitmapImage(new Uri(@"pack://application:,,,/текстурки/подземелье.png", UriKind.Absolute));
+                    background.ImageSource = new BitmapImage(new Uri(@"pack://application:,,,/texture/dungeon.png", UriKind.Absolute));
                     screen.Background = background;
                     pic = 6;
                     if (cave == false)
@@ -1431,7 +1431,7 @@ namespace Game
                 {
                     x = 696;
                     y = 216;
-                    background.ImageSource = new BitmapImage(new Uri(@"pack://application:,,,/текстурки/руины.jpg", UriKind.Absolute));
+                    background.ImageSource = new BitmapImage(new Uri(@"pack://application:,,,/texture/руины.jpg", UriKind.Absolute));
                     screen.Background = background;
                     pic = 7;
                     enemy.Height = 128;
@@ -1478,7 +1478,7 @@ namespace Game
                 {
                     x = 0;
                     y = 216;
-                    background.ImageSource = new BitmapImage(new Uri(@"pack://application:,,,/текстурки/город3.jpg", UriKind.Absolute));
+                    background.ImageSource = new BitmapImage(new Uri(@"pack://application:,,,/texture/city3.jpg", UriKind.Absolute));
                     screen.Background = background;
                     pic = 5;
                     screen.Children.Remove(enemy1);
@@ -1501,7 +1501,7 @@ namespace Game
                                 "Я:”Оу чем воняет? А это от меня(кек)... Дааа, повеселились мы от души(вот оторвы) \n -шипящае окно- \n Я даже непомню где и заснул. Помню только, что бард сказал, что может научить меня чему-то \n" +
                                 " Ладно, пойду вступлю в гильдию.“", "\n", MessageBoxButton.OK) == MessageBoxResult.OK)
                                 MessageBox.Show("Пройдя по улицам замка, я заметил, что рыцарей в этом королевстве почитают. Всюду памятники , монументы, все мальчишки играют в рыцарей и колбасят(колбасят, хы) друг друга. Но лицезреть это долго мне не пришлось... \n" +
-                                    "Я дошёл до главного здания гильдии. Мне без каких либо проблем дали нашивку гильдии и сказали, еcли хочу участвовать в турнире, то мне нужно сначала убить Орков в руинах и в сердце пещеры", "\n", MessageBoxButton.OK);
+                                    "Я дошёл до главного здания гильдии. Мне без каких либо проблем дали нашивку гильдии и сказали, еcли хочу участвовать в турнире, то мне нужно сначала убить Орков в руинах и в incave1", "\n", MessageBoxButton.OK);
                         }
                     }
                 }
@@ -1513,7 +1513,7 @@ namespace Game
                 {
                     x = 0;
                     y = 216;
-                    background.ImageSource = new BitmapImage(new Uri(@"pack://application:,,,/текстурки/поляна.jpg", UriKind.Absolute));
+                    background.ImageSource = new BitmapImage(new Uri(@"pack://application:,,,/texture/polyana.jpg", UriKind.Absolute));
                     screen.Background = background;
                     pic = 2;
 
@@ -1620,13 +1620,13 @@ namespace Game
                 }
             }
 
-            if (rect.Contains(f9t11) == true && pic == 9 && tourn == true) // к маяку
+            if (rect.Contains(f9t11) == true && pic == 9 && tourn == true) // к mayacу
             {
                 if (e.Key == Key.E)
                 {
                     x = 0;
                     y = 216;
-                    background.ImageSource = new BitmapImage(new Uri(@"pack://application:,,,/текстурки/маяк.jpg", UriKind.Absolute));
+                    background.ImageSource = new BitmapImage(new Uri(@"pack://application:,,,/texture/mayac.jpg", UriKind.Absolute));
                     screen.Background = background;
                     pic = 11;
                     screen.Children.Remove(enemy1);
@@ -1654,11 +1654,11 @@ namespace Game
                     {
                         mayak = true;
                         if (MessageBox.Show("Вы сие-минутно же собираетесь в путешествие на остров. \n" +
-                            "Взяв пару сменных трусов, ни о чём не заботясь вы отправились к маяку.По пути вы повстречали иноземного купца, который продавал одежды из шёлка и драгоценности, вы завязали с ним разговор, он спокойно общался с вами, и вы вместе отправились к маяку. Но вот неждан, издалека вы видете над маяком пиратский флаг, а купец стоит и афигеваeт...") == MessageBoxResult.OK)
-                            if (MessageBox.Show("Купец: Пираты карибского происхождения захватили маяк! А возглавляет эту шайку, самый остроумный и любимый женщинами на всём белом море Капитан Джон Птица. Совратил мою дочку, чёртов негодяй! \n" +
+                            "Взяв пару сменных трусов, ни о чём не заботясь вы отправились к mayacу.По пути вы повстречали иноземного купца, который продавал одежды из шёлка и драгоценности, вы завязали с ним разговор, он спокойно общался с вами, и вы вместе отправились к mayacу. Но вот неждан, издалека вы видете над mayacом пиратский флаг, а купец стоит и афигеваeт...") == MessageBoxResult.OK)
+                            if (MessageBox.Show("Купец: Пираты карибского происхождения захватили mayac! А возглавляет эту шайку, самый остроумный и любимый женщинами на всём белом море Капитан Джон Птица. Совратил мою дочку, чёртов негодяй! \n" +
                                 "У него был самый быстроходный корабль из всех наземных существ, кто имел флот, от пиратов до королевств. \n" +
                                 "Наш герой предвкушал не простую битву против целый команды пиратов. Но луна убывала, а с ней отплывали и пираты. Разрушив весь флот, имеющийся на пристани, и захватив добычу они отправились за новыми приключениями. \n" +
-                                "С расстройством смотря на уходящий корабль... Иван решает исследовать маяк День близился к концу, и наш герой решает заглянуть что же осталось в маяке... Благоразумные пираты, не разрушили освещение, что очень хорошо для наших торговцев из королевства Синдрия.Во главе корабля был наставник принца Синдбада повелителя семи белых морей, он тоже был на рыцарском турнире.Но удача была на вашей стороне.Видать пираты узнали о том что скоро в этот порт должен был пришвартоваться корабль королевства Синдрия и покинули его заблаговременно.") == MessageBoxResult.OK)
+                                "С расстройством смотря на уходящий корабль... Иван решает исследовать mayac День близился к концу, и наш герой решает заглянуть что же осталось в mayacе... Благоразумные пираты, не разрушили освещение, что очень хорошо для наших торговцев из королевства Синдрия.Во главе корабля был наставник принца Синдбада повелителя семи белых морей, он тоже был на рыцарском турнире.Но удача была на вашей стороне.Видать пираты узнали о том что скоро в этот порт должен был пришвартоваться корабль королевства Синдрия и покинули его заблаговременно.") == MessageBoxResult.OK)
                                 MessageBox.Show("Я: Сегодня удача была на моей стороне. “Может меня подкинут до острова Тёмный?(был же остров Пасхи, хмхмхм)” \n" +
                                     "Наш герой был без ума от радости, когда узнал, что их маршрут лежит через “Тёмный” остров.");
 
@@ -1674,7 +1674,7 @@ namespace Game
                     {
                         x = 0;
                         y = 216;
-                        background.ImageSource = new BitmapImage(new Uri(@"pack://application:,,,/текстурки/таверна.png", UriKind.Absolute));
+                        background.ImageSource = new BitmapImage(new Uri(@"pack://application:,,,/texture/tavern.png", UriKind.Absolute));
                         screen.Background = background;
                         start = true;
                         ImageBrush girl = new ImageBrush();
@@ -1693,7 +1693,7 @@ namespace Game
 "Я:Привет, Торговка! Что случилось? \n" +
 "Торговка:Бандиты...Бандиты ограбили мою лавку и унесли все самое ценное. \n" +
 "Я:Я сейчас же направлюсь за ними и все верну! А,где их искать? \n" +
-"Торговка:О-Они направились в сторону леса, думаю ты их там и найдешь. ", "\n", MessageBoxButton.OK);
+"Торговка:О-Они направились в сторону forestа, думаю ты их там и найдешь. ", "\n", MessageBoxButton.OK);
                     }
                 }
                 else
@@ -1703,7 +1703,7 @@ namespace Game
 
                         x = 0;
                         y = 216;
-                        background.ImageSource = new BitmapImage(new Uri(@"pack://application:,,,/текстурки/деревня.png", UriKind.Absolute));
+                        background.ImageSource = new BitmapImage(new Uri(@"pack://application:,,,/texture/village.png", UriKind.Absolute));
                         screen.Background = background;
                         pic = 1;
                         screen.Children.Remove(enemy1);
@@ -1723,7 +1723,7 @@ namespace Game
                         {
                             x = 696;
                             y = 216;
-                            background.ImageSource = new BitmapImage(new Uri(@"pack://application:,,,/текстурки/внутри дома.bmp", UriKind.Absolute));
+                            background.ImageSource = new BitmapImage(new Uri(@"pack://application:,,,/texture/home.bmp", UriKind.Absolute));
                             screen.Background = background;
                             pic = 0;
                         }
@@ -1734,7 +1734,7 @@ namespace Game
                         {
                             x = 696;
                             y = 216;
-                            background.ImageSource = new BitmapImage(new Uri(@"pack://application:,,,/текстурки/таверна.png", UriKind.Absolute));
+                            background.ImageSource = new BitmapImage(new Uri(@"pack://application:,,,/texture/tavern.png", UriKind.Absolute));
                             screen.Background = background;
                             pic = 0;
                             ImageBrush girl = new ImageBrush();
@@ -1784,14 +1784,14 @@ namespace Game
                 gold = gold + 300;
             }
 
-            if ((rect.Contains(f1t3) == true) && (pic == 1)) // из деревни в лес
+            if ((rect.Contains(f1t3) == true) && (pic == 1)) // из деревни в forest
             {
                 if (e.Key == Key.E)
                 {
                     
                     x = 0;
                     y = 216;
-                    background.ImageSource = new BitmapImage(new Uri(@"pack://application:,,,/текстурки/лес.jpg", UriKind.Absolute));
+                    background.ImageSource = new BitmapImage(new Uri(@"pack://application:,,,/texture/forest.jpg", UriKind.Absolute));
                     screen.Background = background;
                     pic = 3;
                     enemy1.Height = 96;
@@ -1889,7 +1889,7 @@ namespace Game
                     if (forest==false)
                     {
                         Thread.Sleep(1000);
-                        MessageBox.Show("Углубившись в лесную глубь, я услышал грубые(крайне неприятные) голоса. Выйдя на них я увидел трех непривлекательных людей, очень похожих на бандитов \n"+
+                        MessageBox.Show("Углубившись в forestную глубь, я услышал грубые(крайне неприятные) голоса. Выйдя на них я увидел трех непривлекательных людей, очень похожих на бандитов \n"+
 "Я: Эй!Это вы ограбили торговку в деревне? \n"+
 "Бандит : Ну мы а что? \n"+
 "Я : Требую немедленно вернуть все украденное! \n"+
@@ -1900,13 +1900,13 @@ namespace Game
                 }
             }
 
-            if ((rect.Contains(f1t4) == true) && (pic == 1) && tavern == false) // из деревни на болото
+            if ((rect.Contains(f1t4) == true) && (pic == 1) && tavern == false) // из деревни на swamp
             {
                 if (e.Key == Key.E)
                 {
                     x = 696;
                     y = 216;
-                    background.ImageSource = new BitmapImage(new Uri(@"pack://application:,,,/текстурки/болото.jpg", UriKind.Absolute));
+                    background.ImageSource = new BitmapImage(new Uri(@"pack://application:,,,/texture/swamp.jpg", UriKind.Absolute));
                     screen.Background = background;
                     pic = 4;
 
@@ -2016,7 +2016,7 @@ namespace Game
                 {
                     x = 696;
                     y = 216;
-                    background.ImageSource = new BitmapImage(new Uri(@"pack://application:,,,/текстурки/деревня.png", UriKind.Absolute));
+                    background.ImageSource = new BitmapImage(new Uri(@"pack://application:,,,/texture/village.png", UriKind.Absolute));
                     screen.Background = background;
                     pic = 1;
                     screen.Children.Remove(enemy1);
@@ -2031,13 +2031,13 @@ namespace Game
                 }
             }
 
-            if (rect.Contains(f3t1) == true && pic == 3) // из леса в деревню
+            if (rect.Contains(f3t1) == true && pic == 3) // из forestа в деревню
             {
                 if (e.Key == Key.E)
                 {
                     x = 264;
                     y = 216;
-                    background.ImageSource = new BitmapImage(new Uri(@"pack://application:,,,/текстурки/деревня.png", UriKind.Absolute));
+                    background.ImageSource = new BitmapImage(new Uri(@"pack://application:,,,/texture/village.png", UriKind.Absolute));
                     screen.Background = background;
                     pic = 1;
                     screen.Children.Remove(enemy1);
@@ -2052,13 +2052,13 @@ namespace Game
                 }
             }
 
-            if (rect.Contains(f3t5) == true && pic == 3) // из леса в замок
+            if (rect.Contains(f3t5) == true && pic == 3) // из forestа в замок
             {
                 if (e.Key == Key.E && tavern == false)
                 {
                     x = 150;
                     y = 216;
-                    background.ImageSource = new BitmapImage(new Uri(@"pack://application:,,,/текстурки/город3.jpg", UriKind.Absolute));
+                    background.ImageSource = new BitmapImage(new Uri(@"pack://application:,,,/texture/city3.jpg", UriKind.Absolute));
                     screen.Background = background;
                     pic = 5;
                     screen.Children.Remove(enemy);
@@ -2084,7 +2084,7 @@ namespace Game
                                 "Я:”Оу чем воняет? А это от меня(кек)... Дааа, повеселились мы от души(вот оторвы) \n -шипящае окно- \n Я даже непомню где и заснул. Помню только, что бард сказал, что может научить меня чему-то \n" +
                                 " Ладно, пойду вступлю в гильдию.“", "\n", MessageBoxButton.OK) == MessageBoxResult.OK)
                                 MessageBox.Show("Пройдя по улицам замка, я заметил, что рыцарей в этом королевстве почитают. Всюду памятники , монументы, все мальчишки играют в рыцарей и колбасят(колбасят, хы) друг друга. Но лицезреть это долго мне не пришлось... \n" +
-                                    "Я дошёл до главного здания гильдии. Мне без каких либо проблем дали нашивку гильдии и сказали, еcли хочу участвовать в турнире, то мне нужно сначала убить Орков в руинах и в сердце пещеры", "\n", MessageBoxButton.OK);
+                                    "Я дошёл до главного здания гильдии. Мне без каких либо проблем дали нашивку гильдии и сказали, еcли хочу участвовать в турнире, то мне нужно сначала убить Орков в руинах и в incave1", "\n", MessageBoxButton.OK);
                         }
                     }
                 }
@@ -2096,7 +2096,7 @@ namespace Game
                 {
                     x = 528;
                     y = 216;
-                    background.ImageSource = new BitmapImage(new Uri(@"pack://application:,,,/текстурки/деревня.png", UriKind.Absolute));
+                    background.ImageSource = new BitmapImage(new Uri(@"pack://application:,,,/texture/village.png", UriKind.Absolute));
                     screen.Background = background;
                     pic = 1;
                     screen.Children.Remove(enemy1);
@@ -2111,13 +2111,13 @@ namespace Game
                 }
             }
 
-            if (rect.Contains(f5t4) == true && pic == 5 && bard != 1) // из замка на болото
+            if (rect.Contains(f5t4) == true && pic == 5 && bard != 1) // из замка на swamp
             {
                 if (e.Key == Key.E)
                 {
                     x = 400;
                     y = 216;
-                    background.ImageSource = new BitmapImage(new Uri(@"pack://application:,,,/текстурки/болото.jpg", UriKind.Absolute));
+                    background.ImageSource = new BitmapImage(new Uri(@"pack://application:,,,/texture/swamp.jpg", UriKind.Absolute));
                     screen.Background = background;
                     pic = 4;
                     enemy1.Height = 64;
@@ -2226,7 +2226,7 @@ namespace Game
                 {
                     x = 300;
                     y = 216;
-                    background.ImageSource = new BitmapImage(new Uri(@"pack://application:,,,/текстурки/город3.jpg", UriKind.Absolute));
+                    background.ImageSource = new BitmapImage(new Uri(@"pack://application:,,,/texture/city3.jpg", UriKind.Absolute));
                     screen.Background = background;
                     pic = 5;
                     screen.Children.Remove(enemy1);
@@ -2249,7 +2249,7 @@ namespace Game
                                 "Я:”Оу чем воняет? А это от меня(кек)... Дааа, повеселились мы от души(вот оторвы) \n -шипящае окно- \n Я даже непомню где и заснул. Помню только, что бард сказал, что может научить меня чему-то \n" +
                                 " Ладно, пойду вступлю в гильдию.“", "\n", MessageBoxButton.OK) == MessageBoxResult.OK)
                                 MessageBox.Show("Пройдя по улицам замка, я заметил, что рыцарей в этом королевстве почитают. Всюду памятники , монументы, все мальчишки играют в рыцарей и колбасят(колбасят, хы) друг друга. Но лицезреть это долго мне не пришлось... \n" +
-                                    "Я дошёл до главного здания гильдии. Мне без каких либо проблем дали нашивку гильдии и сказали, еcли хочу участвовать в турнире, то мне нужно сначала убить Орков в руинах и в сердце пещеры", "\n", MessageBoxButton.OK);
+                                    "Я дошёл до главного здания гильдии. Мне без каких либо проблем дали нашивку гильдии и сказали, еcли хочу участвовать в турнире, то мне нужно сначала убить Орков в руинах и в incave1", "\n", MessageBoxButton.OK);
                         }
                     }
                 }
@@ -2261,7 +2261,7 @@ namespace Game
                 {
                     x = 600;
                     y = 216;
-                    background.ImageSource = new BitmapImage(new Uri(@"pack://application:,,,/текстурки/поляна.jpg", UriKind.Absolute));
+                    background.ImageSource = new BitmapImage(new Uri(@"pack://application:,,,/texture/polyana.jpg", UriKind.Absolute));
                     screen.Background = background;
                     pic = 2;
 
@@ -2368,13 +2368,13 @@ namespace Game
                 }
             }
 
-            if (rect.Contains(f5t3) == true && pic == 5 && bard != 1) // из замка в лес
+            if (rect.Contains(f5t3) == true && pic == 5 && bard != 1) // из замка в forest
             {
                 if (e.Key == Key.E)
                 {
                     x = 696;
                     y = 216;
-                    background.ImageSource = new BitmapImage(new Uri(@"pack://application:,,,/текстурки/лес.jpg", UriKind.Absolute));
+                    background.ImageSource = new BitmapImage(new Uri(@"pack://application:,,,/texture/forest.jpg", UriKind.Absolute));
                     screen.Background = background;
                     pic = 3;
 
@@ -2472,13 +2472,13 @@ namespace Game
                 }
             }
 
-            if (rect.Contains(f6t8) == true && pic == 6) // из пещеры в сердце пещеры
+            if (rect.Contains(f6t8) == true && pic == 6) // из пещеры в incave1
             {
                 if (e.Key == Key.E)
                 {
                     x = 696;
                     y = 216;
-                    background.ImageSource = new BitmapImage(new Uri(@"pack://application:,,,/текстурки/сердце пещеры2.jpg", UriKind.Absolute));
+                    background.ImageSource = new BitmapImage(new Uri(@"pack://application:,,,/texture/incave2.jpg", UriKind.Absolute));
                     screen.Background = background;
                     pic = 8;
                     enemy.Height = 128;
@@ -2524,7 +2524,7 @@ namespace Game
                 {
                     x = 650;
                     y = 216;
-                    background.ImageSource = new BitmapImage(new Uri(@"pack://application:,,,/текстурки/город3.jpg", UriKind.Absolute));
+                    background.ImageSource = new BitmapImage(new Uri(@"pack://application:,,,/texture/city3.jpg", UriKind.Absolute));
                     screen.Background = background;
                     pic = 5;
                     screen.Children.Remove(enemy);
@@ -2539,7 +2539,7 @@ namespace Game
                 {
                     x = 0;
                     y = 216;
-                    background.ImageSource = new BitmapImage(new Uri(@"pack://application:,,,/текстурки/подземелье.png", UriKind.Absolute));
+                    background.ImageSource = new BitmapImage(new Uri(@"pack://application:,,,/texture/dungeon.png", UriKind.Absolute));
                     screen.Background = background;
                     pic = 6;
                     screen.Children.Remove(enemy);
@@ -2554,7 +2554,7 @@ namespace Game
                 {
                     x = 0;
                     y = 216;
-                    background.ImageSource = new BitmapImage(new Uri(@"pack://application:,,,/текстурки/вид с корабля.gif", UriKind.Absolute));
+                    background.ImageSource = new BitmapImage(new Uri(@"pack://application:,,,/texture/ship.gif", UriKind.Absolute));
                     screen.Background = background;
                     pic = 12;
                     screen.Children.Remove(enemy1);
@@ -2621,7 +2621,7 @@ namespace Game
                 {
                     x = 0;
                     y = 216;
-                    background.ImageSource = new BitmapImage(new Uri(@"pack://application:,,,/текстурки/мб башня босса.jpg", UriKind.Absolute));
+                    background.ImageSource = new BitmapImage(new Uri(@"pack://application:,,,/texture/bosstower.jpg", UriKind.Absolute));
                     screen.Background = background;
                     pic = 14;
 
@@ -2702,7 +2702,7 @@ namespace Game
                 {
                     x = 0;
                     y = 216;
-                    background.ImageSource = new BitmapImage(new Uri(@"pack://application:,,,/текстурки/сердце пещеры.jpg", UriKind.Absolute));
+                    background.ImageSource = new BitmapImage(new Uri(@"pack://application:,,,/texture/incave1.jpg", UriKind.Absolute));
                     screen.Background = background;
                     pic = 15;
                     screen.Children.Remove(enemy1);

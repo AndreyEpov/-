@@ -30,8 +30,10 @@ namespace Game
     public partial class store : Window
     {
         SQLiteConnection m_dbConnection;
-        string db_name = Game.Properties.Resources.store.ToString();
-
+        // string db_name = "\\res\\store.db";
+        //string db_name = @"pack://application:,,,/store.db";
+        //string db_name = Game.Properties.Resources.store.ToString();
+        string db_name = "res\\store.db";
         Gaming staff = new Gaming();
         //MainWindow mon = new MainWindow();
 
