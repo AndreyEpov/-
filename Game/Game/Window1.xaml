@@ -1,0 +1,18 @@
+﻿<Window x:Class="Game.Window1"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Game"
+        mc:Ignorable="d"
+        Title="Window1" Height="448" Width="800"
+        WindowStyle="None">
+    <Grid Margin="0,0,0,-21">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="60*"/>
+            <RowDefinition Height="13*"/>
+        </Grid.RowDefinitions>
+        <MediaElement x:Name="MP"   HorizontalAlignment="Left" Height="462" VerticalAlignment="Top" Width="818" LoadedBehavior="Manual" UnloadedBehavior="Manual" Grid.RowSpan="2" Margin="0,-11,-26,0" />
+
+    </Grid>
+</Window>

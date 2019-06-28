@@ -1,0 +1,24 @@
+﻿<Window x:Class="Game.store"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Game"
+        mc:Ignorable="d"
+        Title="store" Height="236.496" Width="465.595" Closed="Window_Closed"
+        WindowStyle="None">
+    
+    <Grid>
+        <Button x:Name="buy" Content="Купить" HorizontalAlignment="Left" Height="36" Margin="354,23,0,0" VerticalAlignment="Top" Width="94" Click="Buy_Click"/>
+        <DataGrid x:Name="things" HorizontalAlignment="Left" Height="184" Margin="10,28,0,0" VerticalAlignment="Top" Width="300" SelectionChanged="Things_SelectionChanged">
+            <DataGrid.Columns>
+                <DataGridTextColumn Binding="{Binding Наименование}" ClipboardContentBinding="{x:Null}" Header="Наименование"/>
+                <DataGridTextColumn Binding="{Binding Описание}" ClipboardContentBinding="{x:Null}" Header="Описание"/>
+                <DataGridTextColumn Binding="{Binding Стоимость}" ClipboardContentBinding="{x:Null}" Header="Стоимость"/>
+                <DataGridTextColumn Binding="{Binding Количество}" ClipboardContentBinding="{x:Null}" Header="Количество"/>
+            </DataGrid.Columns>
+        </DataGrid>
+        <Button x:Name="exit" Content="Выйти из магазина" HorizontalAlignment="Left" Height="36" Margin="340,176,0,0" VerticalAlignment="Top" Width="108" Click="Exit_Click"/>
+
+    </Grid>
+</Window>
